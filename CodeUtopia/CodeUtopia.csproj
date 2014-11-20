@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CodeUtopia</RootNamespace>
+    <AssemblyName>CodeUtopia</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bank\Domain\Account\Account.cs" />
+    <Compile Include="Bank\Domain\Account\UnexpectedMementoException.cs" />
+    <Compile Include="Bank\Domain\Client\AccountDoesNotBelongToClientException.cs" />
+    <Compile Include="Bank\Domain\Client\BankCardDoesNotExistException.cs" />
+    <Compile Include="Bank\Domain\Client\BankCardIsReportedStolenException.cs" />
+    <Compile Include="Bank\Domain\Client\IBankCard.cs" />
+    <Compile Include="Bank\Events\v1\Client\BankCardAddedToClient.cs" />
+    <Compile Include="Bank\Events\v1\Client\AccountAddedToClient.cs" />
+    <Compile Include="Bank\Events\v1\Client\BankCardReportedStolen.cs" />
+    <Compile Include="Bank\Events\v1\Client\ClientCreated.cs" />
+    <Compile Include="Bank\Domain\Client\ClientName.cs" />
+    <Compile Include="Bank\Domain\Mementos\v1\AccountMemento.cs" />
+    <Compile Include="Bank\Events\v1\Account\AmountDeposited.cs" />
+    <Compile Include="Bank\Events\v1\Account\AmountWithdrawn.cs" />
+    <Compile Include="Bank\Domain\Account\BalanceHasInsufficientFundsForWithdrawlException.cs" />
+    <Compile Include="Bank\Domain\Account\AccountName.cs" />
+    <Compile Include="Bank\Domain\Account\Amount.cs" />
+    <Compile Include="Bank\Domain\Account\Balance.cs" />
+    <Compile Include="Bank\Domain\Client\BankCard.cs" />
+    <Compile Include="Bank\Domain\Client\Client.cs" />
+    <Compile Include="Bank\Events\v1\Account\AccountCreated.cs" />
+    <Compile Include="Domain\DomainEvent.cs" />
+    <Compile Include="EventStore\ISnapshot.cs" />
+    <Compile Include="EventStore\Snapshot.cs" />
+    <Compile Include="Domain\EntityNotInitializedException.cs" />
+    <Compile Include="Domain\EventHandlerNotRegisteredException.cs" />
+    <Compile Include="Domain\EntityEvent.cs" />
+    <Compile Include="ICommand.cs" />
+    <Compile Include="ICommandHandler.cs" />
+    <Compile Include="IEventPublisher.cs" />
+    <Compile Include="Domain\Aggregate.cs" />
+    <Compile Include="Domain\Entity.cs" />
+    <Compile Include="Domain\EntityList.cs" />
+    <Compile Include="Domain\EntityEventProviderExtensions.cs" />
+    <Compile Include="Domain\IAggregate.cs" />
+    <Compile Include="Domain\IEntity.cs" />
+    <Compile Include="Domain\IDomainEvent.cs" />
+    <Compile Include="EventStore\AggregateRepository.cs" />
+    <Compile Include="EventStore\IEventStorage.cs" />
+    <Compile Include="Domain\IAggregateRepository.cs" />
+    <Compile Include="EventStore\ISnapshotStorage.cs" />
+    <Compile Include="IMemento.cs" />
+    <Compile Include="IOriginator.cs" />
+    <Compile Include="Domain\IEntityEvent.cs" />
+    <Compile Include="IEventHandler.cs" />
+    <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Domain\AggregateNotInitializedException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bank\CommandHandlers\" />
+    <Folder Include="Bank\Commands\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,85 @@
+###################
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.pdb
+*.dll.config
+*.cache
+*.suo
+# Include if they're in the NuGet packages directory
+!/packages/*/lib/*.dll
+!/packages/*/lib/*/*.dll
+# Include if they're in the CommonReferences directory
+!*CommonReferences/*.dll
+
+##############
+# Compressed #
+##############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+###############
+# Directories #
+###############
+bin/
+obj/
+TestResults/
+
+#############
+# Databases #
+#############
+*.sqlite
+
+###########
+# Logging #
+###########
+*.log
+
+####################
+# Operating system #
+####################
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+[Bb]in
+[Oo]bj
+[Tt]est[Rr]esults
+*.suo
+*.user
+*.[Cc]ache
+*[Rr]esharper*
+packages
+NuGet.exe
+_[Ss]cripts
+*.exe
+*.dll
+*.nupkg
+*.ncrunchsolution
+*.dot[Cc]over
+
+#############
+# Resharper #
+#############
+/_ReSharper.*
+*.ReSharper.*
+
+#########################
+# Visual Studio upgrade #
+#########################
+UpgradeLog.XML
+_UpgradeReport_Files/
+
+###############
+# Web publish #
+###############
+*.Publish.xml
