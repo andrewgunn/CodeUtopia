@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeUtopia.Event;
 
 namespace CodeUtopia.Domain
 {
-    public interface IVersionNumberProvider
-    {
-        int GetNextVersionNumber();
-    }
-
     public abstract class Entity : IEntity
     {
         protected Entity(Guid aggregateId, IVersionNumberProvider versionNumberProvider)
         {
             _aggregateId = aggregateId;
-            VersionNumberProvider = versionNumberProvider;
+            _versionNumberProvider = versionNumberProvider;
             _eventHandlers = new Dictionary<Type, Action<IEntityEvent>>();
             _appliedEvents = new List<IEntityEvent>();
         }
@@ -46,6 +42,11 @@ namespace CodeUtopia.Domain
         public IEnumerable<IEntityEvent> GetChanges()
         {
             return _appliedEvents.OrderBy(x => x.VersionNumber);
+        }
+
+        protected int GetNextVersionNumber()
+        {
+            return _versionNumberProvider.GetNextVersionNumber();
         }
 
         private void Handle(IEntityEvent entityEvent)
@@ -95,12 +96,12 @@ namespace CodeUtopia.Domain
 
         public Guid EntityId { get; protected set; }
 
-        protected IVersionNumberProvider VersionNumberProvider { get; private set; }
-
         private readonly Guid _aggregateId;
 
         private readonly List<IEntityEvent> _appliedEvents;
 
         private readonly Dictionary<Type, Action<IEntityEvent>> _eventHandlers;
+
+        private readonly IVersionNumberProvider _versionNumberProvider;
     }
 }

@@ -15,14 +15,14 @@ namespace CodeUtopia.Bank.Domain.Account
             RegisterEventHandlers();
         }
 
-        private Account(Guid clientId, string accountName)
+        private Account(Guid accountId, Guid clientId, string accountName)
         {
-            Apply(new AccountCreated(Guid.NewGuid(), this, clientId, accountName));
+            Apply(new AccountCreated(accountId, GetNextVersionNumber(), clientId, accountName));
         }
 
-        public static Account Create(Guid clientId, string accountName)
+        public static Account Create(Guid accountId, Guid clientId, string accountName)
         {
-            return new Account(clientId, accountName);
+            return new Account(accountId, clientId, accountName);
         }
 
         public IMemento CreateMemento()
@@ -36,7 +36,7 @@ namespace CodeUtopia.Bank.Domain.Account
 
             var balance = _balance.Deposit(amount);
 
-            Apply(new AmountDeposited(AggregateId, this, balance, amount));
+            Apply(new AmountDeposited(AggregateId, GetNextVersionNumber(), balance, amount));
         }
 
         protected void EnsureAccountIsInitialized()
@@ -99,7 +99,7 @@ namespace CodeUtopia.Bank.Domain.Account
 
             var balance = _balance.Withdraw(amount);
 
-            Apply(new AmountWithdrawn(AggregateId, this, balance, amount));
+            Apply(new AmountWithdrawn(AggregateId, GetNextVersionNumber(), balance, amount));
         }
 
         private AccountName _accountName;

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using CodeUtopia.Domain;
+using CodeUtopia.Event;
 
 namespace CodeUtopia.EventStore.EntityFramework
 {
@@ -96,7 +97,9 @@ namespace CodeUtopia.EventStore.EntityFramework
             var entity = GetAggregate(aggregate);
             entity.VersionNumber = aggregate.VersionNumber;
 
-            foreach (var domainEvent in aggregate.GetChanges())
+            var domainEvents = aggregate.GetChanges().OrderBy(x => x.VersionNumber);
+
+            foreach (var domainEvent in domainEvents)
             {
                 entity.DomainEvents.Add(new DomainEvent
                                         {
@@ -105,6 +108,8 @@ namespace CodeUtopia.EventStore.EntityFramework
                                             VersionNumber = domainEvent.VersionNumber
                                         });
             }
+
+            aggregate.UpdateVersionNumber(domainEvents.Last().VersionNumber);
         }
 
         public void SaveSnapshot<TAggregate>(TAggregate aggregate) where TAggregate : IAggregate, IOriginator

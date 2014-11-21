@@ -1,15 +1,12 @@
 ﻿using System;
-using CodeUtopia.Domain;
+using CodeUtopia.Event;
 
 namespace CodeUtopia.Bank.Events.v1.Account
 {
     public class AmountDeposited : DomainEvent
     {
-        public AmountDeposited(Guid aggregateId,
-                               IVersionNumberProvider versionNumberProvider,
-                               decimal balance,
-                               decimal amount)
-            : base(aggregateId, versionNumberProvider)
+        public AmountDeposited(Guid aggregateId, int versionNumber, decimal balance, decimal amount)
+            : base(aggregateId, versionNumber)
         {
             _balance = balance;
             _amount = amount;

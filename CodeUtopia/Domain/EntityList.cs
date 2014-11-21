@@ -24,7 +24,7 @@ namespace CodeUtopia.Domain
 
         public new void Add(TEntity entity)
         {
-            _aggregate.RegisterEntity(entity);
+            _aggregate.RegisterEntityForTracking(entity);
 
             base.Add(entity);
         }

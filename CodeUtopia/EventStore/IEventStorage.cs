@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CodeUtopia.Domain;
+using CodeUtopia.Event;
 
 namespace CodeUtopia.EventStore
 {

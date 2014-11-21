@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CodeUtopia.Domain;
+using CodeUtopia.Event;
 
 namespace Test.CodeUtopia
 {
@@ -21,13 +22,13 @@ namespace Test.CodeUtopia
         public void Setup()
         {
             Aggregate = new TAggregate();
-            Events = new List<IDomainEvent>();
+            Changes = new List<IDomainEvent>();
 
             try
             {
                 Aggregate.LoadFromHistory(Given());
                 When();
-                Events = Aggregate.GetChanges();
+                Changes = Aggregate.GetChanges();
             }
             catch (Exception exception)
             {
@@ -43,7 +44,7 @@ namespace Test.CodeUtopia
 
         protected TAggregate Aggregate;
 
-        protected IReadOnlyCollection<IDomainEvent> Events;
+        protected IReadOnlyCollection<IDomainEvent> Changes;
 
         protected Exception Exception;
     }

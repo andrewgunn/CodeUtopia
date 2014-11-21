@@ -1,12 +1,12 @@
 ﻿using System;
-using CodeUtopia.Domain;
+using CodeUtopia.Event;
 
 namespace CodeUtopia.Bank.Events.v1.Client
 {
     public class ClientCreated : DomainEvent
     {
-        public ClientCreated(Guid aggregateId, IVersionNumberProvider versionNumberProvider, string clientName)
-            : base(aggregateId, versionNumberProvider)
+        public ClientCreated(Guid aggregateId, int versionNumber, string clientName)
+            : base(aggregateId, versionNumber)
         {
             _clientName = clientName;
         }

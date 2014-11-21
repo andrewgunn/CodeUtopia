@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeUtopia.Event;
 
 namespace CodeUtopia.Domain
 {
@@ -8,9 +9,9 @@ namespace CodeUtopia.Domain
     {
         protected Aggregate()
         {
-            _eventHandlers = new Dictionary<Type, Action<IDomainEvent>>();
-            _entities = new List<IEntity>();
             _appliedEvents = new List<IDomainEvent>();
+            _entities = new List<IEntity>();
+            _eventHandlers = new Dictionary<Type, Action<IDomainEvent>>();
         }
 
         protected void Apply(IDomainEvent domainEvent)
@@ -21,13 +22,13 @@ namespace CodeUtopia.Domain
             //domainEvent.VersionNumber = GetNextVersionNumber();
 
             _appliedEvents.Add(domainEvent);
-
-            VersionNumber = domainEvent.VersionNumber;
         }
 
         void IAggregate.ClearChanges()
         {
             _appliedEvents.Clear();
+
+            EventVersionNumber = VersionNumber;
         }
 
         protected void EnsureIsInitialized()
@@ -50,14 +51,14 @@ namespace CodeUtopia.Domain
             return _entities.SelectMany(x => x.GetChanges());
         }
 
-        private int GetNextVersionNumber()
+        protected int GetNextVersionNumber()
         {
             return ((IVersionNumberProvider)this).GetNextVersionNumber();
         }
 
         int IVersionNumberProvider.GetNextVersionNumber()
         {
-            return ++VersionNumber;
+            return ++EventVersionNumber;
         }
 
         private void Handle(IDomainEvent domainEvent)
@@ -92,11 +93,17 @@ namespace CodeUtopia.Domain
 
             VersionNumber = domainEvents.Last()
                                         .VersionNumber;
+            EventVersionNumber = VersionNumber;
         }
 
-        void IAggregate.RegisterEntity(IEntity entity)
+        void IAggregate.RegisterEntityForTracking(IEntity entity)
         {
             _entities.Add(entity);
+        }
+
+        public void UpdateVersionNumber(int versionNumber)
+        {
+            VersionNumber = versionNumber;
         }
 
         protected void RegisterEventHandler<TDomainEvent>(Action<TDomainEvent> eventHandler)
@@ -106,6 +113,8 @@ namespace CodeUtopia.Domain
         }
 
         public Guid AggregateId { get; protected set; }
+
+        public int EventVersionNumber { get; private set; }
 
         public int VersionNumber { get; protected set; }
 

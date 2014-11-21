@@ -1,15 +1,12 @@
 ﻿using System;
-using CodeUtopia.Domain;
+using CodeUtopia.Event;
 
 namespace CodeUtopia.Bank.Events.v1.Account
 {
     public class AccountCreated : DomainEvent
     {
-        public AccountCreated(Guid aggregateId,
-                              IVersionNumberProvider versionNumberProvider,
-                              Guid clientId,
-                              string accountName)
-            : base(aggregateId, versionNumberProvider)
+        public AccountCreated(Guid aggregateId, int versionNumber, Guid clientId, string accountName)
+            : base(aggregateId, versionNumber)
         {
             _clientId = clientId;
             _accountName = accountName;

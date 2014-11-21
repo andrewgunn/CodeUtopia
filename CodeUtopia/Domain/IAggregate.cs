@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeUtopia.Event;
 
 namespace CodeUtopia.Domain
 {
@@ -12,7 +13,9 @@ namespace CodeUtopia.Domain
 
         void LoadFromHistory(IReadOnlyCollection<IDomainEvent> domainEvents);
 
-        void RegisterEntity(IEntity entity);
+        void RegisterEntityForTracking(IEntity entity);
+
+        void UpdateVersionNumber(int versionNumber);
 
         Guid AggregateId { get; }
 

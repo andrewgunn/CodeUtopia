@@ -1,18 +1,15 @@
 using System;
-using CodeUtopia.Domain;
+using CodeUtopia.Event;
 
 namespace CodeUtopia.Bank.Events.v1.Client
 {
     public class BankCardAddedToClient : DomainEvent
     {
-        public BankCardAddedToClient(Guid aggregateId,
-                                     IVersionNumberProvider versionNumberProvider,
-                                     Guid accountId,
-                                     Guid bankCardId)
-            : base(aggregateId, versionNumberProvider)
+        public BankCardAddedToClient(Guid aggregateId, int versionNumber, Guid bankCardId, Guid accountId)
+            : base(aggregateId, versionNumber)
         {
-            _accountId = accountId;
             _bankCardId = bankCardId;
+            _accountId = accountId;
         }
 
         public Guid AccountId

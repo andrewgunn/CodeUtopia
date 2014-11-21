@@ -6,17 +6,13 @@ namespace CodeUtopia.Bank.Domain.Client
 {
     public class BankCard : Entity, IBankCard
     {
-        public BankCard(Guid aggregateId, IVersionNumberProvider versionNumberProvider)
-            : base(aggregateId, versionNumberProvider)
-        {
-            RegisterEventHandlers();
-        }
-
         private BankCard(Guid aggregateId, IVersionNumberProvider versionNumberProvider, Guid bankCardId, Guid accountId)
-            : this(aggregateId, versionNumberProvider)
+            : base(aggregateId, versionNumberProvider)
         {
             EntityId = bankCardId;
             _accountId = accountId;
+
+            RegisterEventHandlers();
         }
 
         public static BankCard Create(Guid aggregateId,
@@ -49,7 +45,7 @@ namespace CodeUtopia.Bank.Domain.Client
         {
             EnsureNotReportedStolen();
 
-            Apply(new BankCardReportedStolen(AggregateId, VersionNumberProvider, EntityId));
+            Apply(new BankCardReportedStolen(AggregateId, GetNextVersionNumber(), EntityId));
         }
 
         private readonly Guid _accountId;

@@ -18,33 +18,35 @@ namespace CodeUtopia.Bank.Domain.Client
             RegisterEventHandlers();
         }
 
-        private Client(ClientName clientName)
+        private Client(Guid clientId, ClientName clientName)
             : this()
         {
-            Apply(new ClientCreated(Guid.NewGuid(), this, clientName));
+            Apply(new ClientCreated(clientId, GetNextVersionNumber(), clientName));
         }
 
-        public Account.Account AddAccount(AccountName accountName)
+        public Account.Account AddAccount(Guid accountId, AccountName accountName)
         {
             EnsureClientIsInitialized();
 
-            var account = Account.Account.Create(AggregateId, accountName);
+            var account = Account.Account.Create(accountId, AggregateId, accountName);
 
-            Apply(new AccountAddedToClient(AggregateId, this, account.AggregateId));
+            Apply(new AccountAddedToClient(AggregateId, GetNextVersionNumber(), account.AggregateId));
 
             return account;
         }
 
-        public void AddBankCard(Guid accountId)
+        public void AddBankCard(Guid bankCardId, Guid accountId)
         {
             EnsureClientIsInitialized();
 
             EnsureAccountBelongsToClient(accountId);
+
+            Apply(new BankCardAddedToClient(AggregateId, GetNextVersionNumber(), bankCardId, accountId));
         }
 
-        public static Client Create(ClientName clientName)
+        public static Client Create(Guid clientId, ClientName clientName)
         {
-            return new Client(clientName);
+            return new Client(clientId, clientName);
         }
 
         private void EnsureAccountBelongsToClient(Guid accountId)
