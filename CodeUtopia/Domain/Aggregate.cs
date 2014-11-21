@@ -5,7 +5,7 @@ using CodeUtopia.Event;
 
 namespace CodeUtopia.Domain
 {
-    public abstract class Aggregate : IAggregate, IVersionNumberProvider
+    public abstract class Aggregate : IAggregate
     {
         protected Aggregate()
         {

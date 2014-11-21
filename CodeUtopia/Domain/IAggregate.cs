@@ -5,7 +5,7 @@ using CodeUtopia.Event;
 namespace CodeUtopia.Domain
 {
     // TODO Split into separate interfaces (e.g. IAggregate, IAggregateTracker, IRegisterEntity)
-    public interface IAggregate
+    public interface IAggregate : IVersionNumberProvider
     {
         void ClearChanges();
 
@@ -14,8 +14,6 @@ namespace CodeUtopia.Domain
         void LoadFromHistory(IReadOnlyCollection<IDomainEvent> domainEvents);
 
         void RegisterEntityForTracking(IEntity entity);
-
-        void UpdateVersionNumber(int versionNumber);
 
         Guid AggregateId { get; }
 
