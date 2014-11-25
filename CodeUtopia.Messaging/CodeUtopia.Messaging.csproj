@@ -39,11 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandDispatcher.cs" />
-    <Compile Include="EventDispatcher.cs" />
+    <Compile Include="CommandSender.cs" />
+    <Compile Include="EventPublisher.cs" />
     <Compile Include="IBus.cs" />
-    <Compile Include="ICommandDispatcher.cs" />
-    <Compile Include="IEventDispatcher.cs" />
+    <Compile Include="ICommandSender.cs" />
+    <Compile Include="IEventPublisher.cs" />
     <Compile Include="InMemoryBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

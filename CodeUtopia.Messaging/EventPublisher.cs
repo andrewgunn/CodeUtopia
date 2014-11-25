@@ -1,8 +1,8 @@
 ﻿namespace CodeUtopia.Messaging
 {
-    public sealed class EventDispatcher : IEventDispatcher
+    public sealed class EventPublisher : IEventPublisher
     {
-        public EventDispatcher(IDependencyResolver dependencyResolver)
+        public EventPublisher(IDependencyResolver dependencyResolver)
         {
             _dependencyResolver = dependencyResolver;
         }

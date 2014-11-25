@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDependencyResolver.cs" />
+    <Compile Include="IQuery.cs" />
+    <Compile Include="IQueryExecutor.cs" />
     <Compile Include="IQueue.cs" />
     <Compile Include="IQueryHandler.cs" />
     <Compile Include="ICommandHandler.cs" />

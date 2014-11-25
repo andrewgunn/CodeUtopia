@@ -1,8 +1,8 @@
 ﻿namespace CodeUtopia
 {
-    public interface IQueryHandler<in TQuery>
-        where TQuery : class
+    public interface IQueryHandler<in TQuery, out TProjection>
+        where TQuery : IQuery<TProjection>
     {
-        void Handle(TQuery query);
+        TProjection Handle(TQuery query);
     }
 }

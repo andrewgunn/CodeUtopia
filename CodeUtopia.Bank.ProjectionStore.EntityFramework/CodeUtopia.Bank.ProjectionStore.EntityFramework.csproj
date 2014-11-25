@@ -65,6 +65,9 @@
     <Compile Include="AccountDetail\EventHandlers\AmountDepositedEventHandler.cs" />
     <Compile Include="Client\EventHandlers\ClientCreatedEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryHandlers\ClientQueryHandler.cs" />
+    <Compile Include="QueryHandlers\ClientDetailQueryHandler.cs" />
+    <Compile Include="QueryHandlers\AccountDetailQueryHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -75,6 +78,10 @@
       <Project>{2B227543-E5D4-47A2-B04C-17FCC3B9D8AB}</Project>
       <Name>CodeUtopia.Bank.Events</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Bank.ProjectionStore\CodeUtopia.Bank.ProjectionStore.csproj">
+      <Project>{8C3CE7F9-C8BC-461A-B7BB-EF9235C31377}</Project>
+      <Name>CodeUtopia.Bank.ProjectionStore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">
       <Project>{2382FC22-7FC9-43D2-AE77-4B2ADF8F0AB3}</Project>
       <Name>CodeUtopia.Events</Name>
@@ -84,9 +91,7 @@
       <Name>CodeUtopia</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="QueryHandlers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

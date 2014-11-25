@@ -4,7 +4,7 @@ namespace CodeUtopia.Messaging
 {
     public class InMemoryBus : IBus
     {
-        public InMemoryBus(ICommandDispatcher commandDispatcher, IEventDispatcher eventDispatcher)
+        public InMemoryBus(ICommandSender commandDispatcher, IEventPublisher eventDispatcher)
         {
             _commandDispatcher = commandDispatcher;
             _eventDispatcher = eventDispatcher;
@@ -60,11 +60,11 @@ namespace CodeUtopia.Messaging
             _commandDispatcher.Dispatch((dynamic)command);
         }
 
-        private readonly ICommandDispatcher _commandDispatcher;
+        private readonly ICommandSender _commandDispatcher;
 
         private ConcurrentQueue<object> _commands;
 
-        private readonly IEventDispatcher _eventDispatcher;
+        private readonly IEventPublisher _eventDispatcher;
 
         private ConcurrentQueue<object> _events;
     }

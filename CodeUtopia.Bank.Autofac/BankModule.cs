@@ -5,6 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Autofac;
 using CodeUtopia.Bank.CommandHandlers;
 using CodeUtopia.Bank.ProjectionStore.EntityFramework.Client.EventHandlers;
+using CodeUtopia.Bank.ProjectionStore.EntityFramework.QueryHandlers;
 using CodeUtopia.Domain;
 using CodeUtopia.EventStore;
 using CodeUtopia.EventStore.EntityFramework;
@@ -31,8 +32,8 @@ namespace CodeUtopia.Bank.Autofac
                    .As<IBus>();
 
             // Command dispatcher.
-            builder.RegisterType<CommandDispatcher>()
-                   .As<ICommandDispatcher>();
+            builder.RegisterType<CommandSender>()
+                   .As<ICommandSender>();
 
             // Command handlers.
             var commandHandlerAssembly = Assembly.GetAssembly(typeof(CreateClientCommandHandler));
@@ -42,8 +43,8 @@ namespace CodeUtopia.Bank.Autofac
                                    .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(ICommandHandler<>))));
 
             // Event dispatcher.
-            builder.RegisterType<EventDispatcher>()
-                   .As<IEventDispatcher>();
+            builder.RegisterType<EventPublisher>()
+                   .As<IEventPublisher>();
 
             // Event handlers.
             var eventHandlerAssembly = Assembly.GetAssembly(typeof(ClientCreatedEventHandler));
@@ -68,6 +69,19 @@ namespace CodeUtopia.Bank.Autofac
                              x =>
                              new EntityFrameworkEventStore(eventStoreNameOrConnectionString, x.Resolve<IFormatter>()))
                    .As<IEventStorage>();
+
+            // Query executor.
+            builder.RegisterType<QueryExecutor>()
+                   .As<IQueryExecutor>();
+
+            // Query handlers.
+            var queryHandlerAssembly = Assembly.GetAssembly(typeof(ClientQueryHandler));
+
+            // TODO Create IProjectionStoreConnectionString
+            builder.RegisterAssemblyTypes(queryHandlerAssembly)
+                   .WithParameter("nameOrConnectionString", projectionStoreNameOrConnectionString)
+                   .As(type => type.GetInterfaces()
+                                   .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(IQueryHandler<,>))));
         }
     }
 }

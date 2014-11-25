@@ -1,13 +1,12 @@
-﻿using System;
+using System;
 
-namespace CodeUtopia.Bank.ProjectionStore.Projections
+namespace CodeUtopia.Bank.ProjectionStore.Projections.ClientDetail
 {
-    public class AccountDetailProjection
+    public class AccountProjection
     {
-        public AccountDetailProjection(Guid accountId, Guid clientId, string accountName)
+        public AccountProjection(Guid accountId, string accountName)
         {
             _accountId = accountId;
-            _clientId = clientId;
             _accountName = accountName;
         }
 
@@ -27,18 +26,8 @@ namespace CodeUtopia.Bank.ProjectionStore.Projections
             }
         }
 
-        public Guid ClientId
-        {
-            get
-            {
-                return _clientId;
-            }
-        }
-
         private readonly Guid _accountId;
 
         private readonly string _accountName;
-
-        private readonly Guid _clientId;
     }
 }

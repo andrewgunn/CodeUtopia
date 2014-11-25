@@ -1,6 +1,6 @@
 ﻿namespace CodeUtopia.Messaging
 {
-    public interface ICommandDispatcher
+    public interface ICommandSender
     {
         void Dispatch<TCommand>(TCommand command) where TCommand : class;
     }

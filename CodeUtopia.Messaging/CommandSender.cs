@@ -1,8 +1,8 @@
 ﻿namespace CodeUtopia.Messaging
 {
-    public sealed class CommandDispatcher : ICommandDispatcher
+    public sealed class CommandSender : ICommandSender
     {
-        public CommandDispatcher(IDependencyResolver dependencyResolver)
+        public CommandSender(IDependencyResolver dependencyResolver)
         {
             _dependencyResolver = dependencyResolver;
         }

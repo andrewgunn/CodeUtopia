@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Threading;
 using Autofac;
 using CodeUtopia.Bank.Autofac;
 using CodeUtopia.Bank.Commands.v1;
+using CodeUtopia.Bank.ProjectionStore.Queries;
 using CodeUtopia.Messaging;
 
 namespace CodeUtopia.Bank.Host.Console
@@ -18,21 +18,33 @@ namespace CodeUtopia.Bank.Host.Console
 
             var bus = container.Resolve<IBus>();
 
+            // Client.
             var clientId = Guid.NewGuid();
 
             bus.Send(new CreateClientCommand(clientId, "Joe Bloggs"));
 
+            // Account.
             var accountId = Guid.NewGuid();
 
             bus.Send(new OpenNewAccountCommand(clientId, accountId, "MyBank"));
-            Thread.Sleep(1000);
             bus.Send(new DepositAmountCommand(accountId, 100));
-            Thread.Sleep(1000);
             bus.Send(new WithdrawAmountCommand(accountId, 50));
 
             bus.Commit();
 
-            System.Console.WriteLine("OMG, it worked (press any key)...");
+            var queryExecutor = container.Resolve<IQueryExecutor>();
+
+            var clientsProjection = queryExecutor.Execute(new ClientsQuery());
+
+            foreach (var clientProjection in clientsProjection.ClientProjections)
+            {
+                System.Console.WriteLine("Client | ID: {0} | Name: {1}",
+                                         clientProjection.ClientId,
+                                         clientProjection.ClientName);
+            }
+
+            System.Console.WriteLine();
+            System.Console.WriteLine("Fin!");
             System.Console.ReadKey();
         }
     }
