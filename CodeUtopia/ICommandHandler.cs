@@ -1,7 +1,8 @@
 ﻿namespace CodeUtopia
 {
-    public interface ICommandHandler
+    public interface ICommandHandler<in TCommand>
+        where TCommand : class
     {
-        void Execute(ICommand command);
+        void Execute(TCommand command);
     }
 }

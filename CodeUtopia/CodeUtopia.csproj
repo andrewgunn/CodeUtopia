@@ -39,60 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bank\Domain\Account\Account.cs" />
-    <Compile Include="Bank\Domain\Account\UnexpectedMementoException.cs" />
-    <Compile Include="Bank\Domain\Client\AccountDoesNotBelongToClientException.cs" />
-    <Compile Include="Bank\Domain\Client\BankCardDoesNotExistException.cs" />
-    <Compile Include="Bank\Domain\Client\BankCardIsReportedStolenException.cs" />
-    <Compile Include="Bank\Domain\Client\IBankCard.cs" />
-    <Compile Include="Bank\Events\v1\Client\BankCardAddedToClient.cs" />
-    <Compile Include="Bank\Events\v1\Client\AccountAddedToClient.cs" />
-    <Compile Include="Bank\Events\v1\Client\BankCardReportedStolen.cs" />
-    <Compile Include="Bank\Events\v1\Client\ClientCreated.cs" />
-    <Compile Include="Bank\Domain\Client\ClientName.cs" />
-    <Compile Include="Bank\Domain\Mementos\v1\AccountMemento.cs" />
-    <Compile Include="Bank\Events\v1\Account\AmountDeposited.cs" />
-    <Compile Include="Bank\Events\v1\Account\AmountWithdrawn.cs" />
-    <Compile Include="Bank\Domain\Account\BalanceHasInsufficientFundsForWithdrawlException.cs" />
-    <Compile Include="Bank\Domain\Account\AccountName.cs" />
-    <Compile Include="Bank\Domain\Account\Amount.cs" />
-    <Compile Include="Bank\Domain\Account\Balance.cs" />
-    <Compile Include="Bank\Domain\Client\BankCard.cs" />
-    <Compile Include="Bank\Domain\Client\Client.cs" />
-    <Compile Include="Bank\Events\v1\Account\AccountCreated.cs" />
-    <Compile Include="Domain\IVersionNumberProvider.cs" />
-    <Compile Include="Event\DomainEvent.cs" />
-    <Compile Include="EventStore\ISnapshot.cs" />
-    <Compile Include="EventStore\Snapshot.cs" />
-    <Compile Include="Domain\EntityNotInitializedException.cs" />
-    <Compile Include="Domain\EventHandlerNotRegisteredException.cs" />
-    <Compile Include="Event\EntityEvent.cs" />
-    <Compile Include="ICommand.cs" />
+    <Compile Include="IDependencyResolver.cs" />
+    <Compile Include="IQueue.cs" />
+    <Compile Include="IQueryHandler.cs" />
     <Compile Include="ICommandHandler.cs" />
-    <Compile Include="IEventPublisher.cs" />
-    <Compile Include="Domain\Aggregate.cs" />
-    <Compile Include="Domain\Entity.cs" />
-    <Compile Include="Domain\EntityList.cs" />
-    <Compile Include="Domain\EntityEventProviderExtensions.cs" />
-    <Compile Include="Domain\IAggregate.cs" />
-    <Compile Include="Domain\IEntity.cs" />
-    <Compile Include="Event\IDomainEvent.cs" />
-    <Compile Include="EventStore\AggregateRepository.cs" />
-    <Compile Include="EventStore\IEventStorage.cs" />
-    <Compile Include="Domain\IAggregateRepository.cs" />
-    <Compile Include="EventStore\ISnapshotStorage.cs" />
-    <Compile Include="IMemento.cs" />
-    <Compile Include="IOriginator.cs" />
-    <Compile Include="Event\IEntityEvent.cs" />
     <Compile Include="IEventHandler.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Domain\AggregateNotInitializedException.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Bank\CommandHandlers\" />
-    <Folder Include="Bank\Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

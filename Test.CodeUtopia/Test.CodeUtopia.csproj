@@ -54,6 +54,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CodeUtopia.Domain\CodeUtopia.Domain.csproj">
+      <Project>{B05CBD95-7133-4B24-92B7-9C273E69A4D2}</Project>
+      <Name>CodeUtopia.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">
+      <Project>{2382FC22-7FC9-43D2-AE77-4B2ADF8F0AB3}</Project>
+      <Name>CodeUtopia.Events</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
       <Name>CodeUtopia</Name>

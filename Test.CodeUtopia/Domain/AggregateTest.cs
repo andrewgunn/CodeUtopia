@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeUtopia.Domain;
-using CodeUtopia.Event;
+using CodeUtopia.Events;
 using NUnit.Framework;
 
 namespace Test.CodeUtopia.Domain
@@ -245,7 +245,7 @@ namespace Test.CodeUtopia.Domain
 
         private void OnCustomerCreated(CustomerCreated customerCreated)
         {
-            AggregateId = customerCreated.AggregateId;
+            AggregateId = customerCreated.CustomerId;
         }
 
         private void OnOrderAddedToCustomer(OrderAddedToCustomer orderAddedToCustomer)
@@ -291,6 +291,14 @@ namespace Test.CodeUtopia.Domain
         public CustomerCreated(Guid aggregateId, int versionNumber)
             : base(aggregateId, versionNumber)
         {
+        }
+
+        public Guid CustomerId
+        {
+            get
+            {
+                return ((IDomainEvent)this).AggregateId;
+            }
         }
     }
 
