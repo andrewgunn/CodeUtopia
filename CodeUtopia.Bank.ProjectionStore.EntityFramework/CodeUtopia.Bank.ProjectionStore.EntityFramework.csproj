@@ -55,6 +55,7 @@
     <Compile Include="ClientDetail\BankCardEntityConfiguration.cs" />
     <Compile Include="ClientDetail\ClientDetailEntityConfiguration.cs" />
     <Compile Include="ClientDetail\EventHandlers\AccountCreatedEventHandler.cs" />
+    <Compile Include="ClientDetail\EventHandlers\BankCardReportedStolenEventHandler.cs" />
     <Compile Include="ClientDetail\EventHandlers\NewBankCardAssignedEventHandler.cs" />
     <Compile Include="ClientDetail\EventHandlers\ClientCreatedEventHandler.cs" />
     <Compile Include="Client\ClientEntityConfiguration.cs" />

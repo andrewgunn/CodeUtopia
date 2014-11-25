@@ -2,6 +2,7 @@
 
 namespace CodeUtopia.Events
 {
+    [Serializable]
     public abstract class EntityEvent : DomainEvent, IEntityEvent
     {
         protected EntityEvent(Guid aggregateId, int versionNumber, Guid entityId)
@@ -10,7 +11,7 @@ namespace CodeUtopia.Events
             _entityId = entityId;
         }
 
-        public Guid EntityId
+        Guid IEntityEvent.EntityId
         {
             get
             {

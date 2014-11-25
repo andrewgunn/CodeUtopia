@@ -7,7 +7,7 @@
             _dependencyResolver = dependencyResolver;
         }
 
-        public void Dispatch<TCommand>(TCommand command) where TCommand : class
+        public void Send<TCommand>(TCommand command) where TCommand : class
         {
             var commandHandler = _dependencyResolver.Resolve<ICommandHandler<TCommand>>();
 

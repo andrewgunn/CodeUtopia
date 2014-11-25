@@ -36,6 +36,8 @@ namespace CodeUtopia.Bank.ProjectionStore.EntityFramework
 
         public IDbSet<AccountEntity> Accounts { get; set; }
 
+        public IDbSet<BankCardEntity> BankCards { get; set; }
+
         public IDbSet<ClientDetailEntity> ClientDetails { get; set; }
 
         public IDbSet<ClientEntity> Clients { get; set; }

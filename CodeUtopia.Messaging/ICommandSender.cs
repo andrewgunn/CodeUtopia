@@ -2,6 +2,6 @@
 {
     public interface ICommandSender
     {
-        void Dispatch<TCommand>(TCommand command) where TCommand : class;
+        void Send<TCommand>(TCommand command) where TCommand : class;
     }
 }

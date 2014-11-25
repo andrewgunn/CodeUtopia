@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeUtopia.Events;
 
 namespace CodeUtopia.Bank.Events.v1.Client
 {
@@ -8,6 +9,14 @@ namespace CodeUtopia.Bank.Events.v1.Client
         public BankCardReportedStolenEvent(Guid aggregateId, int versionNumber, Guid entityId)
             : base(aggregateId, versionNumber, entityId)
         {
+        }
+
+        public Guid BankCardId
+        {
+            get
+            {
+                return ((IEntityEvent)this).EntityId;
+            }
         }
     }
 }

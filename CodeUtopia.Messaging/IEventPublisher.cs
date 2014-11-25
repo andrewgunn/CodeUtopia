@@ -2,6 +2,6 @@
 {
     public interface IEventPublisher
     {
-        void Dispatch<TEvent>(TEvent message) where TEvent : class;
+        void Publish<TEvent>(TEvent message) where TEvent : class;
     }
 }

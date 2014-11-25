@@ -1,5 +1,4 @@
-﻿using System;
-using CodeUtopia.Bank.ProjectionStore.Projections.Client;
+﻿using CodeUtopia.Bank.ProjectionStore.Projections.Client;
 
 namespace CodeUtopia.Bank.ProjectionStore.Queries
 {

@@ -15,7 +15,13 @@ namespace CodeUtopia.Bank.ProjectionStore.EntityFramework.ClientDetail
             Property(p => p.BankCardId)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();
+            Property(p => p.ClientId)
+                .HasColumnOrder(++columnOrder)
+                .IsRequired();
             Property(p => p.AccountId)
+                .HasColumnOrder(++columnOrder)
+                .IsRequired();
+            Property(p => p.IsStolen)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();
         }

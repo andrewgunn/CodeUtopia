@@ -7,7 +7,7 @@
             _dependencyResolver = dependencyResolver;
         }
 
-        public void Dispatch<TEvent>(TEvent @event) where TEvent : class
+        public void Publish<TEvent>(TEvent @event) where TEvent : class
         {
             var eventHandlers = _dependencyResolver.Resolve<IEventHandler<TEvent>[]>();
 

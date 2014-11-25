@@ -9,5 +9,7 @@ namespace CodeUtopia.Bank.ProjectionStore.EntityFramework.ClientDetail
         public Guid BankCardId { get; set; }
 
         public Guid ClientId { get; set; }
+
+        public bool IsStolen { get; set; }
     }
 }

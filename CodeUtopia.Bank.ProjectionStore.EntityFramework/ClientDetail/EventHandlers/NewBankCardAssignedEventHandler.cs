@@ -13,13 +13,12 @@ namespace CodeUtopia.Bank.ProjectionStore.EntityFramework.ClientDetail.EventHand
         {
             using (var databaseContext = new ProjectionStoreContext(_nameOrConnectionString))
             {
-                var clientDetail = databaseContext.ClientDetails.Find(newBankCardAssignedEvent.ClientId);
-                clientDetail.BankCards.Add(new BankCardEntity
-                                           {
-                                               BankCardId = newBankCardAssignedEvent.BankCardId,
-                                               ClientId = newBankCardAssignedEvent.ClientId,
-                                               AccountId = newBankCardAssignedEvent.AccountId
-                                           });
+                databaseContext.BankCards.Add(new BankCardEntity
+                                              {
+                                                  BankCardId = newBankCardAssignedEvent.BankCardId,
+                                                  ClientId = newBankCardAssignedEvent.ClientId,
+                                                  AccountId = newBankCardAssignedEvent.AccountId
+                                              });
 
                 databaseContext.SaveChanges();
             }

@@ -23,7 +23,7 @@ namespace CodeUtopia.Bank.Domain.Client
             Apply(new ClientCreatedEvent(clientId, GetNextVersionNumber(), clientName));
         }
 
-        public void AssignNewBankCard(Guid accountId, Guid bankCardId)
+        public void AssignNewBankCard(Guid bankCardId, Guid accountId)
         {
             EnsureClientIsInitialized();
 

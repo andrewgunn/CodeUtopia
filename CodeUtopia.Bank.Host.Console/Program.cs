@@ -30,6 +30,12 @@ namespace CodeUtopia.Bank.Host.Console
             bus.Send(new DepositAmountCommand(accountId, 100));
             bus.Send(new WithdrawAmountCommand(accountId, 50));
 
+            // Bank card.
+            var bankCardId = Guid.NewGuid();
+
+            bus.Send(new AssignNewBankCardCommand(clientId, bankCardId, accountId));
+            bus.Send(new ReportStolenBankCardCommand(clientId, bankCardId));
+
             bus.Commit();
 
             var queryExecutor = container.Resolve<IQueryExecutor>();
@@ -38,7 +44,7 @@ namespace CodeUtopia.Bank.Host.Console
 
             foreach (var clientProjection in clientsProjection.ClientProjections)
             {
-                System.Console.WriteLine("Client | ID: {0} | Name: {1}",
+                System.Console.WriteLine("Client / ID: {0} / Name: {1}",
                                          clientProjection.ClientId,
                                          clientProjection.ClientName);
             }

@@ -34,7 +34,7 @@ namespace CodeUtopia.Messaging
 
         private void PublishCore(object @event)
         {
-            _eventDispatcher.Dispatch((dynamic)@event);
+            _eventDispatcher.Publish((dynamic)@event);
         }
 
         private void ResetQueues()
@@ -57,7 +57,7 @@ namespace CodeUtopia.Messaging
         private void SendCore(object command)
         {
             // TODO Make this asynchronous.
-            _commandDispatcher.Dispatch((dynamic)command);
+            _commandDispatcher.Send((dynamic)command);
         }
 
         private readonly ICommandSender _commandDispatcher;

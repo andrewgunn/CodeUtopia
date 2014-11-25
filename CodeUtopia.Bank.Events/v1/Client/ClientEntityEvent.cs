@@ -10,5 +10,13 @@ namespace CodeUtopia.Bank.Events.v1.Client
             : base(aggregateId, versionNumber, entityId)
         {
         }
+
+        public Guid ClientId
+        {
+            get
+            {
+                return ((IDomainEvent)this).AggregateId;
+            }
+        }
     }
 }
