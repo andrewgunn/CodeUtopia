@@ -4,10 +4,10 @@ namespace CodeUtopia.Bank.Commands.v1
 {
     public class OpenNewAccountCommand
     {
-        public OpenNewAccountCommand(Guid accountId, Guid clientId, string accountName)
+        public OpenNewAccountCommand(Guid clientId, Guid accountId, string accountName)
         {
-            _accountId = accountId;
             _clientId = clientId;
+            _accountId = accountId;
             _accountName = accountName;
         }
 

@@ -24,7 +24,7 @@ namespace CodeUtopia.Bank.Host.Console
 
             var accountId = Guid.NewGuid();
 
-            bus.Send(new OpenNewAccountCommand(accountId, clientId, "MyBank"));
+            bus.Send(new OpenNewAccountCommand(clientId, accountId, "MyBank"));
             Thread.Sleep(1000);
             bus.Send(new DepositAmountCommand(accountId, 100));
             Thread.Sleep(1000);

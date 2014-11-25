@@ -22,6 +22,9 @@ namespace CodeUtopia.EventStore.EntityFramework
             Property(p => p.AggregateType)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();
+            Property(p => p.DomainEventType)
+                .HasColumnOrder(++columnOrder)
+                .IsRequired();
             Property(p => p.VersionNumber)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();

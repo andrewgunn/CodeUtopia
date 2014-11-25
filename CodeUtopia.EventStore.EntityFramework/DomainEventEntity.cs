@@ -10,6 +10,8 @@ namespace CodeUtopia.EventStore.EntityFramework
 
         public byte[] Data { get; set; }
 
+        public string DomainEventType { get; set; }
+
         public int VersionNumber { get; set; }
     }
 }

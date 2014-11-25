@@ -23,13 +23,6 @@ namespace CodeUtopia.Bank.Domain.Client
             Apply(new ClientCreatedEvent(clientId, GetNextVersionNumber(), clientName));
         }
 
-        public void AssignAccount(Guid accountId)
-        {
-            EnsureClientIsInitialized();
-
-            Apply(new AccountAssignedEvent(AggregateId, GetNextVersionNumber(), accountId));
-        }
-
         public void AssignNewBankCard(Guid accountId, Guid bankCardId)
         {
             EnsureClientIsInitialized();
@@ -98,6 +91,17 @@ namespace CodeUtopia.Bank.Domain.Client
         {
             AggregateId = clientCreatedEvent.ClientId;
             _clientName = clientCreatedEvent.ClientName;
+        }
+
+        public Account.Account OpenNewAccount(Guid accountId, string accountName)
+        {
+            EnsureClientIsInitialized();
+
+            var account = Account.Account.Create(accountId, AggregateId, accountName);
+
+            Apply(new AccountAssignedEvent(AggregateId, GetNextVersionNumber(), accountId));
+
+            return account;
         }
 
         private void RegisterEventHandlers()

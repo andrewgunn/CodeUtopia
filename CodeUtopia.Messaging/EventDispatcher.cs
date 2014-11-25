@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace CodeUtopia.Messaging
+﻿namespace CodeUtopia.Messaging
 {
     public sealed class EventDispatcher : IEventDispatcher
     {
