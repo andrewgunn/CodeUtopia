@@ -8,10 +8,11 @@ namespace CodeUtopia.Bank.ProjectionStore.EntityFramework.ClientDetail
         {
             ToTable("Account", "ClientDetail");
 
+            HasKey(x => x.AccountId);
+
             var columnOrder = 0;
 
-            Property(p => p.Id)
-                .HasColumnName("AccountId")
+            Property(p => p.AccountId)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();
             Property(p => p.ClientId)

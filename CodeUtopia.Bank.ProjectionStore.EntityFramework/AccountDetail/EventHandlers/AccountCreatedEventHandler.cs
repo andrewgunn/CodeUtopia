@@ -15,7 +15,7 @@ namespace CodeUtopia.Bank.ProjectionStore.EntityFramework.AccountDetail.EventHan
             {
                 var accountDetail = new AccountDetailEntity
                                     {
-                                        Id = accountCreatedEvent.AccountId,
+                                        AccountId = accountCreatedEvent.AccountId,
                                         AccountName = accountCreatedEvent.AccountName
                                     };
 

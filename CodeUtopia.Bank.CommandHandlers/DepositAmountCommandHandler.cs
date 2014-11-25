@@ -1,5 +1,4 @@
-﻿using CodeUtopia.Bank.Commands;
-using CodeUtopia.Bank.Commands.v1;
+﻿using CodeUtopia.Bank.Commands.v1;
 using CodeUtopia.Bank.Domain.Account;
 using CodeUtopia.Domain;
 
@@ -12,7 +11,7 @@ namespace CodeUtopia.Bank.CommandHandlers
             _aggregateRepository = aggregateRepository;
         }
 
-        public void Execute(DepositAmountCommand depositAmountCommand)
+        public void Handle(DepositAmountCommand depositAmountCommand)
         {
             var account = _aggregateRepository.Get<Account>(depositAmountCommand.AccountId);
             account.Deposit(depositAmountCommand.Amount);

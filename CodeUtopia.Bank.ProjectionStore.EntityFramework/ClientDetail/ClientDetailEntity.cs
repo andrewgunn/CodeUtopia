@@ -9,8 +9,8 @@ namespace CodeUtopia.Bank.ProjectionStore.EntityFramework.ClientDetail
 
         public virtual ICollection<BankCardEntity> BankCards { get; set; }
 
-        public string ClientName { get; set; }
+        public Guid ClientId { get; set; }
 
-        public Guid Id { get; set; }
+        public string ClientName { get; set; }
     }
 }

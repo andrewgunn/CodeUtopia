@@ -11,7 +11,7 @@ namespace CodeUtopia.Bank.CommandHandlers
             _aggregateRepository = aggregateRepository;
         }
 
-        public void Execute(WithdrawAmountCommand withdrawAmountCommand)
+        public void Handle(WithdrawAmountCommand withdrawAmountCommand)
         {
             var account = _aggregateRepository.Get<Account>(withdrawAmountCommand.AccountId);
             account.Withdraw(withdrawAmountCommand.Amount);

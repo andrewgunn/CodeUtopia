@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Autofac;
 using CodeUtopia.Bank.Autofac;
 using CodeUtopia.Bank.Commands.v1;
@@ -17,11 +18,16 @@ namespace CodeUtopia.Bank.Host.Console
 
             var bus = container.Resolve<IBus>();
 
-            var accountId = new Guid("6D335963-4C72-4250-AD4A-1BA66D8B688C");
-            var clientId = new Guid("0DA242D6-40D4-45F5-B12C-3A7DEF357E26");
+            var clientId = Guid.NewGuid();
 
-            bus.Send(new CreateAccountCommand(accountId, clientId, "HSBC"));
+            bus.Send(new CreateClientCommand(clientId, "Joe Bloggs"));
+
+            var accountId = Guid.NewGuid();
+
+            bus.Send(new OpenNewAccountCommand(accountId, clientId, "MyBank"));
+            Thread.Sleep(1000);
             bus.Send(new DepositAmountCommand(accountId, 100));
+            Thread.Sleep(1000);
             bus.Send(new WithdrawAmountCommand(accountId, 50));
 
             bus.Commit();

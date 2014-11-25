@@ -15,7 +15,7 @@ namespace CodeUtopia.Bank.ProjectionStore.EntityFramework.Client.EventHandlers
             {
                 var client = new ClientEntity
                              {
-                                 Id = clientCreatedEvent.ClientId,
+                                 ClientId = clientCreatedEvent.ClientId,
                                  ClientName = clientCreatedEvent.ClientName
                              };
 

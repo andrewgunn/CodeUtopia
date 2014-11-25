@@ -11,7 +11,7 @@
         {
             var commandHandler = _dependencyResolver.Resolve<ICommandHandler<TCommand>>();
 
-            commandHandler.Execute(command);
+            commandHandler.Handle(command);
         }
 
         private readonly IDependencyResolver _dependencyResolver;

@@ -39,9 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateClientCommandHandler.cs" />
     <Compile Include="WithdrawAmountCommandHandler.cs" />
     <Compile Include="DepositAmountCommandHandler.cs" />
-    <Compile Include="CreateAccountCommandHandler.cs" />
+    <Compile Include="OpenNewAccountCommandHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

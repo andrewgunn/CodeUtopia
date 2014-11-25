@@ -101,8 +101,9 @@ namespace CodeUtopia.EventStore.EntityFramework
                 _databaseContext.DomainEvents.Add(new DomainEventEntity
                                                   {
                                                       AggregateId = aggregate.AggregateId,
-                                                      Data = Serialize(domainEvent),
-                                                      VersionNumber = domainEvent.VersionNumber
+                                                      AggregateType = aggregate.GetType().FullName,
+                                                      VersionNumber = domainEvent.VersionNumber,
+                                                      Data = Serialize(domainEvent)
                                                   });
             }
 

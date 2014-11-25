@@ -50,11 +50,13 @@ namespace CodeUtopia.Messaging
 
         public void Send<T>(T message) where T : class
         {
+            // TODO Make this asynchronous.
             _commands.Enqueue(message);
         }
 
         private void SendCore(object command)
         {
+            // TODO Make this asynchronous.
             _commandDispatcher.Dispatch((dynamic)command);
         }
 

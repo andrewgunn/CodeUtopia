@@ -8,8 +8,11 @@ namespace CodeUtopia.EventStore.EntityFramework
         {
             ToTable("Snapshot", "EventStore");
 
-            HasKey(x => new { x.AggregateId, x.VersionNumber });
-
+            HasKey(x => new
+                        {
+                            x.AggregateId,
+                            x.VersionNumber
+                        });
 
             var columnOrder = 0;
 

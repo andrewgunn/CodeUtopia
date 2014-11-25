@@ -72,7 +72,7 @@
       <Name>CodeUtopia.Bank.Events</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Bank.ProjectionStore.EntityFramework\CodeUtopia.Bank.ProjectionStore.EntityFramework.csproj">
-      <Project>{b79f8a3a-f305-4054-9b88-306de2ac42a1}</Project>
+      <Project>{B79F8A3A-F305-4054-9B88-306DE2AC42A1}</Project>
       <Name>CodeUtopia.Bank.ProjectionStore.EntityFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Bank.ProjectionStore\CodeUtopia.Bank.ProjectionStore.csproj">
@@ -84,7 +84,7 @@
       <Name>CodeUtopia.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.EventStore.EntityFramework\CodeUtopia.EventStore.EntityFramework.csproj">
-      <Project>{d4520cb3-8013-4ac1-9034-379d069699c8}</Project>
+      <Project>{D4520CB3-8013-4AC1-9034-379D069699C8}</Project>
       <Name>CodeUtopia.EventStore.EntityFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.EventStore\CodeUtopia.EventStore.csproj">

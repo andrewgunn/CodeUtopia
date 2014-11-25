@@ -6,7 +6,7 @@ using CodeUtopia.Domain;
 
 namespace CodeUtopia.Bank.Domain.Client
 {
-    public class Client : Aggregate
+    public class Client : Aggregate, IOriginator
     {
         public Client()
         {
@@ -44,6 +44,11 @@ namespace CodeUtopia.Bank.Domain.Client
             return new Client(clientId, clientName);
         }
 
+        public IMemento CreateMemento()
+        {
+            throw new NotImplementedException();
+        }
+
         private void EnsureAccountBelongsToClient(Guid accountId)
         {
             if (!_accountIds.Contains(accountId))
@@ -67,6 +72,11 @@ namespace CodeUtopia.Bank.Domain.Client
             }
 
             return bankCard;
+        }
+
+        public void LoadFromMemento(Guid aggregateId, int versionNumber, IMemento memento)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnAccountAdded(AccountAssignedEvent accountAssignedEvent)

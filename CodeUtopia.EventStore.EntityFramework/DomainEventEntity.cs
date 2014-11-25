@@ -6,6 +6,8 @@ namespace CodeUtopia.EventStore.EntityFramework
     {
         public Guid AggregateId { get; set; }
 
+        public string AggregateType { get; set; }
+
         public byte[] Data { get; set; }
 
         public int VersionNumber { get; set; }

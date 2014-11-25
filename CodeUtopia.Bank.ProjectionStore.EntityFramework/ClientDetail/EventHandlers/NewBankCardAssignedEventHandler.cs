@@ -16,7 +16,8 @@ namespace CodeUtopia.Bank.ProjectionStore.EntityFramework.ClientDetail.EventHand
                 var clientDetail = databaseContext.ClientDetails.Find(newBankCardAssignedEvent.ClientId);
                 clientDetail.BankCards.Add(new BankCardEntity
                                            {
-                                               Id = newBankCardAssignedEvent.BankCardId,
+                                               BankCardId = newBankCardAssignedEvent.BankCardId,
+                                               ClientId = newBankCardAssignedEvent.ClientId,
                                                AccountId = newBankCardAssignedEvent.AccountId
                                            });
 

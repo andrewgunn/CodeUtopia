@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace CodeUtopia.Messaging
 {
@@ -15,10 +13,10 @@ namespace CodeUtopia.Messaging
         {
             var eventHandlers = _dependencyResolver.Resolve<IEventHandler<TEvent>[]>();
 
-            var tasks = eventHandlers.Select(x => Task.Run(() => x.Handle(@event)))
-                                     .ToList();
-
-            Task.WhenAll(tasks).Wait();
+            foreach (var eventHandler in eventHandlers)
+            {
+                eventHandler.Handle(@event);
+            }
         }
 
         private readonly IDependencyResolver _dependencyResolver;

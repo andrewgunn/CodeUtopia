@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="v1\CreateClientCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="v1\CreateAccountCommand.cs" />
+    <Compile Include="v1\OpenNewAccountCommand.cs" />
     <Compile Include="v1\WithdrawAmountCommand.cs" />
     <Compile Include="v1\DepositAmountCommand.cs" />
   </ItemGroup>

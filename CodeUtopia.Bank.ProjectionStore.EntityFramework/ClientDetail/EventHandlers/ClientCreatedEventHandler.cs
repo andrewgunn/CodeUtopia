@@ -1,5 +1,4 @@
 ﻿using CodeUtopia.Bank.Events.v1.Client;
-using CodeUtopia.Bank.ProjectionStore.EntityFramework.Client;
 
 namespace CodeUtopia.Bank.ProjectionStore.EntityFramework.ClientDetail.EventHandlers
 {
@@ -14,13 +13,13 @@ namespace CodeUtopia.Bank.ProjectionStore.EntityFramework.ClientDetail.EventHand
         {
             using (var databaseContext = new ProjectionStoreContext(_nameOrConnectionString))
             {
-                var client = new ClientEntity
+                var client = new ClientDetailEntity
                              {
-                                 Id = clientCreatedEvent.ClientId,
+                                 ClientId = clientCreatedEvent.ClientId,
                                  ClientName = clientCreatedEvent.ClientName
                              };
 
-                databaseContext.Clients.Add(client);
+                databaseContext.ClientDetails.Add(client);
 
                 databaseContext.SaveChanges();
             }

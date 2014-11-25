@@ -16,7 +16,7 @@ namespace CodeUtopia.EventStore
             _aggregates = new List<IAggregate>();
         }
 
-        public void Add<TAggregate>(TAggregate aggregate) where TAggregate : class, IAggregate, IOriginator, new()
+        public void Add<TAggregate>(TAggregate aggregate) where TAggregate : class, IAggregate, new()
         {
             _aggregates.Add(aggregate);
         }
@@ -42,7 +42,7 @@ namespace CodeUtopia.EventStore
             _bus.Commit();
         }
 
-        public TAggregate Get<TAggregate>(Guid aggregateId) where TAggregate : class, IAggregate, IOriginator, new()
+        public TAggregate Get<TAggregate>(Guid aggregateId) where TAggregate : class, IAggregate, new()
         {
             var aggregate = LoadFromHistory<TAggregate>(aggregateId);
 
@@ -51,12 +51,16 @@ namespace CodeUtopia.EventStore
             return aggregate;
         }
 
-        private TAggregate LoadFromHistory<TAggregate>(Guid aggregateId)
-            where TAggregate : class, IAggregate, IOriginator, new()
+        private TAggregate LoadFromHistory<TAggregate>(Guid aggregateId) where TAggregate : class, IAggregate, new()
         {
             var aggregate = new TAggregate();
 
-            LoadFromLastSnapshotIfExists(aggregateId, aggregate);
+            var originator = aggregate as IOriginator;
+
+            if (originator != null)
+            {
+                LoadFromLastSnapshotIfExists(aggregateId, originator);
+            }
 
             LoadFromHistorySinceLastSnapshot(aggregateId, aggregate);
 

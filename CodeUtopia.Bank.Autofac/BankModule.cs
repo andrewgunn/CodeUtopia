@@ -4,8 +4,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using Autofac;
 using CodeUtopia.Bank.CommandHandlers;
-using CodeUtopia.Bank.ProjectionStore.EntityFramework;
-using CodeUtopia.Bank.ProjectionStore.EntityFramework.AccountDetail.EventHandlers;
+using CodeUtopia.Bank.ProjectionStore.EntityFramework.Client.EventHandlers;
 using CodeUtopia.Domain;
 using CodeUtopia.EventStore;
 using CodeUtopia.EventStore.EntityFramework;
@@ -21,28 +20,7 @@ namespace CodeUtopia.Bank.Autofac
             base.Load(builder);
 
             const string eventStoreNameOrConnectionString = "EventStore";
-
-            using (var databaseContext = new EventStoreContext(eventStoreNameOrConnectionString))
-            {
-                if (databaseContext.Database.Exists())
-                {
-                    databaseContext.Database.Delete();
-                }
-
-                databaseContext.Database.Initialize(true);
-            }
-
             const string projectionStoreNameOrConnectionString = "ProjectionStore";
-
-            using (var databaseContext = new ProjectionStoreContext(projectionStoreNameOrConnectionString))
-            {
-                if (databaseContext.Database.Exists())
-                {
-                    databaseContext.Database.Delete();
-                }
-
-                databaseContext.Database.Initialize(true);
-            }
 
             // Dependency resolver.
             builder.RegisterType<AutofacDependencyResolver>()
@@ -57,7 +35,7 @@ namespace CodeUtopia.Bank.Autofac
                    .As<ICommandDispatcher>();
 
             // Command handlers.
-            var commandHandlerAssembly = Assembly.GetAssembly(typeof(CreateAccountCommandHandler));
+            var commandHandlerAssembly = Assembly.GetAssembly(typeof(CreateClientCommandHandler));
 
             builder.RegisterAssemblyTypes(commandHandlerAssembly)
                    .As(type => type.GetInterfaces()
@@ -68,7 +46,7 @@ namespace CodeUtopia.Bank.Autofac
                    .As<IEventDispatcher>();
 
             // Event handlers.
-            var eventHandlerAssembly = Assembly.GetAssembly(typeof(AccountCreatedEventHandler));
+            var eventHandlerAssembly = Assembly.GetAssembly(typeof(ClientCreatedEventHandler));
 
             // TODO Create IProjectionStoreConnectionString
             builder.RegisterAssemblyTypes(eventHandlerAssembly)

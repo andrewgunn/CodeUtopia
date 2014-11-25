@@ -8,11 +8,18 @@ namespace CodeUtopia.EventStore.EntityFramework
         {
             ToTable("DomainEvent", "EventStore");
 
-            HasKey(x => new { x.AggregateId, x.VersionNumber });
+            HasKey(x => new
+                        {
+                            x.AggregateId,
+                            x.VersionNumber
+                        });
 
             var columnOrder = 0;
 
             Property(p => p.AggregateId)
+                .HasColumnOrder(++columnOrder)
+                .IsRequired();
+            Property(p => p.AggregateType)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();
             Property(p => p.VersionNumber)
