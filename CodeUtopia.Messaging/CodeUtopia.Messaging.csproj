@@ -45,6 +45,8 @@
     <Compile Include="ICommandSender.cs" />
     <Compile Include="IEventPublisher.cs" />
     <Compile Include="InMemoryBus.cs" />
+    <Compile Include="LoggingEventPublisherDecorator.cs" />
+    <Compile Include="LoggingCommandSenderDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

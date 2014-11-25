@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using Autofac;
+using Autofac.Core;
 using CodeUtopia.Bank.CommandHandlers;
 using CodeUtopia.Bank.ProjectionStore.EntityFramework.Client.EventHandlers;
 using CodeUtopia.Bank.ProjectionStore.EntityFramework.QueryHandlers;
@@ -31,20 +32,31 @@ namespace CodeUtopia.Bank.Autofac
             builder.RegisterType<InMemoryBus>()
                    .As<IBus>();
 
-            // Command dispatcher.
+            // Command sender.
             builder.RegisterType<CommandSender>()
-                   .As<ICommandSender>();
+                   .Named<ICommandSender>("CommandSender");
+
+            builder.RegisterDecorator<ICommandSender>((x, decorated) => new LoggingCommandSenderDecorator(decorated),
+                                                      "CommandSender");
 
             // Command handlers.
             var commandHandlerAssembly = Assembly.GetAssembly(typeof(CreateClientCommandHandler));
 
             builder.RegisterAssemblyTypes(commandHandlerAssembly)
                    .As(type => type.GetInterfaces()
-                                   .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(ICommandHandler<>))));
+                                   .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(ICommandHandler<>)))
+                                   .Select(interfaceType => new KeyedService("CommandHandler", interfaceType)));
 
-            // Event dispatcher.
+            builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerDecorator<>),
+                                             typeof(ICommandHandler<>),
+                                             "CommandHandler");
+
+            // Event publisher.
             builder.RegisterType<EventPublisher>()
-                   .As<IEventPublisher>();
+                   .Named<IEventPublisher>("EventPublisher");
+
+            builder.RegisterDecorator<IEventPublisher>((x, decorated) => new LoggingEventPublisherDecorator(decorated),
+                                                       "EventPublisher");
 
             // Event handlers.
             var eventHandlerAssembly = Assembly.GetAssembly(typeof(ClientCreatedEventHandler));
@@ -53,7 +65,12 @@ namespace CodeUtopia.Bank.Autofac
             builder.RegisterAssemblyTypes(eventHandlerAssembly)
                    .WithParameter("nameOrConnectionString", projectionStoreNameOrConnectionString)
                    .As(type => type.GetInterfaces()
-                                   .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(IEventHandler<>))));
+                                   .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(IEventHandler<>)))
+                                   .Select(interfaceType => new KeyedService("EventHandler", interfaceType)));
+
+            builder.RegisterGenericDecorator(typeof(LoggingEventHandlerDecorator<>),
+                                             typeof(IEventHandler<>),
+                                             "EventHandler");
 
             // Aggregate repository.
             builder.RegisterType<AggregateRepository>()

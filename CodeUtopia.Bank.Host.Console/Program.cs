@@ -38,17 +38,6 @@ namespace CodeUtopia.Bank.Host.Console
 
             bus.Commit();
 
-            var queryExecutor = container.Resolve<IQueryExecutor>();
-
-            var clientsProjection = queryExecutor.Execute(new ClientsQuery());
-
-            foreach (var clientProjection in clientsProjection.ClientProjections)
-            {
-                System.Console.WriteLine("Client / ID: {0} / Name: {1}",
-                                         clientProjection.ClientId,
-                                         clientProjection.ClientName);
-            }
-
             System.Console.WriteLine();
             System.Console.WriteLine("Fin!");
             System.Console.ReadKey();

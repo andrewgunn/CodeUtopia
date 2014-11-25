@@ -47,6 +47,8 @@
     <Compile Include="ICommandHandler.cs" />
     <Compile Include="IEventHandler.cs" />
     <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="LoggingCommandHandlerDecorator.cs" />
+    <Compile Include="LoggingEventHandlerDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
