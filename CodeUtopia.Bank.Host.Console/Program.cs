@@ -4,6 +4,7 @@ using Autofac;
 using CodeUtopia.Bank.Autofac;
 using CodeUtopia.Bank.Commands.v1;
 using CodeUtopia.Bank.ProjectionStore.Queries;
+using CodeUtopia.Messaging;
 using EasyNetQ;
 using IBus = CodeUtopia.Messaging.IBus;
 
@@ -18,11 +19,62 @@ namespace CodeUtopia.Bank.Host.Console
     {
         private static void Main(string[] args)
         {
+            var easyNetQBus = RabbitHutch.CreateBus("host=localhost");
+
             var builder = new ContainerBuilder();
             builder.RegisterModule(new BankModule());
+            builder.RegisterInstance(easyNetQBus)
+                .As<global::EasyNetQ.IBus>();
 
             var container = builder.Build();
 
+            var commandResolver = container.Resolve<ICommandHandlerResolver>();
+
+            easyNetQBus.Receive("MagicQueue", registration =>
+            {
+                registration.Add((CreateClientCommand x) =>
+                {
+                    var handler = commandResolver.Resolve<CreateClientCommand>();
+
+                    handler.Handle(x);
+                });
+
+                registration.Add((OpenNewAccountCommand x) =>
+                {
+                    var handler = commandResolver.Resolve<OpenNewAccountCommand>();
+
+                    handler.Handle(x);
+                });
+
+                registration.Add((DepositAmountCommand x) =>
+                {
+                    var handler = commandResolver.Resolve<DepositAmountCommand>();
+
+                    handler.Handle(x);
+                });
+
+                registration.Add((WithdrawAmountCommand x) =>
+                {
+                    var handler = commandResolver.Resolve<WithdrawAmountCommand>();
+
+                    handler.Handle(x);
+                });
+
+                registration.Add((AssignNewBankCardCommand x) =>
+                {
+                    var handler = commandResolver.Resolve<AssignNewBankCardCommand>();
+
+                    handler.Handle(x);
+                });
+
+                registration.Add((ReportStolenBankCardCommand x) =>
+                {
+                    var handler = commandResolver.Resolve<ReportStolenBankCardCommand>();
+
+                    handler.Handle(x);
+                });
+            });
+            
             var bus = container.Resolve<IBus>();
 
             // Client.

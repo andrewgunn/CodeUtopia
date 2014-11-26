@@ -38,12 +38,12 @@ namespace CodeUtopia.Bank.Autofac
                 .As<ICommandHandlerResolver>();
 
             // Command sender.
-            builder.RegisterType<InProcCommandSender>()
-                   .Named<ICommandSender>("CommandSender");
+            /*builder.RegisterType<InProcCommandSender>()
+                   .Named<ICommandSender>("CommandSender");*/
             
             // Command sender. **EasyNetQ**
-            /*builder.RegisterType<EasyNetQCommandSender>()
-                   .Named<ICommandSender>("CommandSender");*/
+            builder.RegisterType<EasyNetQCommandSender>()
+                   .Named<ICommandSender>("CommandSender");
 
             builder.RegisterDecorator<ICommandSender>((x, decorated) => new LoggingCommandSenderDecorator(decorated),
                                                       "CommandSender");
@@ -64,11 +64,11 @@ namespace CodeUtopia.Bank.Autofac
                 .As<IEventHandlerResolver>();
 
             // Event publisher.
-            builder.RegisterType<InProcEventPublisher>()
-                   .Named<IEventPublisher>("EventPublisher");
-            // Event publisher. **EasyNetQ**
-            /*builder.RegisterType<EasyNetQEventPublisher>()
+            /*builder.RegisterType<InProcEventPublisher>()
                    .Named<IEventPublisher>("EventPublisher");*/
+            // Event publisher. **EasyNetQ**
+            builder.RegisterType<EasyNetQEventPublisher>()
+                   .Named<IEventPublisher>("EventPublisher");
 
 
             builder.RegisterDecorator<IEventPublisher>((x, decorated) => new LoggingEventPublisherDecorator(decorated),
