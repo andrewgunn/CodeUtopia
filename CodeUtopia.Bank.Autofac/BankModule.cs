@@ -11,6 +11,7 @@ using CodeUtopia.Domain;
 using CodeUtopia.EventStore;
 using CodeUtopia.EventStore.EntityFramework;
 using CodeUtopia.Messaging;
+using CodeUtopia.Messaging.EasyNetQ;
 using Module = Autofac.Module;
 
 namespace CodeUtopia.Bank.Autofac
@@ -32,9 +33,17 @@ namespace CodeUtopia.Bank.Autofac
             builder.RegisterType<InMemoryBus>()
                    .As<IBus>();
 
+            // CommandHandler Resolver.
+            builder.RegisterType<CommandHandlerResolver>()
+                .As<ICommandHandlerResolver>();
+
             // Command sender.
-            builder.RegisterType<CommandSender>()
+            builder.RegisterType<InProcCommandSender>()
                    .Named<ICommandSender>("CommandSender");
+            
+            // Command sender. **EasyNetQ**
+            /*builder.RegisterType<EasyNetQCommandSender>()
+                   .Named<ICommandSender>("CommandSender");*/
 
             builder.RegisterDecorator<ICommandSender>((x, decorated) => new LoggingCommandSenderDecorator(decorated),
                                                       "CommandSender");
@@ -54,6 +63,10 @@ namespace CodeUtopia.Bank.Autofac
             // Event publisher.
             builder.RegisterType<EventPublisher>()
                    .Named<IEventPublisher>("EventPublisher");
+            // Event publisher. **EasyNetQ**
+            /*builder.RegisterType<EasyNetQEventPublisher>()
+                   .Named<IEventPublisher>("EventPublisher");*/
+
 
             builder.RegisterDecorator<IEventPublisher>((x, decorated) => new LoggingEventPublisherDecorator(decorated),
                                                        "EventPublisher");

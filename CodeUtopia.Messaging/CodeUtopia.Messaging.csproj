@@ -39,12 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandSender.cs" />
+    <Compile Include="CommandHandlerResolver.cs" />
+    <Compile Include="ICommandHandlerResolver.cs" />
     <Compile Include="EventPublisher.cs" />
     <Compile Include="IBus.cs" />
     <Compile Include="ICommandSender.cs" />
     <Compile Include="IEventPublisher.cs" />
     <Compile Include="InMemoryBus.cs" />
+    <Compile Include="InProcCommandSender.cs" />
     <Compile Include="LoggingEventPublisherDecorator.cs" />
     <Compile Include="LoggingCommandSenderDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

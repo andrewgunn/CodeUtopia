@@ -1,16 +1,29 @@
 ﻿using System;
+using System.Data.Entity.Core.Metadata.Edm;
 using Autofac;
 using CodeUtopia.Bank.Autofac;
 using CodeUtopia.Bank.Commands.v1;
 using CodeUtopia.Bank.ProjectionStore.Queries;
-using CodeUtopia.Messaging;
+using EasyNetQ;
+using IBus = CodeUtopia.Messaging.IBus;
 
 namespace CodeUtopia.Bank.Host.Console
 {
+    public class MyMessage
+    {
+        public string Name { get; set; }
+    }
+
     internal class Program
     {
         private static void Main(string[] args)
         {
+            /*var rabbitHutch = RabbitHutch.CreateBus("host=localhost");
+            
+            rabbitHutch.Publish(new MyMessage{Name = "Test"});
+
+            return;
+            */
             var builder = new ContainerBuilder();
             builder.RegisterModule(new BankModule());
 

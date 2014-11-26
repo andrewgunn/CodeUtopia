@@ -1,17 +1,17 @@
 ﻿namespace CodeUtopia.Messaging
 {
-    public sealed class CommandSender : ICommandSender
+    public sealed class CommandHandlerResolver : ICommandHandlerResolver
     {
-        public CommandSender(IDependencyResolver dependencyResolver)
+        public CommandHandlerResolver(IDependencyResolver dependencyResolver)
         {
             _dependencyResolver = dependencyResolver;
         }
 
-        public void Send<TCommand>(TCommand command) where TCommand : class
+        public ICommandHandler<TCommand> Resolve<TCommand>() where TCommand : class
         {
             var commandHandler = _dependencyResolver.Resolve<ICommandHandler<TCommand>>();
 
-            commandHandler.Handle(command);
+            return commandHandler;
         }
 
         private readonly IDependencyResolver _dependencyResolver;
