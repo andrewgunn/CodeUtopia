@@ -60,8 +60,11 @@ namespace CodeUtopia.Bank.Autofac
                                              typeof(ICommandHandler<>),
                                              "CommandHandler");
 
+            builder.RegisterType<EventHandlerResolver>()
+                .As<IEventHandlerResolver>();
+
             // Event publisher.
-            builder.RegisterType<EventPublisher>()
+            builder.RegisterType<InProcEventPublisher>()
                    .Named<IEventPublisher>("EventPublisher");
             // Event publisher. **EasyNetQ**
             /*builder.RegisterType<EasyNetQEventPublisher>()

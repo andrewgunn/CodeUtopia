@@ -18,12 +18,6 @@ namespace CodeUtopia.Bank.Host.Console
     {
         private static void Main(string[] args)
         {
-            /*var rabbitHutch = RabbitHutch.CreateBus("host=localhost");
-            
-            rabbitHutch.Publish(new MyMessage{Name = "Test"});
-
-            return;
-            */
             var builder = new ContainerBuilder();
             builder.RegisterModule(new BankModule());
 

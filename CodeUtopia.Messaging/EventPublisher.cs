@@ -1,15 +1,17 @@
 ﻿namespace CodeUtopia.Messaging
 {
-    public sealed class EventPublisher : IEventPublisher
+    public sealed class InProcEventPublisher : IEventPublisher
     {
-        public EventPublisher(IDependencyResolver dependencyResolver)
+        private readonly IEventHandlerResolver _eventHandlerResolver;
+
+        public InProcEventPublisher(IEventHandlerResolver eventHandlerResolver)
         {
-            _dependencyResolver = dependencyResolver;
+            _eventHandlerResolver = eventHandlerResolver;
         }
 
         public void Publish<TEvent>(TEvent @event) where TEvent : class
         {
-            var eventHandlers = _dependencyResolver.Resolve<IEventHandler<TEvent>[]>();
+            var eventHandlers = _eventHandlerResolver.Resolve<TEvent>();
 
             foreach (var eventHandler in eventHandlers)
             {
@@ -17,6 +19,5 @@
             }
         }
 
-        private readonly IDependencyResolver _dependencyResolver;
     }
 }
