@@ -1,6 +1,6 @@
 ﻿using System;
-using CodeUtopia.Bank.Domain.Mementos.v1;
 using CodeUtopia.Bank.Events.v1.Account;
+using CodeUtopia.Bank.Mementoes.v1;
 using CodeUtopia.Domain;
 
 namespace CodeUtopia.Bank.Domain.Account
@@ -15,13 +15,13 @@ namespace CodeUtopia.Bank.Domain.Account
             RegisterEventHandlers();
         }
 
-        private Account(Guid accountId, Guid clientId, string accountName)
+        private Account(Guid accountId, Guid clientId, AccountName accountName)
             : this()
         {
             Apply(new AccountCreatedEvent(accountId, GetNextVersionNumber(), clientId, accountName));
         }
 
-        public static Account Create(Guid accountId, Guid clientId, string accountName)
+        public static Account Create(Guid accountId, Guid clientId, AccountName accountName)
         {
             return new Account(accountId, clientId, accountName);
         }

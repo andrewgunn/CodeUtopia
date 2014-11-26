@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeUtopia.Bank.Domain.Account;
 using CodeUtopia.Bank.Events.v1.Client;
 using CodeUtopia.Domain;
 
@@ -93,7 +94,7 @@ namespace CodeUtopia.Bank.Domain.Client
             _clientName = clientCreatedEvent.ClientName;
         }
 
-        public Account.Account OpenNewAccount(Guid accountId, string accountName)
+        public Account.Account OpenNewAccount(Guid accountId, AccountName accountName)
         {
             EnsureClientIsInitialized();
 

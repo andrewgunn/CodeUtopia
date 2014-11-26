@@ -1,6 +1,6 @@
 ﻿using CodeUtopia.Domain;
 
-namespace CodeUtopia.Bank.Domain.Mementos.v1
+namespace CodeUtopia.Bank.Mementoes.v1
 {
     public class AccountMemento : IMemento
     {
