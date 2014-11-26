@@ -3,6 +3,8 @@ using System.Data.Entity.Core.Metadata.Edm;
 using Autofac;
 using CodeUtopia.Bank.Autofac;
 using CodeUtopia.Bank.Commands.v1;
+using CodeUtopia.Bank.Events.v1.Account;
+using CodeUtopia.Bank.Events.v1.Client;
 using CodeUtopia.Bank.ProjectionStore.Queries;
 using CodeUtopia.Messaging;
 using EasyNetQ;
@@ -29,6 +31,7 @@ namespace CodeUtopia.Bank.Host.Console
             var container = builder.Build();
 
             var commandResolver = container.Resolve<ICommandHandlerResolver>();
+            var eventResolver = container.Resolve<IEventHandlerResolver>();
 
             easyNetQBus.Receive("MagicQueue", registration =>
             {
@@ -73,6 +76,16 @@ namespace CodeUtopia.Bank.Host.Console
 
                     handler.Handle(x);
                 });
+            });
+
+            easyNetQBus.Subscribe("MagicQueue-ClientCreatedEventSubscription", (ClientCreatedEvent x) =>
+            {
+                var handlers = eventResolver.Resolve<ClientCreatedEvent>();
+
+                foreach (var eventHandler in handlers)
+                {
+                    eventHandler.Handle(x);
+                }
             });
             
             var bus = container.Resolve<IBus>();

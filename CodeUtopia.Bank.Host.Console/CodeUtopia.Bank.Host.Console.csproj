@@ -70,6 +70,13 @@
       <Project>{6535c27b-bd73-47c5-a6e5-85995eeab0c1}</Project>
       <Name>CodeUtopia.Bank.Autofac</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Bank.Events\CodeUtopia.Bank.Events.csproj">
+      <Project>{2B227543-E5D4-47A2-B04C-17FCC3B9D8AB}</Project>
+      <Name>CodeUtopia.Bank.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">
+      <Name>CodeUtopia.Events</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Bank.Commands\CodeUtopia.Bank.Commands.csproj">
       <Project>{5D180D04-CC94-40EB-BF26-C039B40678B9}</Project>
       <Name>CodeUtopia.Bank.Commands</Name>

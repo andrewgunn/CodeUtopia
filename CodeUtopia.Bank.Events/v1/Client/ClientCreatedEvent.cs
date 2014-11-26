@@ -5,8 +5,8 @@ namespace CodeUtopia.Bank.Events.v1.Client
     [Serializable]
     public class ClientCreatedEvent : ClientDomainEvent
     {
-        public ClientCreatedEvent(Guid aggregateId, int versionNumber, string clientName)
-            : base(aggregateId, versionNumber)
+        public ClientCreatedEvent(Guid clientId, int versionNumber, string clientName)
+            : base(clientId, versionNumber)
         {
             _clientName = clientName;
         }
