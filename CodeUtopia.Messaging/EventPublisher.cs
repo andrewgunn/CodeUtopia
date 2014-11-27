@@ -2,8 +2,6 @@
 {
     public sealed class InProcEventPublisher : IEventPublisher
     {
-        private readonly IEventHandlerResolver _eventHandlerResolver;
-
         public InProcEventPublisher(IEventHandlerResolver eventHandlerResolver)
         {
             _eventHandlerResolver = eventHandlerResolver;
@@ -19,5 +17,6 @@
             }
         }
 
+        private readonly IEventHandlerResolver _eventHandlerResolver;
     }
 }

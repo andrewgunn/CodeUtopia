@@ -59,7 +59,7 @@
       <Name>CodeUtopia.Bank.Events</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Bank.Mementoes\CodeUtopia.Bank.Mementoes.csproj">
-      <Project>{8A6E5CEE-856D-4BC1-A2F6-FD0E8A838F21}</Project>
+      <Project>{8a6e5cee-856d-4bc1-a2f6-fd0e8a838f21}</Project>
       <Name>CodeUtopia.Bank.Mementoes</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Domain\CodeUtopia.Domain.csproj">

@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregateRepository.cs" />
+    <Compile Include="EventStoreAggregateRepository.cs" />
     <Compile Include="IEventStorage.cs" />
     <Compile Include="ISnapShot.cs" />
     <Compile Include="ISnapshotStorage.cs" />

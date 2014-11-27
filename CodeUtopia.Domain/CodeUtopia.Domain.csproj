@@ -45,7 +45,7 @@
     <Compile Include="EntityEventProviderExtensions.cs" />
     <Compile Include="EntityList.cs" />
     <Compile Include="EntityNotInitializedException.cs" />
-    <Compile Include="EventHandlerNotRegisteredException.cs" />
+    <Compile Include="DomainEventHandlerNotRegisteredException.cs" />
     <Compile Include="IAggregateRepository.cs" />
     <Compile Include="IAggregate.cs" />
     <Compile Include="IEntity.cs" />

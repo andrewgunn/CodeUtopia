@@ -4,5 +4,4 @@
     {
         ICommandHandler<TCommand> Resolve<TCommand>() where TCommand : class;
     }
-
 }

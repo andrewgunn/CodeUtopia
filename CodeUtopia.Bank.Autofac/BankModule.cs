@@ -30,17 +30,17 @@ namespace CodeUtopia.Bank.Autofac
                    .As<IDependencyResolver>();
 
             // Bus.
-            builder.RegisterType<InMemoryBus>()
+            builder.RegisterType<Bus>()
                    .As<IBus>();
 
             // CommandHandler Resolver.
             builder.RegisterType<CommandHandlerResolver>()
-                .As<ICommandHandlerResolver>();
+                   .As<ICommandHandlerResolver>();
 
             // Command sender.
             /*builder.RegisterType<InProcCommandSender>()
                    .Named<ICommandSender>("CommandSender");*/
-            
+
             // Command sender. **EasyNetQ**
             builder.RegisterType<EasyNetQCommandSender>()
                    .Named<ICommandSender>("CommandSender");
@@ -61,15 +61,15 @@ namespace CodeUtopia.Bank.Autofac
                                              "CommandHandler");
 
             builder.RegisterType<EventHandlerResolver>()
-                .As<IEventHandlerResolver>();
+                   .As<IEventHandlerResolver>();
 
             // Event publisher.
             /*builder.RegisterType<InProcEventPublisher>()
                    .Named<IEventPublisher>("EventPublisher");*/
+
             // Event publisher. **EasyNetQ**
             builder.RegisterType<EasyNetQEventPublisher>()
                    .Named<IEventPublisher>("EventPublisher");
-
 
             builder.RegisterDecorator<IEventPublisher>((x, decorated) => new LoggingEventPublisherDecorator(decorated),
                                                        "EventPublisher");
@@ -89,7 +89,7 @@ namespace CodeUtopia.Bank.Autofac
                                              "EventHandler");
 
             // Aggregate repository.
-            builder.RegisterType<AggregateRepository>()
+            builder.RegisterType<EventStoreAggregateRepository>()
                    .As<IAggregateRepository>();
 
             // Binary formatter.

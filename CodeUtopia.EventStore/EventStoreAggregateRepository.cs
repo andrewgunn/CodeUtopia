@@ -6,9 +6,9 @@ using CodeUtopia.Messaging;
 
 namespace CodeUtopia.EventStore
 {
-    public class AggregateRepository : IAggregateRepository
+    public class EventStoreAggregateRepository : IAggregateRepository
     {
-        public AggregateRepository(IEventStorage eventStorage, IBus bus)
+        public EventStoreAggregateRepository(IEventStorage eventStorage, IBus bus)
         {
             _eventStorage = eventStorage;
             _bus = bus;

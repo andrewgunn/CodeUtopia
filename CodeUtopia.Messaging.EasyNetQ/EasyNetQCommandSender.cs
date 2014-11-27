@@ -2,8 +2,6 @@
 {
     public class EasyNetQCommandSender : ICommandSender
     {
-        private readonly global::EasyNetQ.IBus _bus;
-
         public EasyNetQCommandSender(global::EasyNetQ.IBus bus)
         {
             _bus = bus;
@@ -13,5 +11,7 @@
         {
             _bus.Send("MagicQueue", command);
         }
+
+        private readonly global::EasyNetQ.IBus _bus;
     }
 }

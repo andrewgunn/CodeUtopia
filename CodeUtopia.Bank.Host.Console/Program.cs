@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Data.Entity.Core.Metadata.Edm;
 using Autofac;
 using CodeUtopia.Bank.Autofac;
 using CodeUtopia.Bank.Commands.v1;
-using CodeUtopia.Bank.Events.v1.Account;
 using CodeUtopia.Bank.Events.v1.Client;
-using CodeUtopia.Bank.ProjectionStore.Queries;
 using CodeUtopia.Messaging;
 using EasyNetQ;
-using IBus = CodeUtopia.Messaging.IBus;
+using IBus = EasyNetQ.IBus;
 
 namespace CodeUtopia.Bank.Host.Console
 {
@@ -21,74 +18,80 @@ namespace CodeUtopia.Bank.Host.Console
     {
         private static void Main(string[] args)
         {
-            var easyNetQBus = RabbitHutch.CreateBus("host=localhost");
 
             var builder = new ContainerBuilder();
             builder.RegisterModule(new BankModule());
+
+            var easyNetQBus = RabbitHutch.CreateBus("host=localhost");
+
             builder.RegisterInstance(easyNetQBus)
-                .As<global::EasyNetQ.IBus>();
+                   .As<IBus>();
 
             var container = builder.Build();
 
             var commandResolver = container.Resolve<ICommandHandlerResolver>();
             var eventResolver = container.Resolve<IEventHandlerResolver>();
 
-            easyNetQBus.Receive("MagicQueue", registration =>
-            {
-                registration.Add((CreateClientCommand x) =>
-                {
-                    var handler = commandResolver.Resolve<CreateClientCommand>();
+            easyNetQBus.Receive("MagicQueue",
+                                registration =>
+                                {
+                                    registration.Add((CreateClientCommand x) =>
+                                                     {
+                                                         var handler = commandResolver.Resolve<CreateClientCommand>();
 
-                    handler.Handle(x);
-                });
+                                                         handler.Handle(x);
+                                                     });
 
-                registration.Add((OpenNewAccountCommand x) =>
-                {
-                    var handler = commandResolver.Resolve<OpenNewAccountCommand>();
+                                    registration.Add((OpenNewAccountCommand x) =>
+                                                     {
+                                                         var handler = commandResolver.Resolve<OpenNewAccountCommand>();
 
-                    handler.Handle(x);
-                });
+                                                         handler.Handle(x);
+                                                     });
 
-                registration.Add((DepositAmountCommand x) =>
-                {
-                    var handler = commandResolver.Resolve<DepositAmountCommand>();
+                                    registration.Add((DepositAmountCommand x) =>
+                                                     {
+                                                         var handler = commandResolver.Resolve<DepositAmountCommand>();
 
-                    handler.Handle(x);
-                });
+                                                         handler.Handle(x);
+                                                     });
 
-                registration.Add((WithdrawAmountCommand x) =>
-                {
-                    var handler = commandResolver.Resolve<WithdrawAmountCommand>();
+                                    registration.Add((WithdrawAmountCommand x) =>
+                                                     {
+                                                         var handler = commandResolver.Resolve<WithdrawAmountCommand>();
 
-                    handler.Handle(x);
-                });
+                                                         handler.Handle(x);
+                                                     });
 
-                registration.Add((AssignNewBankCardCommand x) =>
-                {
-                    var handler = commandResolver.Resolve<AssignNewBankCardCommand>();
+                                    registration.Add((AssignNewBankCardCommand x) =>
+                                                     {
+                                                         var handler =
+                                                             commandResolver.Resolve<AssignNewBankCardCommand>();
 
-                    handler.Handle(x);
-                });
+                                                         handler.Handle(x);
+                                                     });
 
-                registration.Add((ReportStolenBankCardCommand x) =>
-                {
-                    var handler = commandResolver.Resolve<ReportStolenBankCardCommand>();
+                                    registration.Add((ReportStolenBankCardCommand x) =>
+                                                     {
+                                                         var handler =
+                                                             commandResolver.Resolve<ReportStolenBankCardCommand>();
 
-                    handler.Handle(x);
-                });
-            });
+                                                         handler.Handle(x);
+                                                     });
+                                });
 
-            easyNetQBus.Subscribe("MagicQueue-ClientCreatedEventSubscription", (ClientCreatedEvent x) =>
-            {
-                var handlers = eventResolver.Resolve<ClientCreatedEvent>();
+            easyNetQBus.Subscribe("MagicQueue-ClientCreatedEventSubscription",
+                                  (ClientCreatedEvent x) =>
+                                  {
+                                      var handlers = eventResolver.Resolve<ClientCreatedEvent>();
 
-                foreach (var eventHandler in handlers)
-                {
-                    eventHandler.Handle(x);
-                }
-            });
-            
-            var bus = container.Resolve<IBus>();
+                                      foreach (var eventHandler in handlers)
+                                      {
+                                          eventHandler.Handle(x);
+                                      }
+                                  });
+
+            var bus = container.Resolve<Messaging.IBus>();
 
             // Client.
             var clientId = Guid.NewGuid();

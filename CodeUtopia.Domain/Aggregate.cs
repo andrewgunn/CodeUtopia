@@ -68,7 +68,7 @@ namespace CodeUtopia.Domain
 
             if (!_eventHandlers.TryGetValue(eventType, out eventHandler))
             {
-                throw new EventHandlerNotRegisteredException(eventType);
+                throw new DomainEventHandlerNotRegisteredException(eventType);
             }
 
             eventHandler(domainEvent);

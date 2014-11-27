@@ -2,9 +2,9 @@
 
 namespace CodeUtopia.Messaging
 {
-    public class InMemoryBus : IBus
+    public class Bus : IBus
     {
-        public InMemoryBus(ICommandSender commandDispatcher, IEventPublisher eventDispatcher)
+        public Bus(ICommandSender commandDispatcher, IEventPublisher eventDispatcher)
         {
             _commandDispatcher = commandDispatcher;
             _eventDispatcher = eventDispatcher;

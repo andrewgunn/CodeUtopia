@@ -42,7 +42,7 @@ namespace Test.CodeUtopia.Domain
         [Then]
         public void Then_an_exception_will_be_thrown()
         {
-            Assert.That(Exception, Is.InstanceOf<EventHandlerNotRegisteredException>());
+            Assert.That(Exception, Is.InstanceOf<DomainEventHandlerNotRegisteredException>());
         }
 
         [Then]

@@ -2,8 +2,6 @@
 {
     public class EasyNetQEventPublisher : IEventPublisher
     {
-        private readonly global::EasyNetQ.IBus _bus;
-
         public EasyNetQEventPublisher(global::EasyNetQ.IBus bus)
         {
             _bus = bus;
@@ -13,5 +11,7 @@
         {
             _bus.Publish(message);
         }
+
+        private readonly global::EasyNetQ.IBus _bus;
     }
 }
