@@ -50,6 +50,7 @@
     <Compile Include="LoggingCommandHandlerDecorator.cs" />
     <Compile Include="LoggingEventHandlerDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RetryEventHandlerDecorator.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
