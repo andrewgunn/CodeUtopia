@@ -6,8 +6,8 @@ namespace BankingBackend.Events.v1.Client
     [Serializable]
     public abstract class ClientDomainEvent : DomainEvent
     {
-        protected ClientDomainEvent(Guid aggregateId, int versionNumber)
-            : base(aggregateId, versionNumber)
+        protected ClientDomainEvent(Guid clientId, int versionNumber)
+            : base(clientId, versionNumber)
         {
         }
 

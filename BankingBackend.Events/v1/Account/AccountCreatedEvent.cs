@@ -5,8 +5,8 @@ namespace BankingBackend.Events.v1.Account
     [Serializable]
     public class AccountCreatedEvent : AccountDomainEvent
     {
-        public AccountCreatedEvent(Guid aggregateId, int versionNumber, Guid clientId, string accountName)
-            : base(aggregateId, versionNumber)
+        public AccountCreatedEvent(Guid accountId, int versionNumber, Guid clientId, string accountName)
+            : base(accountId, versionNumber)
         {
             _clientId = clientId;
             _accountName = accountName;

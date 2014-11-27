@@ -5,8 +5,8 @@ namespace BankingBackend.Events.v1.Account
     [Serializable]
     public class AmountDepositedEvent : AccountDomainEvent
     {
-        public AmountDepositedEvent(Guid aggregateId, int versionNumber, decimal balance, decimal amount)
-            : base(aggregateId, versionNumber)
+        public AmountDepositedEvent(Guid accountId, int versionNumber, decimal balance, decimal amount)
+            : base(accountId, versionNumber)
         {
             _balance = balance;
             _amount = amount;

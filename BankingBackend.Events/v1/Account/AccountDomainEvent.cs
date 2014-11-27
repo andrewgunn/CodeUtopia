@@ -6,8 +6,8 @@ namespace BankingBackend.Events.v1.Account
     [Serializable]
     public abstract class AccountDomainEvent : DomainEvent
     {
-        protected AccountDomainEvent(Guid aggregateId, int versionNumber)
-            : base(aggregateId, versionNumber)
+        protected AccountDomainEvent(Guid accountId, int versionNumber)
+            : base(accountId, versionNumber)
         {
         }
 

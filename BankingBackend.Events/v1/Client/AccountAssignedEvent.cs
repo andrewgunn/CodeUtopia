@@ -5,8 +5,8 @@ namespace BankingBackend.Events.v1.Client
     [Serializable]
     public class AccountAssignedEvent : ClientDomainEvent
     {
-        public AccountAssignedEvent(Guid aggregateId, int versionNumber, Guid accountId)
-            : base(aggregateId, versionNumber)
+        public AccountAssignedEvent(Guid clientId, int versionNumber, Guid accountId)
+            : base(clientId, versionNumber)
         {
             _accountId = accountId;
         }

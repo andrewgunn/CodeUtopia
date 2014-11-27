@@ -42,10 +42,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="v1\Account\AccountCreatedEvent.cs" />
     <Compile Include="v1\Account\AccountDomainEvent.cs" />
-    <Compile Include="v1\Account\AccountEntityEvent.cs" />
     <Compile Include="v1\Account\AmountDepositedEvent.cs" />
     <Compile Include="v1\Account\AmountWithdrawnEvent.cs" />
     <Compile Include="v1\Client\AccountAssignedEvent.cs" />
+    <Compile Include="v1\Client\BankCardEvent.cs" />
     <Compile Include="v1\Client\BankCardReportedStolenEvent.cs" />
     <Compile Include="v1\Client\ClientCreatedEvent.cs" />
     <Compile Include="v1\Client\ClientDomainEvent.cs" />
