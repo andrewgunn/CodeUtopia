@@ -11,7 +11,7 @@ namespace CodeUtopia.Events
             _versionNumber = versionNumber;
         }
 
-        Guid IDomainEvent.AggregateId
+        public Guid AggregateId
         {
             get
             {
@@ -19,7 +19,7 @@ namespace CodeUtopia.Events
             }
         }
 
-        int IDomainEvent.VersionNumber
+        public int VersionNumber
         {
             get
             {

@@ -65,6 +65,10 @@ namespace BankingBackend.Autofac
                                              typeof(ICommandHandler<>),
                                              "RetryCommandHandler");
 
+            // Event coordinator.
+            builder.RegisterType<EventCoordinator>()
+                   .As<IEventCoordinator>();
+
             // Event handler resolver.
             builder.RegisterType<EventHandlerResolver>()
                    .As<IEventHandlerResolver>();

@@ -20,6 +20,9 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
+            // Aggregate
+            modelBuilder.Configurations.Add(new AggregateEntityConfiguration());
+
             // AccountDetail
             modelBuilder.Configurations.Add(new AccountDetailEntityConfiguration());
 
@@ -35,6 +38,8 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework
         public IDbSet<AccountDetailEntity> AccountDetails { get; set; }
 
         public IDbSet<AccountEntity> Accounts { get; set; }
+
+        public IDbSet<AggregateEntity> Aggregates { get; set; }
 
         public IDbSet<BankCardEntity> BankCards { get; set; }
 

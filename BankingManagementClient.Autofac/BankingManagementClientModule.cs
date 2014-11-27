@@ -2,6 +2,7 @@
 using System.Reflection;
 using Autofac;
 using Autofac.Core;
+using BankingManagementClient.ProjectionStore.EntityFramework;
 using BankingManagementClient.ProjectionStore.EntityFramework.Client.EventHandlers;
 using BankingManagementClient.ProjectionStore.EntityFramework.QueryHandlers;
 using CodeUtopia;
@@ -40,6 +41,17 @@ namespace BankingManagementClient.Autofac
             // Command sender.
             builder.RegisterType<EasyNetQCommandSender>()
                    .As<ICommandSender>();
+
+            // Event coordinator.
+            builder.RegisterType<EventCoordinator>()
+                   .Named<IEventCoordinator>("EventCoordinator");
+
+            builder.Register(
+                             x =>
+                             new IdempotentEventCoordinatorDecorator(projectionStoreNameOrConnectionString,
+                                                                     x.ResolveNamed<IEventCoordinator>(
+                                                                                                       "EventCoordinator")))
+                   .As<IEventCoordinator>();
 
             // Event handler resolver.
             builder.RegisterType<EventHandlerResolver>()

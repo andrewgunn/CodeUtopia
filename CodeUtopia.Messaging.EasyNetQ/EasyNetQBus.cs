@@ -9,15 +9,15 @@ namespace CodeUtopia.Messaging.EasyNetQ
     {
         public EasyNetQBus(global::EasyNetQ.IBus bus,
                            ICommandHandlerResolver commandHandlerResolver,
-                           ICommandSender commandDispatcher,
-                           IEventHandlerResolver eventHandlerResolver,
-                           IEventPublisher eventDispatcher)
+                           ICommandSender commandSender,
+                           IEventCoordinator eventCoordinator,
+                           IEventPublisher eventPublisher)
         {
             _bus = bus;
             _commandHandlerResolver = commandHandlerResolver;
-            _commandDispatcher = commandDispatcher;
-            _eventHandlerResolver = eventHandlerResolver;
-            _eventDispatcher = eventDispatcher;
+            _commandSender = commandSender;
+            _eventCoordinator = eventCoordinator;
+            _eventPublisher = eventPublisher;
 
             ResetQueues();
         }
@@ -107,7 +107,7 @@ namespace CodeUtopia.Messaging.EasyNetQ
 
         private void PublishCore(object @event)
         {
-            _eventDispatcher.Publish((dynamic)@event);
+            _eventPublisher.Publish((dynamic)@event);
         }
 
         private void ResetQueues()
@@ -130,7 +130,7 @@ namespace CodeUtopia.Messaging.EasyNetQ
         private void SendCore(object command)
         {
             // TODO Make this asynchronous.
-            _commandDispatcher.Send((dynamic)command);
+            _commandSender.Send((dynamic)command);
         }
 
         public void Subscribe<TEvent>() where TEvent : class
@@ -140,29 +140,20 @@ namespace CodeUtopia.Messaging.EasyNetQ
             const string endpointName = "BankingManagementClient";
             var subscriptionId = string.Format("{0}-{1}Subscription", endpointName, eventType.Name);
 
-            _bus.Subscribe(subscriptionId,
-                           (TEvent x) =>
-                           {
-                               var eventHandlers = _eventHandlerResolver.Resolve<TEvent>();
-
-                               foreach (var eventHandler in eventHandlers)
-                               {
-                                   eventHandler.Handle(x);
-                               }
-                           });
+            _bus.Subscribe(subscriptionId, (TEvent x) => _eventCoordinator.Coordinate(x));
         }
 
         private readonly global::EasyNetQ.IBus _bus;
 
-        private readonly ICommandSender _commandDispatcher;
-
         private readonly ICommandHandlerResolver _commandHandlerResolver;
+
+        private readonly ICommandSender _commandSender;
 
         private ConcurrentQueue<object> _commands;
 
-        private readonly IEventPublisher _eventDispatcher;
+        private readonly IEventCoordinator _eventCoordinator;
 
-        private readonly IEventHandlerResolver _eventHandlerResolver;
+        private readonly IEventPublisher _eventPublisher;
 
         private ConcurrentQueue<object> _events;
     }

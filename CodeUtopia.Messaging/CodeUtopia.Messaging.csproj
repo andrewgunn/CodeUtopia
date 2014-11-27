@@ -40,8 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandHandlerResolver.cs" />
+    <Compile Include="EventCoordinator.cs" />
     <Compile Include="EventHandlerResolver.cs" />
     <Compile Include="ICommandHandlerResolver.cs" />
+    <Compile Include="IEventCoordinator.cs" />
     <Compile Include="InProcEventPublisher.cs" />
     <Compile Include="IBus.cs" />
     <Compile Include="ICommandSender.cs" />

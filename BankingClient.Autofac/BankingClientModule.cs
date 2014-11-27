@@ -36,6 +36,10 @@ namespace BankingClient.Autofac
             builder.RegisterDecorator<ICommandSender>((x, decorated) => new LoggingCommandSenderDecorator(decorated),
                                                       "CommandSender");
 
+            // Event coordinator.
+            builder.RegisterType<EventCoordinator>()
+                   .As<IEventCoordinator>();
+
             // Event handler resolver.
             builder.RegisterType<EventHandlerResolver>()
                    .As<IEventHandlerResolver>();
