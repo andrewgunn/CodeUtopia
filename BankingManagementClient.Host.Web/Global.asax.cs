@@ -45,6 +45,39 @@ namespace BankingManagementClient.Host.Web
                                       }
                                   });
 
+            easyNetQBus.Subscribe("BankingManagementClient-AccountAssignedEventSubscription",
+                                  (AccountAssignedEvent x) =>
+                                  {
+                                      var eventHandlers = eventHandlerResolver.Resolve<AccountAssignedEvent>();
+
+                                      foreach (var eventHandler in eventHandlers)
+                                      {
+                                          eventHandler.Handle(x);
+                                      }
+                                  });
+
+            easyNetQBus.Subscribe("BankingManagementClient-NewBankCardAssignedEventSubscription",
+                                  (NewBankCardAssignedEvent x) =>
+                                  {
+                                      var eventHandlers = eventHandlerResolver.Resolve<NewBankCardAssignedEvent>();
+
+                                      foreach (var eventHandler in eventHandlers)
+                                      {
+                                          eventHandler.Handle(x);
+                                      }
+                                  });
+
+            easyNetQBus.Subscribe("BankingManagementClient-BankCardReportedStolenEventSubscription",
+                                  (BankCardReportedStolenEvent x) =>
+                                  {
+                                      var eventHandlers = eventHandlerResolver.Resolve<BankCardReportedStolenEvent>();
+
+                                      foreach (var eventHandler in eventHandlers)
+                                      {
+                                          eventHandler.Handle(x);
+                                      }
+                                  });
+
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             AreaRegistration.RegisterAllAreas();
