@@ -1,4 +1,6 @@
-﻿namespace CodeUtopia.Messaging.EasyNetQ
+﻿using System.Linq;
+
+namespace CodeUtopia.Messaging.EasyNetQ
 {
     public class EasyNetQCommandSender : ICommandSender
     {
@@ -9,7 +11,9 @@
 
         public void Send<TCommand>(TCommand command) where TCommand : class
         {
-            _bus.Send("MagicQueue", command);
+            var queueName = typeof (TCommand).Namespace.Split('.').First();
+
+            _bus.Send(queueName, command);
         }
 
         private readonly global::EasyNetQ.IBus _bus;

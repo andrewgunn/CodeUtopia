@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{0F6AB911-CFEC-48F0-B055-3FC9CEB3E69E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeUtopia.Messaging</RootNamespace>
-    <AssemblyName>CodeUtopia.Messaging</AssemblyName>
+    <RootNamespace>BankingClient.Host.Console</RootNamespace>
+    <AssemblyName>BankingClient.Host.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,6 +32,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="EasyNetQ">
+      <HintPath>..\packages\EasyNetQ.0.38.1.327\lib\net40\EasyNetQ.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\packages\RabbitMQ.Client.3.4.0\lib\net35\RabbitMQ.Client.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,21 +50,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandHandlerResolver.cs" />
-    <Compile Include="EventHandlerResolver.cs" />
-    <Compile Include="ICommandHandlerResolver.cs" />
-    <Compile Include="InProcEventPublisher.cs" />
-    <Compile Include="IBus.cs" />
-    <Compile Include="ICommandSender.cs" />
-    <Compile Include="IEventHandlerResolver.cs" />
-    <Compile Include="IEventPublisher.cs" />
-    <Compile Include="Bus.cs" />
-    <Compile Include="InProcCommandSender.cs" />
-    <Compile Include="LoggingEventPublisherDecorator.cs" />
-    <Compile Include="LoggingCommandSenderDecorator.cs" />
+    <Compile Include="FirstNameGenerator.cs" />
+    <Compile Include="LastNameGenerator.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomSingleton.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BankingBackend.Commands\BankingBackend.Commands.csproj">
+      <Project>{5D180D04-CC94-40EB-BF26-C039B40678B9}</Project>
+      <Name>BankingBackend.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BankingClient.Autofac\BankingClient.Autofac.csproj">
+      <Project>{57C6A26E-B664-4D36-B871-79D6CF8FDC59}</Project>
+      <Name>BankingClient.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
+      <Project>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</Project>
+      <Name>CodeUtopia.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
       <Name>CodeUtopia</Name>

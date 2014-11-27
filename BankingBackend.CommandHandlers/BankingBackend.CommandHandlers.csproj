@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</ProjectGuid>
+    <ProjectGuid>{527F85BE-7957-43FE-AB7F-B2FB130DF6A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeUtopia.Messaging</RootNamespace>
-    <AssemblyName>CodeUtopia.Messaging</AssemblyName>
+    <RootNamespace>BankingBackend.CommandHandlers</RootNamespace>
+    <AssemblyName>BankingBackend.CommandHandlers</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,21 +39,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandHandlerResolver.cs" />
-    <Compile Include="EventHandlerResolver.cs" />
-    <Compile Include="ICommandHandlerResolver.cs" />
-    <Compile Include="InProcEventPublisher.cs" />
-    <Compile Include="IBus.cs" />
-    <Compile Include="ICommandSender.cs" />
-    <Compile Include="IEventHandlerResolver.cs" />
-    <Compile Include="IEventPublisher.cs" />
-    <Compile Include="Bus.cs" />
-    <Compile Include="InProcCommandSender.cs" />
-    <Compile Include="LoggingEventPublisherDecorator.cs" />
-    <Compile Include="LoggingCommandSenderDecorator.cs" />
+    <Compile Include="AssignNewBankCardCommandHandler.cs" />
+    <Compile Include="CreateClientCommandHandler.cs" />
+    <Compile Include="ReportStolenBankCardCommandHandler.cs" />
+    <Compile Include="WithdrawAmountCommandHandler.cs" />
+    <Compile Include="DepositAmountCommandHandler.cs" />
+    <Compile Include="OpenNewAccountCommandHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BankingBackend.Commands\BankingBackend.Commands.csproj">
+      <Project>{5D180D04-CC94-40EB-BF26-C039B40678B9}</Project>
+      <Name>BankingBackend.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BankingBackend.Domain\BankingBackend.Domain.csproj">
+      <Project>{3F9957FE-5C38-48FB-BA76-2DE8FB18F8D7}</Project>
+      <Name>BankingBackend.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Domain\CodeUtopia.Domain.csproj">
+      <Project>{B05CBD95-7133-4B24-92B7-9C273E69A4D2}</Project>
+      <Name>CodeUtopia.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">
+      <Project>{2382fc22-7fc9-43d2-ae77-4b2adf8f0ab3}</Project>
+      <Name>CodeUtopia.Events</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
       <Name>CodeUtopia</Name>

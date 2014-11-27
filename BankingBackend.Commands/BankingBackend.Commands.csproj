@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</ProjectGuid>
+    <ProjectGuid>{5D180D04-CC94-40EB-BF26-C039B40678B9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeUtopia.Messaging</RootNamespace>
-    <AssemblyName>CodeUtopia.Messaging</AssemblyName>
+    <RootNamespace>BankingBackend.Commands</RootNamespace>
+    <AssemblyName>BankingBackend.Commands</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,25 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandHandlerResolver.cs" />
-    <Compile Include="EventHandlerResolver.cs" />
-    <Compile Include="ICommandHandlerResolver.cs" />
-    <Compile Include="InProcEventPublisher.cs" />
-    <Compile Include="IBus.cs" />
-    <Compile Include="ICommandSender.cs" />
-    <Compile Include="IEventHandlerResolver.cs" />
-    <Compile Include="IEventPublisher.cs" />
-    <Compile Include="Bus.cs" />
-    <Compile Include="InProcCommandSender.cs" />
-    <Compile Include="LoggingEventPublisherDecorator.cs" />
-    <Compile Include="LoggingCommandSenderDecorator.cs" />
+    <Compile Include="v1\AssignNewBankCardCommand.cs" />
+    <Compile Include="v1\CreateClientCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
-      <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
-      <Name>CodeUtopia</Name>
-    </ProjectReference>
+    <Compile Include="v1\OpenNewAccountCommand.cs" />
+    <Compile Include="v1\ReportStolenBankCardCommand.cs" />
+    <Compile Include="v1\WithdrawAmountCommand.cs" />
+    <Compile Include="v1\DepositAmountCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

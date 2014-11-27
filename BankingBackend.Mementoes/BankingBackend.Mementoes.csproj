@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</ProjectGuid>
+    <ProjectGuid>{8A6E5CEE-856D-4BC1-A2F6-FD0E8A838F21}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeUtopia.Messaging</RootNamespace>
-    <AssemblyName>CodeUtopia.Messaging</AssemblyName>
+    <RootNamespace>BankingBackend.Mementoes</RootNamespace>
+    <AssemblyName>BankingBackend.Mementoes</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,24 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandHandlerResolver.cs" />
-    <Compile Include="EventHandlerResolver.cs" />
-    <Compile Include="ICommandHandlerResolver.cs" />
-    <Compile Include="InProcEventPublisher.cs" />
-    <Compile Include="IBus.cs" />
-    <Compile Include="ICommandSender.cs" />
-    <Compile Include="IEventHandlerResolver.cs" />
-    <Compile Include="IEventPublisher.cs" />
-    <Compile Include="Bus.cs" />
-    <Compile Include="InProcCommandSender.cs" />
-    <Compile Include="LoggingEventPublisherDecorator.cs" />
-    <Compile Include="LoggingCommandSenderDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="v1\AccountMemento.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
-      <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
-      <Name>CodeUtopia</Name>
+    <ProjectReference Include="..\CodeUtopia.Domain\CodeUtopia.Domain.csproj">
+      <Project>{B05CBD95-7133-4B24-92B7-9C273E69A4D2}</Project>
+      <Name>CodeUtopia.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
