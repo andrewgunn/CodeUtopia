@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using CodeUtopia.Messaging;
 
 namespace CodeUtopia
@@ -20,8 +19,6 @@ namespace CodeUtopia
 
         public void Handle(TEvent @event)
         {
-            Console.WriteLine("Retrying...\t{0} ({1})", @event, _decorated);
-
             try
             {
                 _decorated.Handle(@event);
@@ -30,7 +27,7 @@ namespace CodeUtopia
             {
                 _retryCounts.Increment();
 
-                Console.WriteLine("Retrying ({2})...\t{0} ({1})", @event, _decorated, _retryCounts);
+                Console.WriteLine("Retrying ({2})...\t{0} ({1})", @event, _decorated, _retryCounts.Count);
 
                 _bus.Defer(@event, TimeSpan.FromSeconds(1));
             }

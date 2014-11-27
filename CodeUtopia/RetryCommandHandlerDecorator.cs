@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using CodeUtopia.Messaging;
 
 namespace CodeUtopia
 {
-    public class RetryCommandHandlerDecorator<TCommand> : IEventHandler<TCommand>
+    public class RetryCommandHandlerDecorator<TCommand> : ICommandHandler<TCommand>
         where TCommand : class
     {
         static RetryCommandHandlerDecorator()
@@ -29,8 +27,8 @@ namespace CodeUtopia
             {
                 _retryCounts.Increment();
 
-                Console.WriteLine("Retrying ({2})...\t{0} ({1})", command, _decorated, _retryCounts);
-                
+                Console.WriteLine("Retrying ({2})...\t{0} ({1})", command, _decorated, _retryCounts.Count);
+
                 _bus.Defer(command, TimeSpan.FromSeconds(1));
             }
         }

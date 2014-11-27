@@ -6,6 +6,7 @@ using Autofac.Integration.Mvc;
 using BankingBackend.Events.v1.Account;
 using BankingBackend.Events.v1.Client;
 using BankingManagementClient.Autofac;
+using CodeUtopia.Messaging;
 
 namespace BankingManagementClient.Host.Web
 {
@@ -23,7 +24,7 @@ namespace BankingManagementClient.Host.Web
 
             var container = builder.Build();
 
-            var bus = container.Resolve<CodeUtopia.Messaging.IBus>();
+            var bus = container.Resolve<IBus>();
             bus.Subscribe<ClientCreatedEvent>();
             bus.Subscribe<AccountAssignedEvent>();
             bus.Subscribe<NewBankCardAssignedEvent>();

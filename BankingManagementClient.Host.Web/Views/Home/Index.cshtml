@@ -26,24 +26,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => clientProjection.ClientId)
+                @Html.ActionLink(clientProjection.ClientId.ToString(), "Details", new { id = clientProjection.ClientId });
             </td>
             <td>
                 @Html.DisplayFor(modelItem => clientProjection.ClientName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new
-                                                 {
-                                                     /* id=item.PrimaryKey */
-                                                 }) |
-                @Html.ActionLink("Details", "Details", new
-                                                       {
-                                                           /* id=item.PrimaryKey */
-                                                       }) |
-                @Html.ActionLink("Delete", "Delete", new
-                                                     {
-                                                         /* id=item.PrimaryKey */
-                                                     })
             </td>
         </tr>
     }

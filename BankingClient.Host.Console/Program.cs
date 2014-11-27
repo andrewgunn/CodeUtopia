@@ -4,6 +4,7 @@ using Autofac;
 using BankingBackend.Commands.v1;
 using BankingClient.Autofac;
 using CodeUtopia.Hydrator;
+using CodeUtopia.Messaging;
 
 namespace BankingClient.Host.Console
 {
@@ -16,7 +17,7 @@ namespace BankingClient.Host.Console
 
             var container = builder.Build();
 
-            var bus = container.Resolve<CodeUtopia.Messaging.IBus>();
+            var bus = container.Resolve<IBus>();
 
             do
             {

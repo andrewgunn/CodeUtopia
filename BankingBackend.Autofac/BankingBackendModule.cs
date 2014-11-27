@@ -56,9 +56,14 @@ namespace BankingBackend.Autofac
                                    .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(ICommandHandler<>)))
                                    .Select(interfaceType => new KeyedService("CommandHandler", interfaceType)));
 
+            builder.RegisterGenericDecorator(typeof(RetryCommandHandlerDecorator<>),
+                                             typeof(ICommandHandler<>),
+                                             "CommandHandler",
+                                             "RetryCommandHandler");
+
             builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerDecorator<>),
                                              typeof(ICommandHandler<>),
-                                             "CommandHandler");
+                                             "RetryCommandHandler");
 
             // Event handler resolver.
             builder.RegisterType<EventHandlerResolver>()

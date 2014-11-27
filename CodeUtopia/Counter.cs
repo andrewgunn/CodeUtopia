@@ -4,8 +4,6 @@ namespace CodeUtopia
 {
     public class Counter
     {
-        private int _count = 0;
-
         public int Increment()
         {
             return Interlocked.Increment(ref _count);
@@ -24,5 +22,6 @@ namespace CodeUtopia
             }
         }
 
+        private int _count;
     }
 }

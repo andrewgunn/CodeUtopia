@@ -9,6 +9,7 @@ using CodeUtopia.Autofac;
 using CodeUtopia.Messaging;
 using CodeUtopia.Messaging.EasyNetQ;
 using EasyNetQ;
+using IBus = CodeUtopia.Messaging.IBus;
 using Module = Autofac.Module;
 
 namespace BankingManagementClient.Autofac
@@ -27,7 +28,7 @@ namespace BankingManagementClient.Autofac
 
             // Bus.
             builder.RegisterType<EasyNetQBus>()
-                   .As<CodeUtopia.Messaging.IBus>();
+                   .As<IBus>();
 
             builder.RegisterInstance(RabbitHutch.CreateBus("host=localhost"))
                    .As<EasyNetQ.IBus>();

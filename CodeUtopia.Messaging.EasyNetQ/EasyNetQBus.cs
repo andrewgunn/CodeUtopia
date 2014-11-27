@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading;
+using EasyNetQ.Consumer;
 
 namespace CodeUtopia.Messaging.EasyNetQ
 {
@@ -66,24 +67,37 @@ namespace CodeUtopia.Messaging.EasyNetQ
 
             var eventType = typeof(TEvent);
 
-            const string endpointName = "BankingManagementClient";
-            var subscriptionId = string.Format("{0}-{1}Subscription", endpointName, eventType.Name);
+            var subscriptionId = string.Format("BankingManagementClient-{0}Subscription", eventType.Name);
 
             _bus.Send(subscriptionId, @event);
         }
 
-        public void Listen<TCommand>() where TCommand : class
+        public void Listen<TCommand1, TCommand2, TCommand3, TCommand4, TCommand5, TCommand6>() where TCommand1 : class
+            where TCommand2 : class where TCommand3 : class where TCommand4 : class where TCommand5 : class
+            where TCommand6 : class
         {
-            const string queue = "BankingBackend";
+            const string queueName = "BankingBackend";
 
-            _bus.Receive(queue,
-                         registration => registration.Add((TCommand x) =>
-                                                          {
-                                                              var commandHandler =
-                                                                  _commandHandlerResolver.Resolve<TCommand>();
+            _bus.Receive(queueName,
+                         registration =>
+                         {
+                             Listen<TCommand1>(registration);
+                             Listen<TCommand2>(registration);
+                             Listen<TCommand3>(registration);
+                             Listen<TCommand4>(registration);
+                             Listen<TCommand5>(registration);
+                             Listen<TCommand6>(registration);
+                         });
+        }
 
-                                                              commandHandler.Handle(x);
-                                                          }));
+        private void Listen<TCommand>(IReceiveRegistration registration) where TCommand : class
+        {
+            registration.Add((TCommand command) =>
+                             {
+                                 var commandHandler = _commandHandlerResolver.Resolve<TCommand>();
+
+                                 commandHandler.Handle(command);
+                             });
         }
 
         public void Publish<TEvent>(TEvent message) where TEvent : class
