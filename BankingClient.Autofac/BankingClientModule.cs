@@ -24,12 +24,20 @@ namespace BankingClient.Autofac
             builder.RegisterInstance(RabbitHutch.CreateBus("host=localhost"))
                    .As<EasyNetQ.IBus>();
 
+            // Command handler resolver.
+            builder.RegisterType<CommandHandlerResolver>()
+                   .As<ICommandHandlerResolver>();
+
             // Command sender.
             builder.RegisterType<EasyNetQCommandSender>()
                    .Named<ICommandSender>("CommandSender");
 
             builder.RegisterDecorator<ICommandSender>((x, decorated) => new LoggingCommandSenderDecorator(decorated),
                                                       "CommandSender");
+
+            // Event handler resolver.
+            builder.RegisterType<EventHandlerResolver>()
+                   .As<IEventHandlerResolver>();
 
             // Event publisher.
             builder.RegisterType<EasyNetQEventPublisher>()

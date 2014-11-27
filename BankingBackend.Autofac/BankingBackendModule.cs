@@ -37,16 +37,16 @@ namespace BankingBackend.Autofac
             builder.RegisterInstance(RabbitHutch.CreateBus("host=localhost"))
                    .As<EasyNetQ.IBus>();
 
+            // Command handler resolver.
+            builder.RegisterType<CommandHandlerResolver>()
+                   .As<ICommandHandlerResolver>();
+
             // Command sender.
             builder.RegisterType<EasyNetQCommandSender>()
                    .Named<ICommandSender>("CommandSender");
 
             builder.RegisterDecorator<ICommandSender>((x, decorated) => new LoggingCommandSenderDecorator(decorated),
                                                       "CommandSender");
-
-            // CommandHandler Resolver.
-            builder.RegisterType<CommandHandlerResolver>()
-                   .As<ICommandHandlerResolver>();
 
             // Command handlers.
             var commandHandlerAssembly = Assembly.GetAssembly(typeof(CreateClientCommandHandler));
@@ -60,6 +60,7 @@ namespace BankingBackend.Autofac
                                              typeof(ICommandHandler<>),
                                              "CommandHandler");
 
+            // Event handler resolver.
             builder.RegisterType<EventHandlerResolver>()
                    .As<IEventHandlerResolver>();
 
