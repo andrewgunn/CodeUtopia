@@ -50,6 +50,7 @@
     <Compile Include="EasyNetQEventPublisher.cs" />
     <Compile Include="EasyNetQCommandSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnexpectedMessageException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CodeUtopia.Messaging">
+      <HintPath>..\CodeUtopia.Messaging\bin\Debug\CodeUtopia.Messaging.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Counter.cs" />
     <Compile Include="IDependencyResolver.cs" />
     <Compile Include="IQuery.cs" />
     <Compile Include="IQueryExecutor.cs" />
@@ -50,6 +54,7 @@
     <Compile Include="LoggingCommandHandlerDecorator.cs" />
     <Compile Include="LoggingEventHandlerDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RetryCommandHandlerDecorator.cs" />
     <Compile Include="RetryEventHandlerDecorator.cs" />
   </ItemGroup>
   <ItemGroup />

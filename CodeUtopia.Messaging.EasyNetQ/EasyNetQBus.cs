@@ -1,4 +1,6 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Threading;
 
 namespace CodeUtopia.Messaging.EasyNetQ
 {
@@ -32,6 +34,42 @@ namespace CodeUtopia.Messaging.EasyNetQ
             }
 
             ResetQueues();
+        }
+
+        public void Defer<TMessage>(TMessage message, TimeSpan delay) where TMessage : class
+        {
+            if (typeof(TMessage).Name.EndsWith("Command"))
+            {
+                DeferCommand(message, delay);
+            }
+            else if (typeof(TMessage).Name.EndsWith("Event"))
+            {
+                DeferEvent(message, delay);
+            }
+            else
+            {
+                throw new UnexpectedMessageException(typeof(TMessage));
+            }
+        }
+
+        private void DeferCommand<TCommand>(TCommand command, TimeSpan delay) where TCommand : class
+        {
+            Thread.Sleep(delay);
+            const string queue = "BankingBackend";
+
+            _bus.Send(queue, command);
+        }
+
+        private void DeferEvent<TEvent>(TEvent @event, TimeSpan delay) where TEvent : class
+        {
+            Thread.Sleep(delay);
+
+            var eventType = typeof(TEvent);
+
+            const string endpointName = "BankingManagementClient";
+            var subscriptionId = string.Format("{0}-{1}Subscription", endpointName, eventType.Name);
+
+            _bus.Send(subscriptionId, @event);
         }
 
         public void Listen<TCommand>() where TCommand : class

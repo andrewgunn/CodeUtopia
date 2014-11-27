@@ -1,13 +1,20 @@
 using System;
 using System.Threading;
+using CodeUtopia.Messaging;
 
 namespace CodeUtopia
 {
     public class RetryEventHandlerDecorator<TEvent> : IEventHandler<TEvent>
         where TEvent : class
     {
-        public RetryEventHandlerDecorator(IEventHandler<TEvent> decorated)
+        static RetryEventHandlerDecorator()
         {
+            _retryCounts = new Counter();
+        }
+
+        public RetryEventHandlerDecorator(IBus bus, IEventHandler<TEvent> decorated)
+        {
+            _bus = bus;
             _decorated = decorated;
         }
 
@@ -21,12 +28,18 @@ namespace CodeUtopia
             }
             catch (Exception)
             {
-                Thread.Sleep(1000);
+                _retryCounts.Increment();
 
-                _decorated.Handle(@event);
+                Console.WriteLine("Retrying ({2})...\t{0} ({1})", @event, _decorated, _retryCounts);
+
+                _bus.Defer(@event, TimeSpan.FromSeconds(1));
             }
         }
 
+        private readonly IBus _bus;
+
         private readonly IEventHandler<TEvent> _decorated;
+
+        private static readonly Counter _retryCounts;
     }
 }
