@@ -45,9 +45,14 @@ namespace BankingManagementClient.Autofac
                     .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof (IEventHandler<>)))
                     .Select(interfaceType => new KeyedService("EventHandler", interfaceType)));
 
+            builder.RegisterGenericDecorator(typeof(RetryEventHandlerDecorator<>),
+                typeof(IEventHandler<>),
+                "EventHandler",
+                "RetryEventHandler");
+
             builder.RegisterGenericDecorator(typeof (LoggingEventHandlerDecorator<>),
                 typeof (IEventHandler<>),
-                "EventHandler");
+                "RetryEventHandler");
 
             // Query executor.
             builder.RegisterType<QueryExecutor>()
