@@ -1,8 +1,6 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using BankingBackend.Autofac;
 using BankingBackend.Commands.v1;
-using BankingBackend.Events.v1.Client;
 using CodeUtopia.Messaging;
 using EasyNetQ;
 using IBus = EasyNetQ.IBus;
@@ -13,7 +11,6 @@ namespace BankingBackend.Host.Console
     {
         private static void Main(string[] args)
         {
-
             var builder = new ContainerBuilder();
             builder.RegisterModule(new BankingBackendModule());
 
@@ -31,28 +28,32 @@ namespace BankingBackend.Host.Console
                                 {
                                     registration.Add((CreateClientCommand x) =>
                                                      {
-                                                         var commandHandler = commandHandlerResolver.Resolve<CreateClientCommand>();
+                                                         var commandHandler =
+                                                             commandHandlerResolver.Resolve<CreateClientCommand>();
 
                                                          commandHandler.Handle(x);
                                                      });
 
                                     registration.Add((OpenNewAccountCommand x) =>
                                                      {
-                                                         var commandHandler = commandHandlerResolver.Resolve<OpenNewAccountCommand>();
+                                                         var commandHandler =
+                                                             commandHandlerResolver.Resolve<OpenNewAccountCommand>();
 
                                                          commandHandler.Handle(x);
                                                      });
 
                                     registration.Add((DepositAmountCommand x) =>
                                                      {
-                                                         var commandHandler = commandHandlerResolver.Resolve<DepositAmountCommand>();
+                                                         var commandHandler =
+                                                             commandHandlerResolver.Resolve<DepositAmountCommand>();
 
                                                          commandHandler.Handle(x);
                                                      });
 
                                     registration.Add((WithdrawAmountCommand x) =>
                                                      {
-                                                         var commandHandler = commandHandlerResolver.Resolve<WithdrawAmountCommand>();
+                                                         var commandHandler =
+                                                             commandHandlerResolver.Resolve<WithdrawAmountCommand>();
 
                                                          commandHandler.Handle(x);
                                                      });
@@ -68,13 +69,12 @@ namespace BankingBackend.Host.Console
                                     registration.Add((ReportStolenBankCardCommand x) =>
                                                      {
                                                          var commandHandler =
-                                                             commandHandlerResolver.Resolve<ReportStolenBankCardCommand>();
+                                                             commandHandlerResolver.Resolve<ReportStolenBankCardCommand>
+                                                                 ();
 
                                                          commandHandler.Handle(x);
                                                      });
                                 });
-
-            
 
             System.Console.WriteLine();
             System.Console.WriteLine("Waiting for messages!");

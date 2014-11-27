@@ -1,19 +1,22 @@
 ﻿using System;
 
-namespace BankingClient.Host.Console
+namespace CodeUtopia.Hydrator
 {
     public sealed class RandomSingleton
     {
-        private static readonly Random _random;
-
-        static  RandomSingleton()
+        static RandomSingleton()
         {
             _random = new Random();
         }
 
         public static Random Instance
         {
-            get { return _random; }
+            get
+            {
+                return _random;
+            }
         }
+
+        private static readonly Random _random;
     }
 }

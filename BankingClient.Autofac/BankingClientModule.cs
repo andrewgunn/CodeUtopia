@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using Autofac;
+﻿using Autofac;
 using CodeUtopia;
 using CodeUtopia.Autofac;
 using CodeUtopia.Messaging;
 using CodeUtopia.Messaging.EasyNetQ;
-using Module = Autofac.Module;
 
 namespace BankingClient.Autofac
 {
@@ -18,28 +11,28 @@ namespace BankingClient.Autofac
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
-            
+
             // Dependency resolver.
             builder.RegisterType<AutofacDependencyResolver>()
-                .As<IDependencyResolver>();
+                   .As<IDependencyResolver>();
 
             // Bus.
             builder.RegisterType<Bus>()
-                .As<IBus>();
+                   .As<IBus>();
 
             // Command sender.
             builder.RegisterType<EasyNetQCommandSender>()
-                .Named<ICommandSender>("CommandSender");
+                   .Named<ICommandSender>("CommandSender");
 
             builder.RegisterDecorator<ICommandSender>((x, decorated) => new LoggingCommandSenderDecorator(decorated),
-                "CommandSender");
+                                                      "CommandSender");
 
             // Event publisher.
             builder.RegisterType<EasyNetQEventPublisher>()
                    .Named<IEventPublisher>("EventPublisher");
 
-            builder.RegisterDecorator<IEventPublisher>((x, decorated) => new LoggingEventPublisherDecorator(decorated), 
-                "EventPublisher");
+            builder.RegisterDecorator<IEventPublisher>((x, decorated) => new LoggingEventPublisherDecorator(decorated),
+                                                       "EventPublisher");
         }
     }
 }

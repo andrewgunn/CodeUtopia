@@ -4,7 +4,6 @@ using System.Linq;
 using BankingBackend.Domain.Account;
 using BankingBackend.Events.v1.Client;
 using CodeUtopia.Domain;
-using CodeUtopia.Events;
 
 namespace BankingBackend.Domain.Client
 {
@@ -37,18 +36,6 @@ namespace BankingBackend.Domain.Client
         public static Client Create(Guid clientId, ClientName clientName)
         {
             return new Client(clientId, clientName);
-        }
-
-        private void OnAnyBankCardEvent(BankCardEvent bankCardEvent)
-        {
-            IEntity bankCard;
-
-            if (!_bankCards.TryGetValue(bankCardEvent.BankCardId, out bankCard))
-            {
-                throw new BankCardDoesNotExistException(bankCardEvent.BankCardId);
-            }
-
-            bankCard.LoadFromHistory(new[] { bankCardEvent });
         }
 
         public IMemento CreateMemento()
@@ -91,6 +78,27 @@ namespace BankingBackend.Domain.Client
             _accountIds.Add(accountAssignedEvent.AccountId);
         }
 
+        private void OnAnyBankCardEvent(BankCardEvent bankCardEvent)
+        {
+            IEntity bankCard;
+
+            if (!_bankCards.TryGetValue(bankCardEvent.BankCardId, out bankCard))
+            {
+                throw new BankCardDoesNotExistException(bankCardEvent.BankCardId);
+            }
+
+            bankCard.LoadFromHistory(new[]
+                                     {
+                                         bankCardEvent
+                                     });
+        }
+
+        private void OnClientCreated(ClientCreatedEvent clientCreatedEvent)
+        {
+            AggregateId = clientCreatedEvent.ClientId;
+            _clientName = clientCreatedEvent.ClientName;
+        }
+
         private void OnNewBankCardAssigned(NewBankCardAssignedEvent newBankCardAssignedEvent)
         {
             var bankCard = BankCard.Create(AggregateId,
@@ -99,12 +107,6 @@ namespace BankingBackend.Domain.Client
                                            newBankCardAssignedEvent.AccountId);
 
             _bankCards.Add(bankCard);
-        }
-
-        private void OnClientCreated(ClientCreatedEvent clientCreatedEvent)
-        {
-            AggregateId = clientCreatedEvent.ClientId;
-            _clientName = clientCreatedEvent.ClientName;
         }
 
         public Account.Account OpenNewAccount(Guid accountId, AccountName accountName)

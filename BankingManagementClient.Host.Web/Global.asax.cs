@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Autofac;
@@ -14,7 +11,7 @@ using IBus = EasyNetQ.IBus;
 
 namespace BankingManagementClient.Host.Web
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -77,7 +74,6 @@ namespace BankingManagementClient.Host.Web
                                           eventHandler.Handle(x);
                                       }
                                   });
-
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             AreaRegistration.RegisterAllAreas();

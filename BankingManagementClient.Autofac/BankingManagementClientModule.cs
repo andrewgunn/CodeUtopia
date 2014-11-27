@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Core;
 using BankingManagementClient.ProjectionStore.EntityFramework.Client.EventHandlers;
@@ -25,47 +21,47 @@ namespace BankingManagementClient.Autofac
 
             // Dependency resolver.
             builder.RegisterType<AutofacDependencyResolver>()
-                .As<IDependencyResolver>();
+                   .As<IDependencyResolver>();
 
             // Bus.
             builder.RegisterType<Bus>()
-                .As<IBus>();
+                   .As<IBus>();
 
             // Event handler resolver.
             builder.RegisterType<EventHandlerResolver>()
-                .As<IEventHandlerResolver>();
+                   .As<IEventHandlerResolver>();
 
             // Event handlers.
-            var eventHandlerAssembly = Assembly.GetAssembly(typeof (ClientCreatedEventHandler));
+            var eventHandlerAssembly = Assembly.GetAssembly(typeof(ClientCreatedEventHandler));
 
             // TODO Create IProjectionStoreConnectionString
             builder.RegisterAssemblyTypes(eventHandlerAssembly)
-                .WithParameter("nameOrConnectionString", projectionStoreNameOrConnectionString)
-                .As(type => type.GetInterfaces()
-                    .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof (IEventHandler<>)))
-                    .Select(interfaceType => new KeyedService("EventHandler", interfaceType)));
+                   .WithParameter("nameOrConnectionString", projectionStoreNameOrConnectionString)
+                   .As(type => type.GetInterfaces()
+                                   .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(IEventHandler<>)))
+                                   .Select(interfaceType => new KeyedService("EventHandler", interfaceType)));
 
             builder.RegisterGenericDecorator(typeof(RetryEventHandlerDecorator<>),
-                typeof(IEventHandler<>),
-                "EventHandler",
-                "RetryEventHandler");
+                                             typeof(IEventHandler<>),
+                                             "EventHandler",
+                                             "RetryEventHandler");
 
-            builder.RegisterGenericDecorator(typeof (LoggingEventHandlerDecorator<>),
-                typeof (IEventHandler<>),
-                "RetryEventHandler");
+            builder.RegisterGenericDecorator(typeof(LoggingEventHandlerDecorator<>),
+                                             typeof(IEventHandler<>),
+                                             "RetryEventHandler");
 
             // Query executor.
             builder.RegisterType<QueryExecutor>()
-                .As<IQueryExecutor>();
+                   .As<IQueryExecutor>();
 
             // Query handlers.
-            var queryHandlerAssembly = Assembly.GetAssembly(typeof (ClientQueryHandler));
+            var queryHandlerAssembly = Assembly.GetAssembly(typeof(ClientQueryHandler));
 
             // TODO Create IProjectionStoreConnectionString
             builder.RegisterAssemblyTypes(queryHandlerAssembly)
-                .WithParameter("nameOrConnectionString", projectionStoreNameOrConnectionString)
-                .As(type => type.GetInterfaces()
-                    .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof (IQueryHandler<,>))));
+                   .WithParameter("nameOrConnectionString", projectionStoreNameOrConnectionString)
+                   .As(type => type.GetInterfaces()
+                                   .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(IQueryHandler<,>))));
         }
     }
 }

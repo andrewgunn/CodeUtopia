@@ -34,10 +34,10 @@ namespace BankingBackend.Autofac
 
             // Command sender.
             builder.RegisterType<EasyNetQCommandSender>()
-                .Named<ICommandSender>("CommandSender");
+                   .Named<ICommandSender>("CommandSender");
 
             builder.RegisterDecorator<ICommandSender>((x, decorated) => new LoggingCommandSenderDecorator(decorated),
-                "CommandSender");
+                                                      "CommandSender");
 
             // CommandHandler Resolver.
             builder.RegisterType<CommandHandlerResolver>()

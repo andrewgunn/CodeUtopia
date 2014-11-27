@@ -13,16 +13,16 @@ namespace CodeUtopia
 
         public void Handle(TEvent @event)
         {
-            Console.WriteLine("Handling...\t{0} ({1})", @event, _decorated);
+            Console.WriteLine("Retrying...\t{0} ({1})", @event, _decorated);
+
             try
             {
                 _decorated.Handle(@event);
             }
             catch (Exception)
             {
-                // Err... lost the error... should of used NServiceBus...
-                Thread.Sleep(500);
-                
+                Thread.Sleep(1000);
+
                 _decorated.Handle(@event);
             }
         }

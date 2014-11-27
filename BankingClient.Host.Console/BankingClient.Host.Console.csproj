@@ -50,11 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FirstNameGenerator.cs" />
-    <Compile Include="LastNameGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomSingleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -66,8 +63,12 @@
       <Name>BankingBackend.Commands</Name>
     </ProjectReference>
     <ProjectReference Include="..\BankingClient.Autofac\BankingClient.Autofac.csproj">
-      <Project>{57C6A26E-B664-4D36-B871-79D6CF8FDC59}</Project>
+      <Project>{57c6a26e-b664-4d36-b871-79d6cf8fdc59}</Project>
       <Name>BankingClient.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Hydrator\CodeUtopia.Hydrator.csproj">
+      <Project>{f0d91d3b-298f-478d-9e0c-1e62ef31cca9}</Project>
+      <Name>CodeUtopia.Hydrator</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
       <Project>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</Project>

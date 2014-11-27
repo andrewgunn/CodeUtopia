@@ -3,8 +3,8 @@ using System.Threading;
 using Autofac;
 using BankingBackend.Commands.v1;
 using BankingClient.Autofac;
+using CodeUtopia.Hydrator;
 using EasyNetQ;
-using IBus = CodeUtopia.Messaging.IBus;
 
 namespace BankingClient.Host.Console
 {
@@ -18,11 +18,11 @@ namespace BankingClient.Host.Console
             var easyNetQBus = RabbitHutch.CreateBus("host=localhost");
 
             builder.RegisterInstance(easyNetQBus)
-                .As<EasyNetQ.IBus>();
+                   .As<IBus>();
 
             var container = builder.Build();
 
-            var bus = container.Resolve<IBus>();
+            var bus = container.Resolve<CodeUtopia.Messaging.IBus>();
 
             do
             {
@@ -31,12 +31,15 @@ namespace BankingClient.Host.Console
                     // Client.
                     var clientId = Guid.NewGuid();
 
-                    bus.Send(new CreateClientCommand(clientId, string.Format("{0} {1}", FirstNameGenerator.RandomFirstName(), LastNameGenerator.RandomLastName())));
+                    bus.Send(new CreateClientCommand(clientId,
+                                                     string.Format("{0} {1}",
+                                                                   FirstNameGenerator.RandomFirstName(),
+                                                                   LastNameGenerator.RandomLastName())));
 
                     // Account.
                     var accountId = Guid.NewGuid();
 
-                    bus.Send(new OpenNewAccountCommand(clientId, accountId, "MyBank"));
+                    bus.Send(new OpenNewAccountCommand(clientId, accountId, "MyAccount"));
                     bus.Send(new DepositAmountCommand(accountId, 100));
                     bus.Send(new WithdrawAmountCommand(accountId, 50));
 
@@ -50,8 +53,9 @@ namespace BankingClient.Host.Console
 
                     Thread.Sleep(1000);
                 }
-            } 
-            while (System.Console.ReadKey(true).Key != ConsoleKey.Escape);
+            }
+            while (System.Console.ReadKey(true)
+                         .Key != ConsoleKey.Escape);
         }
     }
 }

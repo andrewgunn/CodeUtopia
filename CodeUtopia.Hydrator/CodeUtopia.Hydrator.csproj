@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FEA6D277-241E-41AE-934A-4BEB2D663605}</ProjectGuid>
+    <ProjectGuid>{F0D91D3B-298F-478D-9E0C-1E62EF31CCA9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BankingManagementClient.Autofac</RootNamespace>
-    <AssemblyName>BankingManagementClient.Autofac</AssemblyName>
+    <RootNamespace>CodeUtopia.Hydrator</RootNamespace>
+    <AssemblyName>CodeUtopia.Hydrator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
-      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,29 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BankingManagementClientModule.cs" />
+    <Compile Include="FirstNameGenerator.cs" />
+    <Compile Include="LastNameGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BankingManagementClient.ProjectionStore.EntityFramework\BankingManagementClient.ProjectionStore.EntityFramework.csproj">
-      <Project>{b79f8a3a-f305-4054-9b88-306de2ac42a1}</Project>
-      <Name>BankingManagementClient.ProjectionStore.EntityFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.Autofac\CodeUtopia.Autofac.csproj">
-      <Project>{E3F3E269-BFC1-4C11-8EF6-4CE4C24C8060}</Project>
-      <Name>CodeUtopia.Autofac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
-      <Project>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</Project>
-      <Name>CodeUtopia.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
-      <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
-      <Name>CodeUtopia</Name>
-    </ProjectReference>
+    <Compile Include="RandomSingleton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

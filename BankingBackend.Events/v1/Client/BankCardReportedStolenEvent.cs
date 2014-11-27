@@ -1,5 +1,4 @@
 ﻿using System;
-using CodeUtopia.Events;
 
 namespace BankingBackend.Events.v1.Client
 {

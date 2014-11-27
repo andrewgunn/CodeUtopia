@@ -11,7 +11,8 @@ namespace CodeUtopia.Messaging.EasyNetQ
 
         public void Send<TCommand>(TCommand command) where TCommand : class
         {
-            var queueName = typeof (TCommand).Namespace.Split('.').First();
+            var queueName = typeof(TCommand).Namespace.Split('.')
+                                            .First();
 
             _bus.Send(queueName, command);
         }

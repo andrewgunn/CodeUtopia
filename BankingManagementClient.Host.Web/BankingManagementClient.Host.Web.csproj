@@ -147,7 +147,7 @@
       <Name>BankingBackend.Events</Name>
     </ProjectReference>
     <ProjectReference Include="..\BankingManagementClient.Autofac\BankingManagementClient.Autofac.csproj">
-      <Project>{FEA6D277-241E-41AE-934A-4BEB2D663605}</Project>
+      <Project>{fea6d277-241e-41ae-934a-4beb2d663605}</Project>
       <Name>BankingManagementClient.Autofac</Name>
     </ProjectReference>
     <ProjectReference Include="..\BankingManagementClient.ProjectionStore\BankingManagementClient.ProjectionStore.csproj">
