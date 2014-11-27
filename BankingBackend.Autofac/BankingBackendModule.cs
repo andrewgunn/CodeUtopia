@@ -12,6 +12,8 @@ using CodeUtopia.EventStore;
 using CodeUtopia.EventStore.EntityFramework;
 using CodeUtopia.Messaging;
 using CodeUtopia.Messaging.EasyNetQ;
+using EasyNetQ;
+using IBus = CodeUtopia.Messaging.IBus;
 using Module = Autofac.Module;
 
 namespace BankingBackend.Autofac
@@ -29,8 +31,11 @@ namespace BankingBackend.Autofac
                    .As<IDependencyResolver>();
 
             // Bus.
-            builder.RegisterType<Bus>()
+            builder.RegisterType<EasyNetQBus>()
                    .As<IBus>();
+
+            builder.RegisterInstance(RabbitHutch.CreateBus("host=localhost"))
+                   .As<EasyNetQ.IBus>();
 
             // Command sender.
             builder.RegisterType<EasyNetQCommandSender>()

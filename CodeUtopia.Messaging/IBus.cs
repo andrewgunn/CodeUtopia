@@ -2,8 +2,12 @@
 {
     public interface IBus : IUnitOfWork
     {
-        void Publish<T>(T message) where T : class;
+        void Listen<TCommand>() where TCommand : class;
 
-        void Send<T>(T message) where T : class;
+        void Publish<TEvent>(TEvent message) where TEvent : class;
+
+        void Send<TCommand>(TCommand message) where TCommand : class;
+
+        void Subscribe<TEvent>() where TEvent : class;
     }
 }

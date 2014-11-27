@@ -4,7 +4,6 @@ using Autofac;
 using BankingBackend.Commands.v1;
 using BankingClient.Autofac;
 using CodeUtopia.Hydrator;
-using EasyNetQ;
 
 namespace BankingClient.Host.Console
 {
@@ -14,11 +13,6 @@ namespace BankingClient.Host.Console
         {
             var builder = new ContainerBuilder();
             builder.RegisterModule(new BankingClientModule());
-
-            var easyNetQBus = RabbitHutch.CreateBus("host=localhost");
-
-            builder.RegisterInstance(easyNetQBus)
-                   .As<IBus>();
 
             var container = builder.Build();
 

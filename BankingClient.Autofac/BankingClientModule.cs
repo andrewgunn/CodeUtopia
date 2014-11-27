@@ -3,6 +3,7 @@ using CodeUtopia;
 using CodeUtopia.Autofac;
 using CodeUtopia.Messaging;
 using CodeUtopia.Messaging.EasyNetQ;
+using EasyNetQ;
 
 namespace BankingClient.Autofac
 {
@@ -17,8 +18,11 @@ namespace BankingClient.Autofac
                    .As<IDependencyResolver>();
 
             // Bus.
-            builder.RegisterType<Bus>()
-                   .As<IBus>();
+            builder.RegisterType<EasyNetQBus>()
+                   .As<CodeUtopia.Messaging.IBus>();
+
+            builder.RegisterInstance(RabbitHutch.CreateBus("host=localhost"))
+                   .As<EasyNetQ.IBus>();
 
             // Command sender.
             builder.RegisterType<EasyNetQCommandSender>()

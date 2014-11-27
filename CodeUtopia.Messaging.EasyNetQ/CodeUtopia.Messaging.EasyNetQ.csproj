@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EasyNetQBus.cs" />
     <Compile Include="EasyNetQEventPublisher.cs" />
     <Compile Include="EasyNetQCommandSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,6 +58,10 @@
     <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
       <Project>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</Project>
       <Name>CodeUtopia.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
+      <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
+      <Name>CodeUtopia</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

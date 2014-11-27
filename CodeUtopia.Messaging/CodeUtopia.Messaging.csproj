@@ -47,7 +47,6 @@
     <Compile Include="ICommandSender.cs" />
     <Compile Include="IEventHandlerResolver.cs" />
     <Compile Include="IEventPublisher.cs" />
-    <Compile Include="Bus.cs" />
     <Compile Include="InProcCommandSender.cs" />
     <Compile Include="LoggingEventPublisherDecorator.cs" />
     <Compile Include="LoggingCommandSenderDecorator.cs" />

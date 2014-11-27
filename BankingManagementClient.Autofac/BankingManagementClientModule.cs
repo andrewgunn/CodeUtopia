@@ -7,6 +7,8 @@ using BankingManagementClient.ProjectionStore.EntityFramework.QueryHandlers;
 using CodeUtopia;
 using CodeUtopia.Autofac;
 using CodeUtopia.Messaging;
+using CodeUtopia.Messaging.EasyNetQ;
+using EasyNetQ;
 using Module = Autofac.Module;
 
 namespace BankingManagementClient.Autofac
@@ -24,8 +26,11 @@ namespace BankingManagementClient.Autofac
                    .As<IDependencyResolver>();
 
             // Bus.
-            builder.RegisterType<Bus>()
-                   .As<IBus>();
+            builder.RegisterType<EasyNetQBus>()
+                   .As<CodeUtopia.Messaging.IBus>();
+
+            builder.RegisterInstance(RabbitHutch.CreateBus("host=localhost"))
+                   .As<EasyNetQ.IBus>();
 
             // Event handler resolver.
             builder.RegisterType<EventHandlerResolver>()
