@@ -1,10 +1,11 @@
-﻿using System.Web;
+﻿using System;
+using System.Configuration;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
-using BankingBackend.Events.v1.Account;
-using BankingBackend.Events.v1.Client;
 using BankingManagementClient.Autofac;
 using CodeUtopia.Messaging;
 
@@ -25,13 +26,15 @@ namespace BankingManagementClient.Host.Web
             var container = builder.Build();
 
             var bus = container.Resolve<IBus>();
-            bus.Subscribe<ClientCreatedEvent>();
-            bus.Subscribe<AccountAssignedEvent>();
-            bus.Subscribe<NewBankCardAssignedEvent>();
-            bus.Subscribe<BankCardReportedStolenEvent>();
-            bus.Subscribe<AccountCreatedEvent>();
-            bus.Subscribe<AmountDepositedEvent>();
-            bus.Subscribe<AmountWithdrawnEvent>();
+
+            bus.Subscribe<BankingBackend.Events.v1.Client.ClientCreatedEvent>();
+            bus.Subscribe<BankingBackend.Events.v1.Client.AccountAssignedEvent>();
+            bus.Subscribe<BankingBackend.Events.v1.Client.NewBankCardAssignedEvent>();
+            bus.Subscribe<BankingBackend.Events.v1.Client.BankCardReportedStolenEvent>();
+
+            bus.Subscribe<BankingBackend.Events.v1.Account.AccountCreatedEvent>();
+            bus.Subscribe<BankingBackend.Events.v1.Account.AmountDepositedEvent>();
+            bus.Subscribe<BankingBackend.Events.v1.Account.AmountWithdrawnEvent>();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             AreaRegistration.RegisterAllAreas();

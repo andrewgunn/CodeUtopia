@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading;
+using EasyNetQ;
 using EasyNetQ.Consumer;
 
 namespace CodeUtopia.Messaging.EasyNetQ
