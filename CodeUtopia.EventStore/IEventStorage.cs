@@ -10,6 +10,8 @@ namespace CodeUtopia.EventStore
     /// </summary>
     public interface IEventStorage : ISnapshotStorage, IUnitOfWork
     {
+        IReadOnlyCollection<IDomainEvent> GetAll(int skip, int take);
+
         IReadOnlyCollection<IDomainEvent> GetAll(Guid aggregateId);
 
         IReadOnlyCollection<IDomainEvent> GetAllSinceLastSnapshot(Guid aggregateId);

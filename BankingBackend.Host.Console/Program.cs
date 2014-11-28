@@ -21,6 +21,7 @@ namespace BankingBackend.Host.Console
             bus.Listen<ReportStolenBankCardCommand>();
             bus.Listen<DepositAmountCommand>();
             bus.Listen<WithdrawAmountCommand>();
+            bus.Listen<RepublishAllEventsCommand>();
 
             System.Console.ReadKey();
         }

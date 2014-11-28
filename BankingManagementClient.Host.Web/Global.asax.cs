@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
+using BankingBackend.Commands.v1;
 using BankingManagementClient.Autofac;
+using BankingManagementClient.ProjectionStore.Queries;
+using CodeUtopia;
 using CodeUtopia.Messaging;
 
 namespace BankingManagementClient.Host.Web
@@ -30,7 +34,7 @@ namespace BankingManagementClient.Host.Web
             bus.Subscribe<BankingBackend.Events.v1.Client.ClientCreatedEvent>();
             bus.Subscribe<BankingBackend.Events.v1.Client.AccountAssignedEvent>();
             bus.Subscribe<BankingBackend.Events.v1.Client.NewBankCardAssignedEvent>();
-            bus.Subscribe<BankingBackend.Events.v1.Client.BankCardReportedStolenEvent>();
+            bus.Subscribe<BankingBackend.Events.v2.Client.BankCardReportedStolenEvent>();
 
             bus.Subscribe<BankingBackend.Events.v1.Account.AccountCreatedEvent>();
             bus.Subscribe<BankingBackend.Events.v1.Account.AmountDepositedEvent>();
@@ -39,6 +43,17 @@ namespace BankingManagementClient.Host.Web
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            var queryExecutor = container.Resolve<IQueryExecutor>();
+
+            var projection = queryExecutor.Execute(new ClientsQuery());
+
+            if (!projection.ClientProjections.Any())
+            {
+                bus.Send(new RepublishAllEventsCommand());
+                bus.Commit();
+            }
+
         }
     }
 }
