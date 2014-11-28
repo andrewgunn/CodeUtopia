@@ -47,7 +47,7 @@
     <Compile Include="Client\AccountDoesNotBelongToClientException.cs" />
     <Compile Include="Client\BankCard.cs" />
     <Compile Include="Client\BankCardDoesNotExistException.cs" />
-    <Compile Include="Client\BankCardIsReportedStolenException.cs" />
+    <Compile Include="Client\BankCardAlreadyReportedStolenException.cs" />
     <Compile Include="Client\Client.cs" />
     <Compile Include="Client\ClientName.cs" />
     <Compile Include="Client\IBankCard.cs" />
