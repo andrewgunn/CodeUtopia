@@ -4,34 +4,37 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Clients</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ElementAt(0)
-                                               .ClientId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ElementAt(0)
-                                               .ClientName)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var clientProjection in Model)
-    {
+@if (Model.Any())
+{
+    <table class="table">
         <tr>
-            <td>
-                @Html.ActionLink(clientProjection.ClientId.ToString(), "Details", new { id = clientProjection.ClientId })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => clientProjection.ClientName)
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.ElementAt(0)
+                    .ClientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElementAt(0)
+                    .ClientName)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var clientProjection in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(clientProjection.ClientId.ToString(), "Details", new {id = clientProjection.ClientId})
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => clientProjection.ClientName)
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No clients found.</p>
+}
