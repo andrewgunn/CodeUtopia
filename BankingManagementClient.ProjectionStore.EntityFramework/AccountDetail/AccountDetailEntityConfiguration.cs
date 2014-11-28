@@ -15,6 +15,9 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework.AccountDetail
             Property(p => p.AccountId)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();
+            Property(p => p.ClientId)
+                .HasColumnOrder(++columnOrder)
+                .IsRequired();
             Property(p => p.AccountName)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();

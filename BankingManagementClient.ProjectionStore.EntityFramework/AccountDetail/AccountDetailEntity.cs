@@ -8,6 +8,8 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework.AccountDetail
 
         public string AccountName { get; set; }
 
+        public Guid ClientId { get; set; }
+
         public decimal Balance { get; set; }
     }
 }

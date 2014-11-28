@@ -4,9 +4,10 @@ namespace BankingManagementClient.ProjectionStore.Projections.AccountDetail
 {
     public class AccountDetailProjection
     {
-        public AccountDetailProjection(Guid accountId, string accountName, decimal balance)
+        public AccountDetailProjection(Guid accountId, Guid clientId, string accountName, decimal balance)
         {
             _accountId = accountId;
+            _clientId = clientId;
             _accountName = accountName;
             _balance = balance;
         }
@@ -35,7 +36,13 @@ namespace BankingManagementClient.ProjectionStore.Projections.AccountDetail
             }
         }
 
+        public Guid ClientId
+        {
+            get { return _clientId; }
+        }
+
         private readonly Guid _accountId;
+        private readonly Guid _clientId;
 
         private readonly string _accountName;
 

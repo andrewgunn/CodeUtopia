@@ -7,7 +7,7 @@
 <h2>@Html.DisplayFor(model => model.ClientName) (@Html.DisplayFor(model => model.ClientId))</h2>
 
 <p>
-    @Html.ActionLink("View all Clients", "List")
+    @Html.ActionLink("Back to Clients", "List")
 </p>
 
 <div>
@@ -31,7 +31,7 @@
             {
                     <tr>
                         <td>
-                            @Html.ActionLink(accountProjection.AccountId.ToString(), "Details", "Account", new { id = accountProjection.AccountId })
+                            @Html.ActionLink(accountProjection.AccountId.ToString(), "Details", "Account", new { id = accountProjection.AccountId }, null)
                         </td>
                         <td>
                             @Html.DisplayFor(model => accountProjection.AccountName)

@@ -17,6 +17,7 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework.AccountDetail.
                 var accountDetail = new AccountDetailEntity
                                     {
                                         AccountId = accountCreatedEvent.AccountId,
+                                        ClientId = accountCreatedEvent.ClientId,
                                         AccountName = accountCreatedEvent.AccountName
                                     };
 

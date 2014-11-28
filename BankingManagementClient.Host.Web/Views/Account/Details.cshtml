@@ -1,0 +1,22 @@
+﻿@model BankingManagementClient.ProjectionStore.Projections.AccountDetail.AccountDetailProjection
+
+@{
+    ViewBag.Title = "Account detail";
+}
+
+<h2>@Html.DisplayFor(model => model.AccountName) (@Html.DisplayFor(model => model.AccountId))</h2>
+
+<p>
+    @Html.ActionLink("Back to Client", "Details", "Client", new { id = Model.ClientId }, null)
+</p>
+
+<div>
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.Balance)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Balance)
+        </dd>
+    </dl>
+</div>
