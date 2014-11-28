@@ -72,27 +72,32 @@ namespace CodeUtopia.Messaging.EasyNetQ
             _bus.Send(subscriptionId, @event);
         }
 
-        public void Listen<TCommand1, TCommand2, TCommand3, TCommand4, TCommand5, TCommand6>() where TCommand1 : class
-            where TCommand2 : class where TCommand3 : class where TCommand4 : class where TCommand5 : class
-            where TCommand6 : class
+        public void Listen<TCommand>() where TCommand : class
         {
             const string queueName = "BankingBackend";
 
-            _bus.Receive(queueName,
-                         registration =>
-                         {
-                             Listen<TCommand1>(registration);
-                             Listen<TCommand2>(registration);
-                             Listen<TCommand3>(registration);
-                             Listen<TCommand4>(registration);
-                             Listen<TCommand5>(registration);
-                             Listen<TCommand6>(registration);
-                         });
-        }
+            if (_registration == null)
+            {
+                lock (_registrationLock)
+                {
+                    if (_registration == null)
+                    {
+                        _bus.Receive(queueName,
+                            registration =>
+                            {
+                                _registration = registration;
+                            });
+                    }
+                }
+            }
 
-        private void Listen<TCommand>(IReceiveRegistration registration) where TCommand : class
+            InternalListen<TCommand>();
+        }
+    
+
+        private void InternalListen<TCommand>() where TCommand : class
         {
-            registration.Add((TCommand command) =>
+            _registration.Add((TCommand command) =>
                              {
                                  var commandHandler = _commandHandlerResolver.Resolve<TCommand>();
 
@@ -156,5 +161,9 @@ namespace CodeUtopia.Messaging.EasyNetQ
         private readonly IEventPublisher _eventPublisher;
 
         private ConcurrentQueue<object> _events;
+        
+        private IReceiveRegistration _registration;
+
+        private object _registrationLock = new object();
     }
 }

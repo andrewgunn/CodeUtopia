@@ -15,7 +15,12 @@ namespace BankingBackend.Host.Console
             var container = builder.Build();
 
             var bus = container.Resolve<IBus>();
-            bus.Listen<CreateClientCommand, OpenNewAccountCommand, AssignNewBankCardCommand, ReportStolenBankCardCommand, DepositAmountCommand, WithdrawAmountCommand>();
+            bus.Listen<CreateClientCommand>();
+            bus.Listen<OpenNewAccountCommand>();
+            bus.Listen<AssignNewBankCardCommand>();
+            bus.Listen<ReportStolenBankCardCommand>();
+            bus.Listen<DepositAmountCommand>();
+            bus.Listen<WithdrawAmountCommand>();
 
             System.Console.ReadKey();
         }
