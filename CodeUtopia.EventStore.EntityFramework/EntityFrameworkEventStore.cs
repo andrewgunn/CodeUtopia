@@ -50,6 +50,18 @@ namespace CodeUtopia.EventStore.EntityFramework
                                    .ToList();
         }
 
+        public IReadOnlyCollection<IDomainEvent> GetAll(int skip, int take)
+        {
+            return _databaseContext.DomainEvents
+                                   .OrderBy(x=> x.AggregateId)
+                                   .ThenBy(x => x.VersionNumber)
+                                   .Skip(skip)
+                                   .Take(take)
+                                   .ToList()
+                                   .Select(x => Deserialize<IDomainEvent>(x.Data))
+                                   .ToList();
+        }
+
         public IReadOnlyCollection<IDomainEvent> GetAllSinceLastSnapshot(Guid aggregateId)
         {
             var snapshot = GetLastSnapshot(aggregateId);

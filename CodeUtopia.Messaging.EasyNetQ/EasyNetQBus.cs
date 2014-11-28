@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Reflection.Emit;
 using System.Threading;
 using EasyNetQ;
 using EasyNetQ.Consumer;
@@ -12,13 +13,15 @@ namespace CodeUtopia.Messaging.EasyNetQ
                            ICommandHandlerResolver commandHandlerResolver,
                            ICommandSender commandSender,
                            IEventCoordinator eventCoordinator,
-                           IEventPublisher eventPublisher)
+                           IEventPublisher eventPublisher,
+                           string endpointName)
         {
             _bus = bus;
             _commandHandlerResolver = commandHandlerResolver;
             _commandSender = commandSender;
             _eventCoordinator = eventCoordinator;
             _eventPublisher = eventPublisher;
+            _endpointName = endpointName;
 
             ResetQueues();
         }
@@ -57,7 +60,7 @@ namespace CodeUtopia.Messaging.EasyNetQ
         private void DeferCommand<TCommand>(TCommand command, TimeSpan delay) where TCommand : class
         {
             Thread.Sleep(delay);
-            const string queue = "BankingBackend";
+            string queue = _endpointName;
 
             _bus.Send(queue, command);
         }
@@ -68,14 +71,14 @@ namespace CodeUtopia.Messaging.EasyNetQ
 
             var eventType = typeof(TEvent);
 
-            var subscriptionId = string.Format("BankingManagementClient-{0}Subscription", eventType.Name);
+            var subscriptionId = string.Format("{0}-{1}Subscription", _endpointName, eventType.Name);
 
             _bus.Send(subscriptionId, @event);
         }
 
         public void Listen<TCommand>() where TCommand : class
         {
-            const string queueName = "BankingBackend";
+            string queueName = _endpointName;
 
             if (_registration == null)
             {
@@ -143,8 +146,7 @@ namespace CodeUtopia.Messaging.EasyNetQ
         {
             var eventType = typeof(TEvent);
 
-            const string endpointName = "BankingManagementClient";
-            var subscriptionId = string.Format("{0}-{1}Subscription", endpointName, eventType.Name);
+            var subscriptionId = string.Format("{0}-{1}Subscription", _endpointName, eventType.Name);
 
             _bus.Subscribe(subscriptionId, (TEvent x) => _eventCoordinator.Coordinate(x, this));
         }
@@ -160,6 +162,8 @@ namespace CodeUtopia.Messaging.EasyNetQ
         private readonly IEventCoordinator _eventCoordinator;
 
         private readonly IEventPublisher _eventPublisher;
+
+        private readonly string _endpointName;
 
         private ConcurrentQueue<object> _events;
         

@@ -1,4 +1,4 @@
-﻿using BankingBackend.Events.v1.Client;
+﻿using BankingBackend.Events.v2.Client;
 using CodeUtopia;
 
 namespace BankingManagementClient.ProjectionStore.EntityFramework.ClientDetail.EventHandlers
@@ -22,6 +22,7 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework.ClientDetail.E
                 }
 
                 bankCard.IsStolen = true;
+                bankCard.StolenAt = bankCardReportedStolenEvent.StolenAt;
 
                 databaseContext.SaveChanges();
             }

@@ -29,6 +29,7 @@ namespace BankingManagementClient.Autofac
 
             // Bus.
             builder.RegisterType<EasyNetQBus>()
+                .WithParameter("endpointName", "BankingManagementClientNEW")
                 .As<IBus>();
 
             builder.RegisterInstance(RabbitHutch.CreateBus("host=localhost"))
