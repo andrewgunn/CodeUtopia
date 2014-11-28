@@ -12,6 +12,8 @@ namespace BankingClient.Host.Console
     {
         private static void Main(string[] args)
         {
+            var random = RandomSingleton.Instance;
+
             var builder = new ContainerBuilder();
             builder.RegisterModule(new BankingClientModule());
 
@@ -19,38 +21,35 @@ namespace BankingClient.Host.Console
 
             var bus = container.Resolve<IBus>();
 
-            do
+            for (int i = 0; i < 100; i++)
             {
-                while (!System.Console.KeyAvailable)
+                // Client.
+                var clientId = Guid.NewGuid();
+
+                bus.Send(new CreateClientCommand(clientId,
+                    string.Format("{0} {1}",
+                        FirstNameGenerator.RandomFirstName(),
+                        LastNameGenerator.RandomLastName())));
+
+                // Account.
+                var accountId = Guid.NewGuid();
+
+                bus.Send(new OpenNewAccountCommand(clientId, accountId, "MyAccount"));
+                bus.Send(new DepositAmountCommand(accountId, 100));
+                bus.Send(new WithdrawAmountCommand(accountId, 50));
+
+                // Bank card.
+                var bankCardId = Guid.NewGuid();
+
+                bus.Send(new AssignNewBankCardCommand(clientId, bankCardId, accountId));
+
+                if (random.Next(0, 2) == 0)
                 {
-                    // Client.
-                    var clientId = Guid.NewGuid();
-
-                    bus.Send(new CreateClientCommand(clientId,
-                                                     string.Format("{0} {1}",
-                                                                   FirstNameGenerator.RandomFirstName(),
-                                                                   LastNameGenerator.RandomLastName())));
-
-                    // Account.
-                    var accountId = Guid.NewGuid();
-
-                    bus.Send(new OpenNewAccountCommand(clientId, accountId, "MyAccount"));
-                    bus.Send(new DepositAmountCommand(accountId, 100));
-                    bus.Send(new WithdrawAmountCommand(accountId, 50));
-
-                    // Bank card.
-                    var bankCardId = Guid.NewGuid();
-
-                    bus.Send(new AssignNewBankCardCommand(clientId, bankCardId, accountId));
                     bus.Send(new ReportStolenBankCardCommand(clientId, bankCardId));
-
-                    bus.Commit();
-
-                    Thread.Sleep(1000);
                 }
+
+                bus.Commit();
             }
-            while (System.Console.ReadKey(true)
-                         .Key != ConsoleKey.Escape);
         }
     }
 }

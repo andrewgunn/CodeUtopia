@@ -4,10 +4,11 @@ namespace BankingManagementClient.ProjectionStore.Projections.ClientDetail
 {
     public class BankCardProjection
     {
-        public BankCardProjection(Guid bankCardId, Guid accountId)
+        public BankCardProjection(Guid bankCardId, Guid accountId, bool isStolen)
         {
             _bankCardId = bankCardId;
             _accountId = accountId;
+            _isStolen = isStolen;
         }
 
         public Guid AccountId
@@ -26,7 +27,16 @@ namespace BankingManagementClient.ProjectionStore.Projections.ClientDetail
             }
         }
 
+        public bool IsStolen
+        {
+            get
+            {
+                return _isStolen;
+            }
+        }
+
         private readonly Guid _accountId;
+        private readonly bool _isStolen;
 
         private readonly Guid _bankCardId;
     }

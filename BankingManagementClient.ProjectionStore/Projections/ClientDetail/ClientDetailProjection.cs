@@ -16,14 +16,6 @@ namespace BankingManagementClient.ProjectionStore.Projections.ClientDetail
             _bankCards = bankCards;
         }
 
-        public Guid AccountId
-        {
-            get
-            {
-                return _accountId;
-            }
-        }
-
         public IReadOnlyCollection<AccountProjection> Accounts
         {
             get
@@ -55,8 +47,6 @@ namespace BankingManagementClient.ProjectionStore.Projections.ClientDetail
                 return _clientName;
             }
         }
-
-        private readonly Guid _accountId;
 
         private readonly IReadOnlyList<AccountProjection> _accounts;
 
