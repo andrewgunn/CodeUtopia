@@ -25,15 +25,15 @@ namespace BankingBackend.Domain.Client
 
         private void EnsureNotReportedStolen()
         {
-            if (_isReportedStolen)
+            if (_isStolen)
             {
-                throw new BankCardIsReportedStolenException(EntityId);
+                throw new BankCardAlreadyReportedStolenException(EntityId);
             }
         }
 
         private void OnBankCardReportedStolen(BankCardReportedStolenEvent bankCardReportedStolenEvent)
         {
-            _isReportedStolen = true;
+            _isStolen = true;
         }
 
         private void RegisterEventHandlers()
@@ -43,6 +43,7 @@ namespace BankingBackend.Domain.Client
 
         public void ReportStolen()
         {
+            EnsureIsInitialized();
             EnsureNotReportedStolen();
 
             Apply(new BankCardReportedStolenEvent(AggregateId, GetNextVersionNumber(), EntityId));
@@ -50,6 +51,6 @@ namespace BankingBackend.Domain.Client
 
         private readonly Guid _accountId;
 
-        private bool _isReportedStolen;
+        private bool _isStolen;
     }
 }

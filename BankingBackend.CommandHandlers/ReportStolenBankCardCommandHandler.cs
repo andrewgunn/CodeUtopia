@@ -1,4 +1,5 @@
-﻿using BankingBackend.Commands.v1;
+﻿using System;
+using BankingBackend.Commands.v1;
 using BankingBackend.Domain.Client;
 using CodeUtopia;
 using CodeUtopia.Domain;
@@ -17,6 +18,7 @@ namespace BankingBackend.CommandHandlers
             var client = _aggregateRepository.Get<Client>(reportStolenBankCardCommend.ClientId);
 
             var bankCard = client.GetBankCard(reportStolenBankCardCommend.BankCardId);
+
             bankCard.ReportStolen();
 
             _aggregateRepository.Commit();
