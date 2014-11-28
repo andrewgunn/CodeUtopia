@@ -1,7 +1,6 @@
 using System;
-using CodeUtopia.Messaging;
 
-namespace CodeUtopia
+namespace CodeUtopia.Messaging
 {
     public class RetryEventHandlerDecorator<TEvent> : IEventHandler<TEvent>
         where TEvent : class
