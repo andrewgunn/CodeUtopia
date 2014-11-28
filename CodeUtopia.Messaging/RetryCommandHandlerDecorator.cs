@@ -28,6 +28,7 @@ namespace CodeUtopia.Messaging
 
                 Console.WriteLine("Retrying ({2})...\t{0} ({1})", command, _decorated, _retryCounts.Count);
 
+                // TODO Don't defer indefinitely.
                 _bus.Defer(command, TimeSpan.FromSeconds(1));
             }
         }
