@@ -21,6 +21,7 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework.QueryHandlers
                 return accountDetail == null
                            ? null
                            : new AccountDetailProjection(accountDetail.AccountId,
+                                                         accountDetail.ClientId,
                                                          accountDetail.AccountName,
                                                          accountDetail.Balance);
             }
