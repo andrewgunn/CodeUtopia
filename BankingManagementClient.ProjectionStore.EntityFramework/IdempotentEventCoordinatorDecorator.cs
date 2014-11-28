@@ -1,17 +1,18 @@
-﻿using CodeUtopia.Events;
+﻿using System;
+using CodeUtopia.Events;
 using CodeUtopia.Messaging;
 
 namespace BankingManagementClient.ProjectionStore.EntityFramework
 {
     public class IdempotentEventCoordinatorDecorator : IEventCoordinator
     {
-        public IdempotentEventCoordinatorDecorator(string nameOrConnectionString, IEventCoordinator decorated)
+        public IdempotentEventCoordinatorDecorator(IEventCoordinator decorated, string nameOrConnectionString)
         {
-            _nameOrConnectionString = nameOrConnectionString;
             _decorated = decorated;
+            _nameOrConnectionString = nameOrConnectionString;
         }
 
-        public void Coordinate<TEvent>(TEvent @event) where TEvent : class
+        public void Coordinate<TEvent>(TEvent @event, IBus bus) where TEvent : class
         {
             // TODO Fix this code smell.
             var domainEvent = @event as IDomainEvent;
@@ -29,7 +30,8 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework
                 {
                     if (domainEvent.VersionNumber != 1)
                     {
-                        // TODO Defer the event.
+                        bus.Defer(@event, TimeSpan.FromSeconds(1));
+
                         return;
                     }
 
@@ -51,7 +53,8 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework
 
                     if (aggregate.VersionNumber != domainEvent.VersionNumber - 1)
                     {
-                        // TODO Defer the event.
+                        bus.Defer(@event, TimeSpan.FromSeconds(1));
+
                         return;
                     }
 
@@ -60,7 +63,7 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework
                 }
             }
 
-            _decorated.Coordinate(@event);
+            _decorated.Coordinate(@event, bus);
         }
 
         private readonly IEventCoordinator _decorated;
