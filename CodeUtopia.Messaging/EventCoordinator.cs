@@ -9,7 +9,7 @@
             _eventHandlerResolver = eventHandlerResolver;
         }
 
-        public void Coordinate<TEvent>(TEvent @event) where TEvent : class
+        public void Coordinate<TEvent>(TEvent @event, IBus bus) where TEvent : class
         {
             var eventHandlers = _eventHandlerResolver.Resolve<TEvent>();
 

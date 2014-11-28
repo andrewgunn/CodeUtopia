@@ -25,73 +25,71 @@ namespace BankingManagementClient.Autofac
 
             // Dependency resolver.
             builder.RegisterType<AutofacDependencyResolver>()
-                   .As<IDependencyResolver>();
+                .As<IDependencyResolver>();
 
             // Bus.
             builder.RegisterType<EasyNetQBus>()
-                   .As<IBus>();
+                .As<IBus>();
 
             builder.RegisterInstance(RabbitHutch.CreateBus("host=localhost"))
-                   .As<EasyNetQ.IBus>();
+                .As<EasyNetQ.IBus>();
 
             // Command handler resolver.
             builder.RegisterType<CommandHandlerResolver>()
-                   .As<ICommandHandlerResolver>();
+                .As<ICommandHandlerResolver>();
 
             // Command sender.
             builder.RegisterType<EasyNetQCommandSender>()
-                   .As<ICommandSender>();
+                .As<ICommandSender>();
 
             // Event coordinator.
             builder.RegisterType<EventCoordinator>()
-                   .Named<IEventCoordinator>("EventCoordinator");
+                .Named<IEventCoordinator>("EventCoordinator");
 
             builder.Register(
-                             x =>
-                             new IdempotentEventCoordinatorDecorator(projectionStoreNameOrConnectionString,
-                                                                     x.ResolveNamed<IEventCoordinator>(
-                                                                                                       "EventCoordinator")))
-                   .As<IEventCoordinator>();
+                x =>
+                    new IdempotentEventCoordinatorDecorator(x.ResolveNamed<IEventCoordinator>("EventCoordinator"), projectionStoreNameOrConnectionString))
+                .As<IEventCoordinator>();
 
             // Event handler resolver.
             builder.RegisterType<EventHandlerResolver>()
-                   .As<IEventHandlerResolver>();
+                .As<IEventHandlerResolver>();
 
             // Event publisher.
             builder.RegisterType<EasyNetQEventPublisher>()
-                   .As<IEventPublisher>();
+                .As<IEventPublisher>();
 
             // Event handlers.
-            var eventHandlerAssembly = Assembly.GetAssembly(typeof(ClientCreatedEventHandler));
+            var eventHandlerAssembly = Assembly.GetAssembly(typeof (ClientCreatedEventHandler));
 
             // TODO Create IProjectionStoreConnectionString
             builder.RegisterAssemblyTypes(eventHandlerAssembly)
-                   .WithParameter("nameOrConnectionString", projectionStoreNameOrConnectionString)
-                   .As(type => type.GetInterfaces()
-                                   .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(IEventHandler<>)))
-                                   .Select(interfaceType => new KeyedService("EventHandler", interfaceType)));
+                .WithParameter("nameOrConnectionString", projectionStoreNameOrConnectionString)
+                .As(type => type.GetInterfaces()
+                    .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof (IEventHandler<>)))
+                    .Select(interfaceType => new KeyedService("EventHandler", interfaceType)));
 
-            builder.RegisterGenericDecorator(typeof(RetryEventHandlerDecorator<>),
-                                             typeof(IEventHandler<>),
-                                             "EventHandler",
-                                             "RetryEventHandler");
+            builder.RegisterGenericDecorator(typeof (RetryEventHandlerDecorator<>),
+                typeof (IEventHandler<>),
+                "EventHandler",
+                "RetryEventHandler");
 
-            builder.RegisterGenericDecorator(typeof(LoggingEventHandlerDecorator<>),
-                                             typeof(IEventHandler<>),
-                                             "RetryEventHandler");
+            builder.RegisterGenericDecorator(typeof (LoggingEventHandlerDecorator<>),
+                typeof (IEventHandler<>),
+                "RetryEventHandler");
 
             // Query executor.
             builder.RegisterType<QueryExecutor>()
-                   .As<IQueryExecutor>();
+                .As<IQueryExecutor>();
 
             // Query handlers.
-            var queryHandlerAssembly = Assembly.GetAssembly(typeof(ClientQueryHandler));
+            var queryHandlerAssembly = Assembly.GetAssembly(typeof (ClientQueryHandler));
 
             // TODO Create IProjectionStoreConnectionString
             builder.RegisterAssemblyTypes(queryHandlerAssembly)
-                   .WithParameter("nameOrConnectionString", projectionStoreNameOrConnectionString)
-                   .As(type => type.GetInterfaces()
-                                   .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(IQueryHandler<,>))));
+                .WithParameter("nameOrConnectionString", projectionStoreNameOrConnectionString)
+                .As(type => type.GetInterfaces()
+                    .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof (IQueryHandler<,>))));
         }
     }
 }

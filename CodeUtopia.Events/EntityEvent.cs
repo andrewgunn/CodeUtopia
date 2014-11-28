@@ -11,7 +11,7 @@ namespace CodeUtopia.Events
             _entityId = entityId;
         }
 
-        Guid IEntityEvent.EntityId
+        public Guid EntityId
         {
             get
             {

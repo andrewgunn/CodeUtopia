@@ -2,6 +2,6 @@
 {
     public interface IEventCoordinator
     {
-        void Coordinate<TEvent>(TEvent @event) where TEvent : class;
+        void Coordinate<TEvent>(TEvent @event, IBus bus) where TEvent : class;
     }
 }

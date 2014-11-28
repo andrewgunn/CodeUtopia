@@ -145,7 +145,7 @@ namespace CodeUtopia.Messaging.EasyNetQ
             const string endpointName = "BankingManagementClient";
             var subscriptionId = string.Format("{0}-{1}Subscription", endpointName, eventType.Name);
 
-            _bus.Subscribe(subscriptionId, (TEvent x) => _eventCoordinator.Coordinate(x));
+            _bus.Subscribe(subscriptionId, (TEvent x) => _eventCoordinator.Coordinate(x, this));
         }
 
         private readonly global::EasyNetQ.IBus _bus;
