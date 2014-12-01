@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BankReporting.ProjectionStore.Projections.Client.ClientProjection>
+
+@{
+    ViewBag.Title = "Clients";
+}
+
+<h2>Clients</h2>
+
+@if (Model.Any())
+{
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ElementAt(0)
+                    .ClientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElementAt(0)
+                    .ClientName)
+            </th>
+        </tr>
+
+        @foreach (var clientProjection in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(clientProjection.ClientId.ToString(), "Details", new { id = clientProjection.ClientId })
+                </td>
+                <td>
+                    @Html.DisplayFor(model => clientProjection.ClientName)
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No clients found.</p>
+}

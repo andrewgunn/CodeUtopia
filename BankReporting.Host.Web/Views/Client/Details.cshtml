@@ -1,0 +1,90 @@
+﻿@model BankReporting.ProjectionStore.Projections.ClientDetail.ClientDetailProjection
+
+@{
+    ViewBag.Title = "Client detail";
+}
+
+<h2>@Html.DisplayFor(model => model.ClientName) (@Html.DisplayFor(model => model.ClientId))</h2>
+
+<p>
+    @Html.ActionLink("Back to Clients", "List")
+</p>
+
+<div>
+    <h4>@Html.DisplayNameFor(model => model.Accounts)</h4>
+    
+    @if (Model.Accounts.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Accounts.ElementAt(0)
+                    .AccountId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Accounts.ElementAt(0)
+                    .AccountName)
+                </th>
+            </tr>
+
+            @foreach (var accountProjection in Model.Accounts)
+            {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(accountProjection.AccountId.ToString(), "Details", "Account", new { id = accountProjection.AccountId }, null)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => accountProjection.AccountName)
+                        </td>
+                    </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <p>No accounts found.</p>
+    }
+</div>
+
+<div>
+    <h4>@Html.DisplayNameFor(model => model.BankCards)</h4>
+
+    @if (Model.BankCards.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BankCards.ElementAt(0)
+                    .BankCardId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BankCards.ElementAt(0)
+                    .IsStolen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BankCards.ElementAt(0)
+                    .StolenAt)
+                </th>
+            </tr>
+
+            @foreach (var bankCardProjection in Model.BankCards)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => bankCardProjection.BankCardId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => bankCardProjection.IsStolen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => bankCardProjection.StolenAt)
+                        </td>
+                    </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <p>No bank cards found.</p>
+    }
+</div>

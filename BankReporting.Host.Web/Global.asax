@@ -1,0 +1,1 @@
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="BankReporting.Host.Web.MvcApplication" Language="C#" %>

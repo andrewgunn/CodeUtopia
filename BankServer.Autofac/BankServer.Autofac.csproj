@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6535C27B-BD73-47C5-A6E5-85995EEAB0C1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BankServer.Autofac</RootNamespace>
+    <AssemblyName>BankServer.Autofac</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="EasyNetQ, Version=0.39.0.330, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EasyNetQ.0.39.0.330\lib\net40\EasyNetQ.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client, Version=3.4.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RabbitMQ.Client.3.4.0\lib\net35\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BankingBackendModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeUtopia.Autofac\CodeUtopia.Autofac.csproj">
+      <Project>{E3F3E269-BFC1-4C11-8EF6-4CE4C24C8060}</Project>
+      <Name>CodeUtopia.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BankServer.CommandHandlers\BankServer.CommandHandlers.csproj">
+      <Project>{527f85be-7957-43fe-ab7f-b2fb130df6a1}</Project>
+      <Name>BankServer.CommandHandlers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BankServer.Commands\BankServer.Commands.csproj">
+      <Project>{5d180d04-cc94-40eb-bf26-c039b40678b9}</Project>
+      <Name>BankServer.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BankServer.Events\BankServer.Events.csproj">
+      <Project>{2b227543-e5d4-47a2-b04c-17fcc3b9d8ab}</Project>
+      <Name>BankServer.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Domain\CodeUtopia.Domain.csproj">
+      <Project>{B05CBD95-7133-4B24-92B7-9C273E69A4D2}</Project>
+      <Name>CodeUtopia.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.EventStore.EntityFramework\CodeUtopia.EventStore.EntityFramework.csproj">
+      <Project>{D4520CB3-8013-4AC1-9034-379D069699C8}</Project>
+      <Name>CodeUtopia.EventStore.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.EventStore\CodeUtopia.EventStore.csproj">
+      <Project>{CD9D834E-D000-4687-ACCE-E8C16A65E33A}</Project>
+      <Name>CodeUtopia.EventStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">
+      <Project>{2382FC22-7FC9-43D2-AE77-4B2ADF8F0AB3}</Project>
+      <Name>CodeUtopia.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Messaging.EasyNetQ\CodeUtopia.Messaging.EasyNetQ.csproj">
+      <Project>{93836F52-A184-4ACD-9443-95982BF6A4E9}</Project>
+      <Name>CodeUtopia.Messaging.EasyNetQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
+      <Project>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</Project>
+      <Name>CodeUtopia.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
+      <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
+      <Name>CodeUtopia</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
