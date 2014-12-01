@@ -2,6 +2,7 @@
 
 namespace BankServer.Commands.v1
 {
+    //[Obsolete]
     public class ReportStolenBankCardCommand
     {
         public ReportStolenBankCardCommand(Guid clientId, Guid bankCardId)

@@ -1,4 +1,4 @@
-﻿@model BankReporting.ProjectionStore.Projections.ClientDetail.ClientDetailProjection
+﻿@model BankReporting.Queries.Projections.ClientDetail.ClientDetailProjection
 
 @{
     ViewBag.Title = "Client detail";
@@ -64,10 +64,10 @@
                     @Html.DisplayNameFor(model => model.BankCards.ElementAt(0)
                                                        .IsStolen)
                 </th>
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.BankCards.ElementAt(0)
                                                        .StolenAt)
-                </th>
+                </th>*@
             </tr>
 
             @foreach (var bankCardProjection in Model.BankCards)
@@ -79,9 +79,9 @@
                     <td>
                         @Html.DisplayFor(model => bankCardProjection.IsStolen)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(model => bankCardProjection.StolenAt)
-                    </td>
+                    </td>*@
                 </tr>
             }
         </table>

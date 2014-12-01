@@ -5,13 +5,12 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
 using BankReporting.Autofac;
-using BankReporting.ProjectionStore.Queries;
+using BankReporting.Queries;
 using BankServer.Commands.v1;
 using BankServer.Events.v1.Account;
 using BankServer.Events.v1.Client;
 using CodeUtopia;
 using CodeUtopia.Messaging;
-using BankCardReportedStolenEvent = BankServer.Events.v2.Client.BankCardReportedStolenEvent;
 
 namespace BankReporting.Host.Web
 {
@@ -31,11 +30,13 @@ namespace BankReporting.Host.Web
 
             var bus = container.Resolve<IBus>();
 
+            // Client.
             bus.Subscribe<ClientCreatedEvent>();
             bus.Subscribe<AccountAssignedEvent>();
             bus.Subscribe<NewBankCardAssignedEvent>();
             bus.Subscribe<BankCardReportedStolenEvent>();
 
+            // Account.
             bus.Subscribe<AccountCreatedEvent>();
             bus.Subscribe<AmountDepositedEvent>();
             bus.Subscribe<AmountWithdrawnEvent>();

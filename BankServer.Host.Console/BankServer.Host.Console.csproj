@@ -74,9 +74,9 @@
       <Project>{5D180D04-CC94-40EB-BF26-C039B40678B9}</Project>
       <Name>BankServer.Commands</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BankReporting.ProjectionStore\BankReporting.ProjectionStore.csproj">
+    <ProjectReference Include="..\BankReporting.Queries\BankReporting.Queries.csproj">
       <Project>{8C3CE7F9-C8BC-461A-B7BB-EF9235C31377}</Project>
-      <Name>BankReporting.ProjectionStore</Name>
+      <Name>BankReporting.Queries</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
       <Project>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</Project>

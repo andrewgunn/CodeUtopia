@@ -36,19 +36,19 @@ namespace BankServer.Domain.Client
             _isStolen = true;
         }
 
-        private void OnBankCardReportedStolen(Events.v2.Client.BankCardReportedStolenEvent bankCardReportedStolenEvent)
-        {
-            _isStolen = true;
-            _stolenAt = bankCardReportedStolenEvent.StolenAt;
-        }
+        //private void OnBankCardReportedStolen(Events.v2.Client.BankCardReportedStolenEvent bankCardReportedStolenEvent)
+        //{
+        //    _isStolen = true;
+        //    _stolenAt = bankCardReportedStolenEvent.StolenAt;
+        //}
 
         private void RegisterEventHandlers()
         {
             RegisterEventHandler<BankCardReportedStolenEvent>(OnBankCardReportedStolen);
-            RegisterEventHandler<Events.v2.Client.BankCardReportedStolenEvent>(OnBankCardReportedStolen);
+            //RegisterEventHandler<Events.v2.Client.BankCardReportedStolenEvent>(OnBankCardReportedStolen);
         }
 
-        [Obsolete]
+        //[Obsolete]
         public void ReportStolen()
         {
             EnsureIsInitialized();
@@ -57,21 +57,19 @@ namespace BankServer.Domain.Client
             Apply(new BankCardReportedStolenEvent(AggregateId, GetNextVersionNumber(), EntityId));
         }
 
-        public void ReportStolen(DateTime stolenAt)
-        {
-            EnsureIsInitialized();
-            EnsureNotReportedStolen();
+        //public void ReportStolen(DateTime stolenAt)
+        //{
+        //    EnsureIsInitialized();
+        //    EnsureNotReportedStolen();
 
-            Apply(new Events.v2.Client.BankCardReportedStolenEvent(AggregateId,
-                                                                   GetNextVersionNumber(),
-                                                                   EntityId,
-                                                                   stolenAt));
-        }
+        //    Apply(new Events.v2.Client.BankCardReportedStolenEvent(AggregateId,
+        //                                                           GetNextVersionNumber(),
+        //                                                           EntityId,
+        //                                                           stolenAt));
+        //}
 
         private readonly Guid _accountId;
 
         private bool _isStolen;
-
-        private DateTime? _stolenAt;
     }
 }

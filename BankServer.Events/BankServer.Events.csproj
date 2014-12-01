@@ -51,7 +51,6 @@
     <Compile Include="v1\Client\ClientDomainEvent.cs" />
     <Compile Include="v1\Client\ClientEntityEvent.cs" />
     <Compile Include="v1\Client\NewBankCardAssignedEvent.cs" />
-    <Compile Include="v2\Client\BankCardReportedStolenEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">

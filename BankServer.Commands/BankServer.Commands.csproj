@@ -47,7 +47,6 @@
     <Compile Include="v1\RepublishAllEventsCommand.cs" />
     <Compile Include="v1\WithdrawAmountCommand.cs" />
     <Compile Include="v1\DepositAmountCommand.cs" />
-    <Compile Include="v2\ReportStolenBankCardCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
-using BankReporting.ProjectionStore.Queries;
+using BankReporting.Queries;
 using CodeUtopia;
 
 namespace BankReporting.Host.Web.Controllers

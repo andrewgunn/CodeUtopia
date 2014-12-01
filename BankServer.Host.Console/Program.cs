@@ -2,7 +2,6 @@
 using BankServer.Autofac;
 using BankServer.Commands.v1;
 using CodeUtopia.Messaging;
-using ReportStolenBankCardCommand = BankServer.Commands.v2.ReportStolenBankCardCommand;
 
 namespace BankServer.Host.Console
 {
@@ -16,10 +15,14 @@ namespace BankServer.Host.Console
             var container = builder.Build();
 
             var bus = container.Resolve<IBus>();
+
+            // Client.
             bus.Listen<CreateClientCommand>();
             bus.Listen<OpenNewAccountCommand>();
             bus.Listen<AssignNewBankCardCommand>();
             bus.Listen<ReportStolenBankCardCommand>();
+
+            // Account.
             bus.Listen<DepositAmountCommand>();
             bus.Listen<WithdrawAmountCommand>();
             bus.Listen<RepublishAllEventsCommand>();

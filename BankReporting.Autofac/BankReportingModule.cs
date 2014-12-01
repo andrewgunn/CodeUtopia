@@ -2,9 +2,9 @@
 using System.Reflection;
 using Autofac;
 using Autofac.Core;
-using BankReporting.ProjectionStore.EntityFramework;
-using BankReporting.ProjectionStore.EntityFramework.Client.EventHandlers;
-using BankReporting.ProjectionStore.EntityFramework.QueryHandlers;
+using BankReporting.ProjectionStore;
+using BankReporting.ProjectionStore.Client.EventHandlers;
+using BankReporting.ProjectionStore.QueryHandlers;
 using CodeUtopia;
 using CodeUtopia.Autofac;
 using CodeUtopia.Messaging;

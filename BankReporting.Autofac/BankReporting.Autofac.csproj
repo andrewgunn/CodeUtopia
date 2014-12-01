@@ -56,9 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BankReporting.ProjectionStore.EntityFramework\BankReporting.ProjectionStore.EntityFramework.csproj">
+    <ProjectReference Include="..\BankReporting.ProjectionStore\BankReporting.ProjectionStore.csproj">
       <Project>{b79f8a3a-f305-4054-9b88-306de2ac42a1}</Project>
-      <Name>BankReporting.ProjectionStore.EntityFramework</Name>
+      <Name>BankReporting.ProjectionStore</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Autofac\CodeUtopia.Autofac.csproj">
       <Project>{E3F3E269-BFC1-4C11-8EF6-4CE4C24C8060}</Project>

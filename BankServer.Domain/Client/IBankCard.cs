@@ -7,6 +7,6 @@ namespace BankServer.Domain.Client
         [Obsolete]
         void ReportStolen();
 
-        void ReportStolen(DateTime stolenAt);
+        //void ReportStolen(DateTime stolenAt);
     }
 }

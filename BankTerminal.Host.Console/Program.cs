@@ -4,7 +4,6 @@ using BankServer.Commands.v1;
 using BankTerminal.Autofac;
 using CodeUtopia.Hydrator;
 using CodeUtopia.Messaging;
-using ReportStolenBankCardCommand = BankServer.Commands.v2.ReportStolenBankCardCommand;
 
 namespace BankTerminal.Host.Console
 {
@@ -45,7 +44,8 @@ namespace BankTerminal.Host.Console
 
                 if (random.Next(0, 2) == 0)
                 {
-                    bus.Send(new ReportStolenBankCardCommand(clientId, bankCardId, DateTime.UtcNow));
+                    bus.Send(new ReportStolenBankCardCommand(clientId, bankCardId));
+                    //bus.Send(new ReportStolenBankCardCommand(clientId, bankCardId, DateTime.UtcNow));
                 }
 
                 bus.Commit();

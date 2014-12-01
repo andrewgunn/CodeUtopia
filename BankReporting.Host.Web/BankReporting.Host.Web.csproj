@@ -163,9 +163,9 @@
       <Project>{fea6d277-241e-41ae-934a-4beb2d663605}</Project>
       <Name>BankReporting.Autofac</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BankReporting.ProjectionStore\BankReporting.ProjectionStore.csproj">
+    <ProjectReference Include="..\BankReporting.Queries\BankReporting.Queries.csproj">
       <Project>{8C3CE7F9-C8BC-461A-B7BB-EF9235C31377}</Project>
-      <Name>BankReporting.ProjectionStore</Name>
+      <Name>BankReporting.Queries</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">
       <Project>{2382FC22-7FC9-43D2-AE77-4B2ADF8F0AB3}</Project>
