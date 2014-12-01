@@ -18,7 +18,7 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework.ClientDetail.E
 
                 if (bankCard == null)
                 {
-                    return;
+                    throw new BankCardNotFoundException(bankCardReportedStolenEvent.BankCardId);
                 }
 
                 bankCard.IsStolen = true;

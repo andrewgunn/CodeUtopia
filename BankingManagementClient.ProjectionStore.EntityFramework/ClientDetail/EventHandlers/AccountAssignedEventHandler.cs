@@ -1,24 +1,25 @@
 ﻿using BankingBackend.Events.v1.Account;
+using BankingBackend.Events.v1.Client;
 using CodeUtopia;
 
 namespace BankingManagementClient.ProjectionStore.EntityFramework.ClientDetail.EventHandlers
 {
-    public class AccountCreatedEventHandler : IEventHandler<AccountCreatedEvent>
+    public class AccountAssignedEventHandler : IEventHandler<AccountAssignedEvent>
     {
-        public AccountCreatedEventHandler(string nameOrConnectionString)
+        public AccountAssignedEventHandler(string nameOrConnectionString)
         {
             _nameOrConnectionString = nameOrConnectionString;
         }
 
-        public void Handle(AccountCreatedEvent accountCreatedEvent)
+        public void Handle(AccountAssignedEvent accountAssignedEvent)
         {
             using (var databaseContext = new ProjectionStoreContext(_nameOrConnectionString))
             {
                 var account = new AccountEntity
                               {
-                                  AccountId = accountCreatedEvent.AccountId,
-                                  ClientId = accountCreatedEvent.ClientId,
-                                  AccountName = accountCreatedEvent.AccountName
+                                  AccountId = accountAssignedEvent.AccountId,
+                                  ClientId = accountAssignedEvent.ClientId,
+                                  AccountName = accountAssignedEvent.AccountName
                               };
 
                 databaseContext.Accounts.Add(account);

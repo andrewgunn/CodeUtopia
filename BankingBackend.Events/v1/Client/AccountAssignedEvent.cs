@@ -5,10 +5,11 @@ namespace BankingBackend.Events.v1.Client
     [Serializable]
     public class AccountAssignedEvent : ClientDomainEvent
     {
-        public AccountAssignedEvent(Guid clientId, int versionNumber, Guid accountId)
+        public AccountAssignedEvent(Guid clientId, int versionNumber, Guid accountId, string accountName)
             : base(clientId, versionNumber)
         {
             _accountId = accountId;
+            _accountName = accountName;
         }
 
         public Guid AccountId
@@ -19,6 +20,12 @@ namespace BankingBackend.Events.v1.Client
             }
         }
 
+        public string AccountName
+        {
+            get { return _accountName; }
+        }
+
         private readonly Guid _accountId;
+        private readonly string _accountName;
     }
 }

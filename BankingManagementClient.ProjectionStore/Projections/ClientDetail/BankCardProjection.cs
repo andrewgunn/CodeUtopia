@@ -4,7 +4,7 @@ namespace BankingManagementClient.ProjectionStore.Projections.ClientDetail
 {
     public class BankCardProjection
     {
-        public BankCardProjection(Guid bankCardId, Guid accountId, bool isStolen, DateTime stolenAt)
+        public BankCardProjection(Guid bankCardId, Guid accountId, bool isStolen, DateTime? stolenAt)
         {
             _bankCardId = bankCardId;
             _accountId = accountId;
@@ -36,7 +36,7 @@ namespace BankingManagementClient.ProjectionStore.Projections.ClientDetail
             }
         }
 
-        public DateTime StolenAt
+        public DateTime? StolenAt
         {
             get
             {
@@ -48,7 +48,7 @@ namespace BankingManagementClient.ProjectionStore.Projections.ClientDetail
         
         private readonly bool _isStolen;
         
-        private readonly DateTime _stolenAt;
+        private readonly DateTime? _stolenAt;
 
         private readonly Guid _bankCardId;
     }

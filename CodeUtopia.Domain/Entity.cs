@@ -64,7 +64,7 @@ namespace CodeUtopia.Domain
 
         public bool IsInitialized()
         {
-            return EntityId == default(Guid);
+            return EntityId != default(Guid);
         }
 
         public void LoadFromHistory(IReadOnlyCollection<IEntityEvent> entityEvents)

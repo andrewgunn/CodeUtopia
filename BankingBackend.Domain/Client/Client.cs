@@ -62,7 +62,7 @@ namespace BankingBackend.Domain.Client
 
             if (bankCard == null)
             {
-                throw new BankCardDoesNotExistException(bankCardId);
+                throw new BankCardNotFoundException(bankCardId);
             }
 
             return bankCard;
@@ -84,7 +84,7 @@ namespace BankingBackend.Domain.Client
 
             if (!_bankCards.TryGetValue(bankCardEvent.BankCardId, out bankCard))
             {
-                throw new BankCardDoesNotExistException(bankCardEvent.BankCardId);
+                throw new BankCardNotFoundException(bankCardEvent.BankCardId);
             }
 
             bankCard.LoadFromHistory(new[]
@@ -115,7 +115,7 @@ namespace BankingBackend.Domain.Client
 
             var account = Account.Account.Create(accountId, AggregateId, accountName);
 
-            Apply(new AccountAssignedEvent(AggregateId, GetNextVersionNumber(), accountId));
+            Apply(new AccountAssignedEvent(AggregateId, GetNextVersionNumber(), accountId, accountName));
 
             return account;
         }

@@ -46,7 +46,7 @@
     <Compile Include="Account\BalanceHasInsufficientFundsForWithdrawlException.cs" />
     <Compile Include="Client\AccountDoesNotBelongToClientException.cs" />
     <Compile Include="Client\BankCard.cs" />
-    <Compile Include="Client\BankCardDoesNotExistException.cs" />
+    <Compile Include="Client\BankCardNotFoundException.cs" />
     <Compile Include="Client\BankCardAlreadyReportedStolenException.cs" />
     <Compile Include="Client\Client.cs" />
     <Compile Include="Client\ClientName.cs" />

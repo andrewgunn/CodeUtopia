@@ -12,6 +12,6 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework.ClientDetail
 
         public bool IsStolen { get; set; }
 
-        public DateTime StolenAt { get; set; }
+        public DateTime? StolenAt { get; set; }
     }
 }

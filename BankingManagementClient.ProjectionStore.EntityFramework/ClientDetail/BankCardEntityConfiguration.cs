@@ -22,11 +22,9 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework.ClientDetail
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();
             Property(p => p.IsStolen)
-                .HasColumnOrder(++columnOrder)
-                .IsRequired();
+                .HasColumnOrder(++columnOrder);
             Property(p => p.StolenAt)
-                .HasColumnOrder(++columnOrder)
-                .IsRequired();
+                .HasColumnOrder(++columnOrder);
         }
     }
 }

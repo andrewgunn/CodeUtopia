@@ -65,8 +65,6 @@
                     @Html.DisplayNameFor(model => model.BankCards.ElementAt(0)
                     .StolenAt)
                 </th>
-                <th>
-                </th>
             </tr>
 
             @foreach (var bankCardProjection in Model.BankCards)
@@ -80,12 +78,6 @@
                         </td>
                         <td>
                             @Html.DisplayFor(model => bankCardProjection.StolenAt)
-                        </td>
-                        <td>
-                            @using (Html.BeginForm("ReportAsStolen", "BankCard", new { id = bankCardProjection.BankCardId, clientId = Model.ClientId }))
-                            {
-                                <button class="btn btn-primary" @(bankCardProjection.IsStolen ? "disabled" : "")>Report as stolen</button>
-                            }
                         </td>
                     </tr>
             }

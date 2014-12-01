@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Reflection.Emit;
 using System.Threading;
 using EasyNetQ;
@@ -71,7 +72,7 @@ namespace CodeUtopia.Messaging.EasyNetQ
 
             var eventType = typeof(TEvent);
 
-            var subscriptionId = string.Format("{0}-{1}Subscription", _endpointName, eventType.Name);
+            var subscriptionId = string.Format("{0}:{1}_{2}-{3}Subscription", eventType.FullName, eventType.Assembly.FullName.Split(',').ElementAt(0), _endpointName, eventType.Name);
 
             _bus.Send(subscriptionId, @event);
         }
