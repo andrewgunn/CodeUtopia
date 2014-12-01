@@ -1,13 +1,8 @@
-﻿namespace CodeUtopia
+namespace CodeUtopia
 {
-    public interface IQueryExecutor
+    public sealed class QueryDispatcher : IQueryDispatcher
     {
-        TResult Execute<TResult>(IQuery<TResult> query);
-    }
-
-    public sealed class QueryExecutor : IQueryExecutor
-    {
-        public QueryExecutor(IDependencyResolver dependencyResolver)
+        public QueryDispatcher(IDependencyResolver dependencyResolver)
         {
             _dependencyResolver = dependencyResolver;
         }

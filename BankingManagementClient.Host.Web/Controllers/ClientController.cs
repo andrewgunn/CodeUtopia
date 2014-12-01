@@ -7,7 +7,7 @@ namespace BankingManagementClient.Host.Web.Controllers
 {
     public class ClientController : Controller
     {
-        public ClientController(IQueryExecutor queryExecutor)
+        public ClientController(IQueryDispatcher queryExecutor)
         {
             _queryExecutor = queryExecutor;
         }
@@ -26,6 +26,6 @@ namespace BankingManagementClient.Host.Web.Controllers
             return View(clientsProjection.ClientProjections);
         }
 
-        private readonly IQueryExecutor _queryExecutor;
+        private readonly IQueryDispatcher _queryExecutor;
     }
 }

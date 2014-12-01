@@ -44,7 +44,7 @@ namespace BankingManagementClient.Host.Web
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            var queryExecutor = container.Resolve<IQueryExecutor>();
+            var queryExecutor = container.Resolve<IQueryDispatcher>();
 
             var projection = queryExecutor.Execute(new ClientsQuery());
 

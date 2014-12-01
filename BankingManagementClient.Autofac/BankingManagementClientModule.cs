@@ -79,9 +79,9 @@ namespace BankingManagementClient.Autofac
                 typeof (IEventHandler<>),
                 "RetryEventHandler");
 
-            // Query executor.
-            builder.RegisterType<QueryExecutor>()
-                .As<IQueryExecutor>();
+            // Query dispatcher.
+            builder.RegisterType<QueryDispatcher>()
+                .As<IQueryDispatcher>();
 
             // Query handlers.
             var queryHandlerAssembly = Assembly.GetAssembly(typeof (ClientQueryHandler));
