@@ -53,7 +53,6 @@ namespace BankReporting.Host.Web
                 bus.Send(new RepublishAllEventsCommand());
                 bus.Commit();
             }
-
         }
     }
 }

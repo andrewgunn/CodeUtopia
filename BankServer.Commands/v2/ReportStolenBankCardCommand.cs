@@ -37,8 +37,8 @@ namespace BankServer.Commands.v2
 
         private readonly Guid _bankCardId;
 
-        private readonly DateTime _stolenAt;
-
         private readonly Guid _clientId;
+
+        private readonly DateTime _stolenAt;
     }
 }

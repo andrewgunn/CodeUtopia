@@ -52,8 +52,7 @@ namespace CodeUtopia.EventStore.EntityFramework
 
         public IReadOnlyCollection<IDomainEvent> GetAll(int skip, int take)
         {
-            return _databaseContext.DomainEvents
-                                   .OrderBy(x=> x.AggregateId)
+            return _databaseContext.DomainEvents.OrderBy(x => x.AggregateId)
                                    .ThenBy(x => x.VersionNumber)
                                    .Skip(skip)
                                    .Take(take)

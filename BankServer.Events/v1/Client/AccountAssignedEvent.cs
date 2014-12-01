@@ -22,10 +22,14 @@ namespace BankServer.Events.v1.Client
 
         public string AccountName
         {
-            get { return _accountName; }
+            get
+            {
+                return _accountName;
+            }
         }
 
         private readonly Guid _accountId;
+
         private readonly string _accountName;
     }
 }

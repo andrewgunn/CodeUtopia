@@ -1,4 +1,5 @@
 ﻿using System;
+using BankServer.Events.v1.Client;
 using CodeUtopia.Domain;
 
 namespace BankServer.Domain.Client
@@ -30,7 +31,7 @@ namespace BankServer.Domain.Client
             }
         }
 
-        private void OnBankCardReportedStolen(Events.v1.Client.BankCardReportedStolenEvent bankCardReportedStolenEvent)
+        private void OnBankCardReportedStolen(BankCardReportedStolenEvent bankCardReportedStolenEvent)
         {
             _isStolen = true;
         }
@@ -43,7 +44,7 @@ namespace BankServer.Domain.Client
 
         private void RegisterEventHandlers()
         {
-            RegisterEventHandler<Events.v1.Client.BankCardReportedStolenEvent>(OnBankCardReportedStolen);
+            RegisterEventHandler<BankCardReportedStolenEvent>(OnBankCardReportedStolen);
             RegisterEventHandler<Events.v2.Client.BankCardReportedStolenEvent>(OnBankCardReportedStolen);
         }
 
@@ -53,7 +54,7 @@ namespace BankServer.Domain.Client
             EnsureIsInitialized();
             EnsureNotReportedStolen();
 
-            Apply(new Events.v1.Client.BankCardReportedStolenEvent(AggregateId, GetNextVersionNumber(), EntityId));
+            Apply(new BankCardReportedStolenEvent(AggregateId, GetNextVersionNumber(), EntityId));
         }
 
         public void ReportStolen(DateTime stolenAt)
@@ -61,7 +62,10 @@ namespace BankServer.Domain.Client
             EnsureIsInitialized();
             EnsureNotReportedStolen();
 
-            Apply(new Events.v2.Client.BankCardReportedStolenEvent(AggregateId, GetNextVersionNumber(), EntityId, stolenAt));
+            Apply(new Events.v2.Client.BankCardReportedStolenEvent(AggregateId,
+                                                                   GetNextVersionNumber(),
+                                                                   EntityId,
+                                                                   stolenAt));
         }
 
         private readonly Guid _accountId;

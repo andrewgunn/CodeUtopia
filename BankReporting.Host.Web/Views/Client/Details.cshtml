@@ -19,24 +19,27 @@
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Accounts.ElementAt(0)
-                    .AccountId)
+                                                       .AccountId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Accounts.ElementAt(0)
-                    .AccountName)
+                                                       .AccountName)
                 </th>
             </tr>
 
             @foreach (var accountProjection in Model.Accounts)
             {
-                    <tr>
-                        <td>
-                            @Html.ActionLink(accountProjection.AccountId.ToString(), "Details", "Account", new { id = accountProjection.AccountId }, null)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => accountProjection.AccountName)
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.ActionLink(accountProjection.AccountId.ToString(), "Details", "Account", new
+                                                                                                       {
+                                                                                                           id = accountProjection.AccountId
+                                                                                                       }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => accountProjection.AccountName)
+                    </td>
+                </tr>
             }
         </table>
     }
@@ -55,31 +58,31 @@
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.BankCards.ElementAt(0)
-                    .BankCardId)
+                                                       .BankCardId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.BankCards.ElementAt(0)
-                    .IsStolen)
+                                                       .IsStolen)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.BankCards.ElementAt(0)
-                    .StolenAt)
+                                                       .StolenAt)
                 </th>
             </tr>
 
             @foreach (var bankCardProjection in Model.BankCards)
             {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => bankCardProjection.BankCardId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => bankCardProjection.IsStolen)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => bankCardProjection.StolenAt)
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => bankCardProjection.BankCardId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => bankCardProjection.IsStolen)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => bankCardProjection.StolenAt)
+                    </td>
+                </tr>
             }
         </table>
     }

@@ -7,7 +7,10 @@
 <h2>@Html.DisplayFor(model => model.AccountName) (@Html.DisplayFor(model => model.AccountId))</h2>
 
 <p>
-    @Html.ActionLink("Back to Client", "Details", "Client", new { id = Model.ClientId }, null)
+    @Html.ActionLink("Back to Client", "Details", "Client", new
+                                                            {
+                                                                id = Model.ClientId
+                                                            }, null)
 </p>
 
 <div>

@@ -2,7 +2,7 @@
 
 namespace BankReporting.ProjectionStore.EntityFramework
 {
-    public class AggregateEntity 
+    public class AggregateEntity
     {
         public Guid AggregateId { get; set; }
 

@@ -6,8 +6,6 @@ namespace BankServer.Events.v2.Client
     [Serializable]
     public class BankCardReportedStolenEvent : BankCardEvent
     {
-        private readonly DateTime _stolenAt;
-
         public BankCardReportedStolenEvent(Guid clientId, int versionNumber, Guid bankCardId, DateTime stolenAt)
             : base(clientId, versionNumber, bankCardId)
         {
@@ -21,5 +19,7 @@ namespace BankServer.Events.v2.Client
                 return _stolenAt;
             }
         }
+
+        private readonly DateTime _stolenAt;
     }
 }

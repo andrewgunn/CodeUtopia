@@ -20,8 +20,8 @@ namespace BankTerminal.Autofac
 
             // Bus.
             builder.RegisterType<EasyNetQBus>()
-                    .WithParameter("endpointName", "BankingClient")
-                    .As<IBus>();
+                   .WithParameter("endpointName", "BankTerminal")
+                   .As<IBus>();
 
             builder.RegisterInstance(RabbitHutch.CreateBus("host=localhost"))
                    .As<EasyNetQ.IBus>();

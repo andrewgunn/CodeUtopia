@@ -29,8 +29,14 @@ namespace BankReporting.ProjectionStore.EntityFramework.QueryHandlers
 
                 var accounts = clientDetail.Accounts.Select(x => new AccountProjection(x.AccountId, x.AccountName))
                                            .ToList();
-                var bankCards = clientDetail.BankCards.Select(x => new BankCardProjection(x.BankCardId, x.AccountId, x.IsStolen, x.StolenAt))
-                                            .ToList();
+                var bankCards =
+                    clientDetail.BankCards.Select(
+                                                  x =>
+                                                  new BankCardProjection(x.BankCardId,
+                                                                         x.AccountId,
+                                                                         x.IsStolen,
+                                                                         x.StolenAt))
+                                .ToList();
 
                 return new ClientDetailProjection(clientDetail.ClientId, clientDetail.ClientName, accounts, bankCards);
             }

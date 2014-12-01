@@ -38,14 +38,18 @@ namespace BankReporting.ProjectionStore.Projections.AccountDetail
 
         public Guid ClientId
         {
-            get { return _clientId; }
+            get
+            {
+                return _clientId;
+            }
         }
 
         private readonly Guid _accountId;
-        private readonly Guid _clientId;
 
         private readonly string _accountName;
 
         private readonly decimal _balance;
+
+        private readonly Guid _clientId;
     }
 }

@@ -21,15 +21,15 @@ namespace BankTerminal.Host.Console
 
             var bus = container.Resolve<IBus>();
 
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 // Client.
                 var clientId = Guid.NewGuid();
 
                 bus.Send(new CreateClientCommand(clientId,
-                    string.Format("{0} {1}",
-                        FirstNameGenerator.RandomFirstName(),
-                        LastNameGenerator.RandomLastName())));
+                                                 string.Format("{0} {1}",
+                                                               FirstNameGenerator.RandomFirstName(),
+                                                               LastNameGenerator.RandomLastName())));
 
                 // Account.
                 var accountId = Guid.NewGuid();

@@ -10,9 +10,6 @@ namespace BankServer.CommandHandlers
 {
     public class RepublishAllEventsCommandHandler : ICommandHandler<RepublishAllEventsCommand>
     {
-        private readonly IEventStorage _eventStorage;
-        private readonly IBus _bus;
-
         public RepublishAllEventsCommandHandler(IEventStorage eventStorage, IBus bus)
         {
             _eventStorage = eventStorage;
@@ -38,5 +35,9 @@ namespace BankServer.CommandHandlers
                 skip += take;
             }
         }
+
+        private readonly IBus _bus;
+
+        private readonly IEventStorage _eventStorage;
     }
 }

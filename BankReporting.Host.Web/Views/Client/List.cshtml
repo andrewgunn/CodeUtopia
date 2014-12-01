@@ -12,11 +12,11 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.ElementAt(0)
-                    .ClientId)
+                                                   .ClientId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ElementAt(0)
-                    .ClientName)
+                                                   .ClientName)
             </th>
         </tr>
 
@@ -24,7 +24,10 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(clientProjection.ClientId.ToString(), "Details", new { id = clientProjection.ClientId })
+                    @Html.ActionLink(clientProjection.ClientId.ToString(), "Details", new
+                                                                                      {
+                                                                                          id = clientProjection.ClientId
+                                                                                      })
                 </td>
                 <td>
                     @Html.DisplayFor(model => clientProjection.ClientName)

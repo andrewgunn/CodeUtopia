@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Threading;
-using EasyNetQ;
 using EasyNetQ.Consumer;
 
 namespace CodeUtopia.Messaging.EasyNetQ
@@ -61,7 +59,7 @@ namespace CodeUtopia.Messaging.EasyNetQ
         private void DeferCommand<TCommand>(TCommand command, TimeSpan delay) where TCommand : class
         {
             Thread.Sleep(delay);
-            string queue = _endpointName;
+            var queue = _endpointName;
 
             _bus.Send(queue, command);
         }
@@ -72,14 +70,29 @@ namespace CodeUtopia.Messaging.EasyNetQ
 
             var eventType = typeof(TEvent);
 
-            var subscriptionId = string.Format("{0}:{1}_{2}-{3}Subscription", eventType.FullName, eventType.Assembly.FullName.Split(',').ElementAt(0), _endpointName, eventType.Name);
+            var subscriptionId = string.Format("{0}:{1}_{2}-{3}Subscription",
+                                               eventType.FullName,
+                                               eventType.Assembly.FullName.Split(',')
+                                                        .ElementAt(0),
+                                               _endpointName,
+                                               eventType.Name);
 
             _bus.Send(subscriptionId, @event);
         }
 
+        private void InternalListen<TCommand>() where TCommand : class
+        {
+            _registration.Add((TCommand command) =>
+                              {
+                                  var commandHandler = _commandHandlerResolver.Resolve<TCommand>();
+
+                                  commandHandler.Handle(command);
+                              });
+        }
+
         public void Listen<TCommand>() where TCommand : class
         {
-            string queueName = _endpointName;
+            var queueName = _endpointName;
 
             if (_registration == null)
             {
@@ -88,26 +101,15 @@ namespace CodeUtopia.Messaging.EasyNetQ
                     if (_registration == null)
                     {
                         _bus.Receive(queueName,
-                            registration =>
-                            {
-                                _registration = registration;
-                            });
+                                     registration =>
+                                     {
+                                         _registration = registration;
+                                     });
                     }
                 }
             }
 
             InternalListen<TCommand>();
-        }
-    
-
-        private void InternalListen<TCommand>() where TCommand : class
-        {
-            _registration.Add((TCommand command) =>
-                             {
-                                 var commandHandler = _commandHandlerResolver.Resolve<TCommand>();
-
-                                 commandHandler.Handle(command);
-                             });
         }
 
         public void Publish<TEvent>(TEvent message) where TEvent : class
@@ -160,16 +162,16 @@ namespace CodeUtopia.Messaging.EasyNetQ
 
         private ConcurrentQueue<object> _commands;
 
+        private readonly string _endpointName;
+
         private readonly IEventCoordinator _eventCoordinator;
 
         private readonly IEventPublisher _eventPublisher;
 
-        private readonly string _endpointName;
-
         private ConcurrentQueue<object> _events;
-        
+
         private IReceiveRegistration _registration;
 
-        private object _registrationLock = new object();
+        private readonly object _registrationLock = new object();
     }
 }

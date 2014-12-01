@@ -32,7 +32,7 @@ namespace BankServer.Autofac
 
             // Bus.
             builder.RegisterType<EasyNetQBus>()
-                .WithParameter("endpointName", "BankingBackend")
+                   .WithParameter("endpointName", "BankServer")
                    .As<IBus>();
 
             builder.RegisterInstance(RabbitHutch.CreateBus("host=localhost"))

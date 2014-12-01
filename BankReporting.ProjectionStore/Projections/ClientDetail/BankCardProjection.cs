@@ -45,11 +45,11 @@ namespace BankReporting.ProjectionStore.Projections.ClientDetail
         }
 
         private readonly Guid _accountId;
-        
-        private readonly bool _isStolen;
-        
-        private readonly DateTime? _stolenAt;
 
         private readonly Guid _bankCardId;
+
+        private readonly bool _isStolen;
+
+        private readonly DateTime? _stolenAt;
     }
 }

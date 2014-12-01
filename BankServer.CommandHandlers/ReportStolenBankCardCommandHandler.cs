@@ -1,18 +1,19 @@
-﻿using BankServer.Commands.v2;
+﻿using BankServer.Commands.v1;
 using BankServer.Domain.Client;
 using CodeUtopia;
 using CodeUtopia.Domain;
 
 namespace BankServer.CommandHandlers
 {
-    public class ReportStolenBankCardCommandHandler : ICommandHandler<Commands.v1.ReportStolenBankCardCommand>, ICommandHandler<ReportStolenBankCardCommand>
+    public class ReportStolenBankCardCommandHandler : ICommandHandler<ReportStolenBankCardCommand>,
+                                                      ICommandHandler<Commands.v2.ReportStolenBankCardCommand>
     {
         public ReportStolenBankCardCommandHandler(IAggregateRepository aggregateRepository)
         {
             _aggregateRepository = aggregateRepository;
         }
 
-        public void Handle(Commands.v1.ReportStolenBankCardCommand reportStolenBankCardCommend)
+        public void Handle(ReportStolenBankCardCommand reportStolenBankCardCommend)
         {
             var client = _aggregateRepository.Get<Client>(reportStolenBankCardCommend.ClientId);
 
@@ -23,7 +24,7 @@ namespace BankServer.CommandHandlers
             _aggregateRepository.Commit();
         }
 
-        public void Handle(ReportStolenBankCardCommand reportStolenBankCardCommend)
+        public void Handle(Commands.v2.ReportStolenBankCardCommand reportStolenBankCardCommend)
         {
             var client = _aggregateRepository.Get<Client>(reportStolenBankCardCommend.ClientId);
 
