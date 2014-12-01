@@ -18,7 +18,7 @@ using Module = Autofac.Module;
 
 namespace BankServer.Autofac
 {
-    public class BankingBackendModule : Module
+    public class BankServerModuke : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

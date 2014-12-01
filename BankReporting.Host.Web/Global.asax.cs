@@ -25,7 +25,7 @@ namespace BankReporting.Host.Web
             builder.RegisterModelBinderProvider();
             builder.RegisterModelBinders(typeof(MvcApplication).Assembly);
 
-            builder.RegisterModule(new BankingManagementClientModule());
+            builder.RegisterModule(new BankReportingModule());
 
             var container = builder.Build();
 

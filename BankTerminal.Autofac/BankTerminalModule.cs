@@ -8,7 +8,7 @@ using IBus = CodeUtopia.Messaging.IBus;
 
 namespace BankTerminal.Autofac
 {
-    public class BankingClientModule : Module
+    public class BankTerminalModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

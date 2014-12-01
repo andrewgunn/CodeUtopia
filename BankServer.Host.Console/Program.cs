@@ -11,7 +11,7 @@ namespace BankServer.Host.Console
         private static void Main(string[] args)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterModule(new BankingBackendModule());
+            builder.RegisterModule(new BankServerModuke());
 
             var container = builder.Build();
 

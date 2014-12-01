@@ -15,7 +15,7 @@ namespace BankTerminal.Host.Console
             var random = RandomSingleton.Instance;
 
             var builder = new ContainerBuilder();
-            builder.RegisterModule(new BankingClientModule());
+            builder.RegisterModule(new BankTerminalModule());
 
             var container = builder.Build();
 

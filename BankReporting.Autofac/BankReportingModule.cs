@@ -15,7 +15,7 @@ using Module = Autofac.Module;
 
 namespace BankReporting.Autofac
 {
-    public class BankingManagementClientModule : Module
+    public class BankReportingModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
