@@ -12,6 +12,10 @@ using BankingManagementClient.Autofac;
 using BankingManagementClient.ProjectionStore.Queries;
 using CodeUtopia;
 using CodeUtopia.Messaging;
+using NServiceBus;
+using NServiceBus.Features;
+using NServiceBus.Logging;
+using IBus = NServiceBus.IBus;
 
 namespace BankingManagementClient.Host.Web
 {
@@ -29,16 +33,12 @@ namespace BankingManagementClient.Host.Web
 
             var container = builder.Build();
 
-            var bus = container.Resolve<IBus>();
+            var busConfiguration = new BusConfiguration();
+            busConfiguration = ConfigureBus(busConfiguration, container);
+            busConfiguration.EndpointName("BankingManagementClient");
+            var startableBus = Bus.Create(busConfiguration);
+            var bus = startableBus.Start();
 
-            bus.Subscribe<BankingBackend.Events.v1.Client.ClientCreatedEvent>();
-            bus.Subscribe<BankingBackend.Events.v1.Client.AccountAssignedEvent>();
-            bus.Subscribe<BankingBackend.Events.v1.Client.NewBankCardAssignedEvent>();
-            bus.Subscribe<BankingBackend.Events.v2.Client.BankCardReportedStolenEvent>();
-
-            bus.Subscribe<BankingBackend.Events.v1.Account.AccountCreatedEvent>();
-            bus.Subscribe<BankingBackend.Events.v1.Account.AmountDepositedEvent>();
-            bus.Subscribe<BankingBackend.Events.v1.Account.AmountWithdrawnEvent>();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             AreaRegistration.RegisterAllAreas();
@@ -51,9 +51,27 @@ namespace BankingManagementClient.Host.Web
             if (!projection.ClientProjections.Any())
             {
                 bus.Send(new RepublishAllEventsCommand());
-                bus.Commit();
             }
 
+        }
+
+        private BusConfiguration ConfigureBus(BusConfiguration busConfiguration, ILifetimeScope lifetimeScope)
+        {
+            LogManager.Use<DefaultFactory>();
+
+            busConfiguration.UseSerialization<JsonSerializer>();
+            busConfiguration.DisableFeature<Sagas>();
+            busConfiguration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(lifetimeScope));
+
+            busConfiguration.UseTransport<RabbitMQTransport>();
+
+            var conventions = busConfiguration.Conventions();
+            conventions.DefiningCommandsAs(x => x.Name.EndsWith("Command"));
+            conventions.DefiningEventsAs(x => x.Name.EndsWith("Event"));
+
+            busConfiguration.UsePersistence<InMemoryPersistence>();
+
+            return busConfiguration;
         }
     }
 }

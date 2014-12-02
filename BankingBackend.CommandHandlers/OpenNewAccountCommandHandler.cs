@@ -2,10 +2,11 @@
 using BankingBackend.Domain.Client;
 using CodeUtopia;
 using CodeUtopia.Domain;
+using NServiceBus;
 
 namespace BankingBackend.CommandHandlers
 {
-    public class OpenNewAccountCommandHandler : ICommandHandler<OpenNewAccountCommand>
+    public class OpenNewAccountCommandHandler : IHandleMessages<OpenNewAccountCommand>
     {
         public OpenNewAccountCommandHandler(IAggregateRepository aggregateRepository)
         {

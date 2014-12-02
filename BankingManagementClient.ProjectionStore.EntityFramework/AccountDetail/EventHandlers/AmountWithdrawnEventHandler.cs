@@ -1,13 +1,14 @@
 using BankingBackend.Events.v1.Account;
 using CodeUtopia;
+using NServiceBus;
 
 namespace BankingManagementClient.ProjectionStore.EntityFramework.AccountDetail.EventHandlers
 {
-    public class AmountWithdrawnEventHandler : IEventHandler<AmountWithdrawnEvent>
+    public class AmountWithdrawnEventHandler : IHandleMessages<AmountWithdrawnEvent>
     {
-        public AmountWithdrawnEventHandler(string nameOrConnectionString)
+        public AmountWithdrawnEventHandler()
         {
-            _nameOrConnectionString = nameOrConnectionString;
+            _nameOrConnectionString = "ProjectionStore";
         }
 
         public void Handle(AmountWithdrawnEvent amountWithdrawnEvent)

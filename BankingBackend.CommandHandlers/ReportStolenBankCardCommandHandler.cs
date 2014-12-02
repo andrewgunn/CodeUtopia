@@ -1,13 +1,11 @@
-﻿using System;
-using BankingBackend.Commands;
-using BankingBackend.Commands.v2;
+﻿using BankingBackend.Commands.v2;
 using BankingBackend.Domain.Client;
-using CodeUtopia;
 using CodeUtopia.Domain;
+using NServiceBus;
 
 namespace BankingBackend.CommandHandlers
 {
-    public class ReportStolenBankCardCommandHandler : ICommandHandler<Commands.v1.ReportStolenBankCardCommand>, ICommandHandler<ReportStolenBankCardCommand>
+    public class ReportStolenBankCardCommandHandler : IHandleMessages<Commands.v1.ReportStolenBankCardCommand>, IHandleMessages<ReportStolenBankCardCommand>
     {
         public ReportStolenBankCardCommandHandler(IAggregateRepository aggregateRepository)
         {

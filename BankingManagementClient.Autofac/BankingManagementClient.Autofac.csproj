@@ -33,11 +33,8 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="EasyNetQ">
-      <HintPath>..\packages\EasyNetQ.0.38.1.327\lib\net40\EasyNetQ.dll</HintPath>
-    </Reference>
-    <Reference Include="RabbitMQ.Client">
-      <HintPath>..\packages\RabbitMQ.Client.3.4.0\lib\net35\RabbitMQ.Client.dll</HintPath>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\packages\NServiceBus.5.1.2\lib\net45\NServiceBus.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -63,9 +60,9 @@
       <Project>{E3F3E269-BFC1-4C11-8EF6-4CE4C24C8060}</Project>
       <Name>CodeUtopia.Autofac</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.Messaging.EasyNetQ\CodeUtopia.Messaging.EasyNetQ.csproj">
-      <Project>{93836F52-A184-4ACD-9443-95982BF6A4E9}</Project>
-      <Name>CodeUtopia.Messaging.EasyNetQ</Name>
+    <ProjectReference Include="..\CodeUtopia.Messaging.NServiceBus\CodeUtopia.Messaging.NServiceBus.csproj">
+      <Project>{3DC42EF3-686A-46DE-A810-A43AFE2ECC23}</Project>
+      <Name>CodeUtopia.Messaging.NServiceBus</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
       <Project>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</Project>

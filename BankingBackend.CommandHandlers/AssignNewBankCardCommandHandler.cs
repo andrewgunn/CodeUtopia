@@ -1,11 +1,11 @@
 ﻿using BankingBackend.Commands.v1;
 using BankingBackend.Domain.Client;
-using CodeUtopia;
 using CodeUtopia.Domain;
+using NServiceBus;
 
 namespace BankingBackend.CommandHandlers
 {
-    public class AssignNewBankCardCommandHandler : ICommandHandler<AssignNewBankCardCommand>
+    public class AssignNewBankCardCommandHandler : IHandleMessages<AssignNewBankCardCommand>
     {
         public AssignNewBankCardCommandHandler(IAggregateRepository aggregateRepository)
         {

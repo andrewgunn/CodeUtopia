@@ -8,17 +8,10 @@ namespace CodeUtopia.Events
         protected EntityEvent(Guid aggregateId, int versionNumber, Guid entityId)
             : base(aggregateId, versionNumber)
         {
-            _entityId = entityId;
+            EntityId = entityId;
         }
 
-        public Guid EntityId
-        {
-            get
-            {
-                return _entityId;
-            }
-        }
+        public Guid EntityId { get; set; }
 
-        private readonly Guid _entityId;
     }
 }

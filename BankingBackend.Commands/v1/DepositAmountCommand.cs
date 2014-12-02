@@ -1,33 +1,19 @@
 using System;
+using Newtonsoft.Json;
 
 namespace BankingBackend.Commands.v1
 {
     public class DepositAmountCommand
     {
+        [JsonConstructor]
         public DepositAmountCommand(Guid accountId, decimal amount)
         {
-            _accountId = accountId;
-            _amount = amount;
+            AccountId = accountId;
+            Amount = amount;
         }
 
-        public Guid AccountId
-        {
-            get
-            {
-                return _accountId;
-            }
-        }
+        public Guid AccountId { get; set; }
 
-        public decimal Amount
-        {
-            get
-            {
-                return _amount;
-            }
-        }
-
-        private readonly Guid _accountId;
-
-        private readonly decimal _amount;
+        public decimal Amount { get; set; }
     }
 }

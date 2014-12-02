@@ -1,11 +1,11 @@
 ﻿using BankingBackend.Commands.v1;
 using BankingBackend.Domain.Account;
-using CodeUtopia;
 using CodeUtopia.Domain;
+using NServiceBus;
 
 namespace BankingBackend.CommandHandlers
 {
-    public class WithdrawAmountCommandHandler : ICommandHandler<WithdrawAmountCommand>
+    public class WithdrawAmountCommandHandler : IHandleMessages<WithdrawAmountCommand>
     {
         public WithdrawAmountCommandHandler(IAggregateRepository aggregateRepository)
         {

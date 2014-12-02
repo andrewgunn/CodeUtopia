@@ -1,24 +1,18 @@
 using System;
+using Newtonsoft.Json;
 
 namespace BankingBackend.Events.v1.Client
 {
     [Serializable]
     public class AccountAssignedEvent : ClientDomainEvent
     {
+        [JsonConstructor]
         public AccountAssignedEvent(Guid clientId, int versionNumber, Guid accountId)
             : base(clientId, versionNumber)
         {
-            _accountId = accountId;
+            AccountId = accountId;
         }
 
-        public Guid AccountId
-        {
-            get
-            {
-                return _accountId;
-            }
-        }
-
-        private readonly Guid _accountId;
+        public Guid AccountId { get; set; }
     }
 }

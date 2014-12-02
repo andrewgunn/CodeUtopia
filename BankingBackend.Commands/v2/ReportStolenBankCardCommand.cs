@@ -1,9 +1,11 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace BankingBackend.Commands.v2
 {
     public class ReportStolenBankCardCommand
     {
+        [JsonConstructor]
         public ReportStolenBankCardCommand(Guid clientId, Guid bankCardId, DateTime stolenAt)
         {
             _clientId = clientId;

@@ -2,10 +2,11 @@
 using BankingBackend.Domain.Account;
 using CodeUtopia;
 using CodeUtopia.Domain;
+using NServiceBus;
 
 namespace BankingBackend.CommandHandlers
 {
-    public class DepositAmountCommandHandler : ICommandHandler<DepositAmountCommand>
+    public class DepositAmountCommandHandler : IHandleMessages<DepositAmountCommand>
     {
         public DepositAmountCommandHandler(IAggregateRepository aggregateRepository)
         {

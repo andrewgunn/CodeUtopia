@@ -1,13 +1,14 @@
 ﻿using BankingBackend.Events.v1.Account;
 using CodeUtopia;
+using NServiceBus;
 
 namespace BankingManagementClient.ProjectionStore.EntityFramework.ClientDetail.EventHandlers
 {
-    public class AccountCreatedEventHandler : IEventHandler<AccountCreatedEvent>
+    public class AccountCreatedEventHandler : IHandleMessages<AccountCreatedEvent>
     {
-        public AccountCreatedEventHandler(string nameOrConnectionString)
+        public AccountCreatedEventHandler()
         {
-            _nameOrConnectionString = nameOrConnectionString;
+            _nameOrConnectionString = "ProjectionStore";
         }
 
         public void Handle(AccountCreatedEvent accountCreatedEvent)

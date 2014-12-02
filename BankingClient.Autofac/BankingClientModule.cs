@@ -2,8 +2,7 @@
 using CodeUtopia;
 using CodeUtopia.Autofac;
 using CodeUtopia.Messaging;
-using CodeUtopia.Messaging.EasyNetQ;
-using EasyNetQ;
+using CodeUtopia.Messaging.NServiceBus;
 using IBus = CodeUtopia.Messaging.IBus;
 
 namespace BankingClient.Autofac
@@ -19,19 +18,16 @@ namespace BankingClient.Autofac
                    .As<IDependencyResolver>();
 
             // Bus.
-            builder.RegisterType<EasyNetQBus>()
+            builder.RegisterType<NServiceBusBus>()
                     .WithParameter("endpointName", "BankingClient")
                     .As<IBus>();
-
-            builder.RegisterInstance(RabbitHutch.CreateBus("host=localhost"))
-                   .As<EasyNetQ.IBus>();
 
             // Command handler resolver.
             builder.RegisterType<CommandHandlerResolver>()
                    .As<ICommandHandlerResolver>();
 
             // Command sender.
-            builder.RegisterType<EasyNetQCommandSender>()
+            builder.RegisterType<NServiceBusCommandSender>()
                    .Named<ICommandSender>("CommandSender");
 
             builder.RegisterDecorator<ICommandSender>((x, decorated) => new LoggingCommandSenderDecorator(decorated),
@@ -46,7 +42,7 @@ namespace BankingClient.Autofac
                    .As<IEventHandlerResolver>();
 
             // Event publisher.
-            builder.RegisterType<EasyNetQEventPublisher>()
+            builder.RegisterType<NServiceBusEventPublisher>()
                    .Named<IEventPublisher>("EventPublisher");
 
             builder.RegisterDecorator<IEventPublisher>((x, decorated) => new LoggingEventPublisherDecorator(decorated),

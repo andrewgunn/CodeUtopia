@@ -4,11 +4,12 @@ using BankingBackend.Commands.v1;
 using CodeUtopia;
 using CodeUtopia.Events;
 using CodeUtopia.EventStore;
-using CodeUtopia.Messaging;
+using NServiceBus;
+using IBus = CodeUtopia.Messaging.IBus;
 
 namespace BankingBackend.CommandHandlers
 {
-    public class RepublishAllEventsCommandHandler : ICommandHandler<RepublishAllEventsCommand>
+    public class RepublishAllEventsCommandHandler : IHandleMessages<RepublishAllEventsCommand>
     {
         private readonly IEventStorage _eventStorage;
         private readonly IBus _bus;

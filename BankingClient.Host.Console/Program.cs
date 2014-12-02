@@ -4,7 +4,9 @@ using Autofac;
 using BankingBackend.Commands.v1;
 using BankingClient.Autofac;
 using CodeUtopia.Hydrator;
-using CodeUtopia.Messaging;
+using NServiceBus;
+using NServiceBus.Features;
+using NServiceBus.Logging;
 
 namespace BankingClient.Host.Console
 {
@@ -18,10 +20,13 @@ namespace BankingClient.Host.Console
             builder.RegisterModule(new BankingClientModule());
 
             var container = builder.Build();
+            var busConfiguration = new BusConfiguration();
+            busConfiguration = ConfigureBus(busConfiguration, container);
+            
+            var startableBus = Bus.Create(busConfiguration);
+            var bus = startableBus.Start();
 
-            var bus = container.Resolve<IBus>();
-
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1; i++)
             {
                 // Client.
                 var clientId = Guid.NewGuid();
@@ -47,9 +52,26 @@ namespace BankingClient.Host.Console
                 {
                     bus.Send(new ReportStolenBankCardCommand(clientId, bankCardId));
                 }
-
-                bus.Commit();
             }
+        }
+
+        private static BusConfiguration ConfigureBus(BusConfiguration busConfiguration, ILifetimeScope lifetimeScope)
+        {
+            LogManager.Use<DefaultFactory>();
+
+            busConfiguration.UseSerialization<JsonSerializer>();
+            busConfiguration.DisableFeature<Sagas>();
+            busConfiguration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(lifetimeScope));
+
+            busConfiguration.UseTransport<RabbitMQTransport>();
+
+            var conventions = busConfiguration.Conventions();
+            conventions.DefiningCommandsAs(x => x.Name.EndsWith("Command"));
+            conventions.DefiningEventsAs(x => x.Name.EndsWith("Event"));
+
+            busConfiguration.UsePersistence<InMemoryPersistence>();
+
+            return busConfiguration;
         }
     }
 }

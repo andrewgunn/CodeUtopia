@@ -33,10 +33,6 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="EasyNetQ, Version=0.38.1.327, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EasyNetQ.0.38.1.327\lib\net40\EasyNetQ.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.1.19.0\lib\net45\EntityFramework.dll</HintPath>
@@ -44,9 +40,8 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.1.19.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="RabbitMQ.Client, Version=3.4.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\RabbitMQ.Client.3.4.0\lib\net35\RabbitMQ.Client.dll</HintPath>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\packages\NServiceBus.5.1.2\lib\net45\NServiceBus.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -98,9 +93,9 @@
       <Project>{2382FC22-7FC9-43D2-AE77-4B2ADF8F0AB3}</Project>
       <Name>CodeUtopia.Events</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.Messaging.EasyNetQ\CodeUtopia.Messaging.EasyNetQ.csproj">
-      <Project>{93836F52-A184-4ACD-9443-95982BF6A4E9}</Project>
-      <Name>CodeUtopia.Messaging.EasyNetQ</Name>
+    <ProjectReference Include="..\CodeUtopia.Messaging.NServiceBus\CodeUtopia.Messaging.NServiceBus.csproj">
+      <Project>{3DC42EF3-686A-46DE-A810-A43AFE2ECC23}</Project>
+      <Name>CodeUtopia.Messaging.NServiceBus</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
       <Project>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</Project>

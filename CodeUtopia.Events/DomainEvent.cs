@@ -7,28 +7,12 @@ namespace CodeUtopia.Events
     {
         protected DomainEvent(Guid aggregateId, int versionNumber)
         {
-            _aggregateId = aggregateId;
-            _versionNumber = versionNumber;
+            AggregateId = aggregateId;
+            VersionNumber = versionNumber;
         }
 
-        public Guid AggregateId
-        {
-            get
-            {
-                return _aggregateId;
-            }
-        }
+        public Guid AggregateId { get; set; }
 
-        public int VersionNumber
-        {
-            get
-            {
-                return _versionNumber;
-            }
-        }
-
-        private readonly Guid _aggregateId;
-
-        private readonly int _versionNumber;
+        public int VersionNumber { get; set; }
     }
 }

@@ -1,33 +1,19 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace BankingBackend.Commands.v1
 {
     public class ReportStolenBankCardCommand
     {
+        [JsonConstructor]
         public ReportStolenBankCardCommand(Guid clientId, Guid bankCardId)
         {
-            _clientId = clientId;
-            _bankCardId = bankCardId;
+            ClientId = clientId;
+            BankCardId = bankCardId;
         }
 
-        public Guid BankCardId
-        {
-            get
-            {
-                return _bankCardId;
-            }
-        }
+        public Guid BankCardId { get; set; }
 
-        public Guid ClientId
-        {
-            get
-            {
-                return _clientId;
-            }
-        }
-
-        private readonly Guid _bankCardId;
-
-        private readonly Guid _clientId;
+        public Guid ClientId { get; set; }
     }
 }

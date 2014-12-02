@@ -1,13 +1,14 @@
 ﻿using BankingBackend.Events.v2.Client;
 using CodeUtopia;
+using NServiceBus;
 
 namespace BankingManagementClient.ProjectionStore.EntityFramework.ClientDetail.EventHandlers
 {
-    public class BankCardReportedStolenEventHandler : IEventHandler<BankCardReportedStolenEvent>
+    public class BankCardReportedStolenEventHandler : IHandleMessages<BankCardReportedStolenEvent>
     {
-        public BankCardReportedStolenEventHandler(string nameOrConnectionString)
+        public BankCardReportedStolenEventHandler()
         {
-            _nameOrConnectionString = nameOrConnectionString;
+            _nameOrConnectionString = "ProjectionStore";
         }
 
         public void Handle(BankCardReportedStolenEvent bankCardReportedStolenEvent)
