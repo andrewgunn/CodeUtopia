@@ -4,6 +4,7 @@ using CodeUtopia;
 namespace BankReporting.ProjectionStore.ClientDetail.EventHandlers
 {
     public class BankCardReportedStolenEventHandler : IEventHandler<BankCardReportedStolenEvent>
+    //, IEventHandler<BankServer.Events.v2.Client.BankCardReportedStolenEvent>
     {
         public BankCardReportedStolenEventHandler(string nameOrConnectionString)
         {
