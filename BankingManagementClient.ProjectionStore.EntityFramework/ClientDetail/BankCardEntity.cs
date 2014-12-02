@@ -10,7 +10,7 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework.ClientDetail
 
         public Guid ClientId { get; set; }
 
-        public bool IsStolen { get; set; }
+        public bool? IsStolen { get; set; }
 
         public DateTime? StolenAt { get; set; }
     }

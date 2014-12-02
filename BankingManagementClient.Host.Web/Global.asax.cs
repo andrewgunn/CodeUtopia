@@ -33,13 +33,7 @@ namespace BankingManagementClient.Host.Web
 
             var container = builder.Build();
 
-            var busConfiguration = new BusConfiguration();
-            busConfiguration = ConfigureBus(busConfiguration, container);
-            busConfiguration.EndpointName("BankingManagementClient");
-            var startableBus = Bus.Create(busConfiguration);
-            var bus = startableBus.Start();
-
-
+            
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -47,6 +41,13 @@ namespace BankingManagementClient.Host.Web
             var queryExecutor = container.Resolve<IQueryExecutor>();
 
             var projection = queryExecutor.Execute(new ClientsQuery());
+
+            var busConfiguration = new BusConfiguration();
+            busConfiguration = ConfigureBus(busConfiguration, container);
+            busConfiguration.EndpointName("BankingManagementClient");
+            var startableBus = Bus.Create(busConfiguration);
+            var bus = startableBus.Start();
+
 
             if (!projection.ClientProjections.Any())
             {

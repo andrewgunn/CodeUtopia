@@ -1,4 +1,5 @@
-﻿using BankingBackend.Events.v1.Client;
+﻿using System;
+using BankingBackend.Events.v1.Client;
 using CodeUtopia;
 using NServiceBus;
 
@@ -22,6 +23,7 @@ namespace BankingManagementClient.ProjectionStore.EntityFramework.ClientDetail.E
                                                   AccountId = newBankCardAssignedEvent.AccountId
                                               });
 
+                
                 databaseContext.SaveChanges();
             }
         }
