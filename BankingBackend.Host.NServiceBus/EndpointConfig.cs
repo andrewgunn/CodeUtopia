@@ -17,6 +17,7 @@ namespace BankingBackend.Host.NServiceBus
             var container = builder.Build();
 
             ConfigureBus(configuration, container);
+            configuration.EnableOutbox();
             
             configuration.EndpointName("BankingBackend");
         }
