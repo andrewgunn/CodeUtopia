@@ -5,7 +5,7 @@ using CodeUtopia.Domain;
 using CodeUtopia.Events;
 using NUnit.Framework;
 
-namespace Test.CodeUtopia.Domain
+namespace Test.CodeUtopia.Core.Domain
 {
     public class When_clearing_the_changes : AggregateTestFixture<Customer>
     {
