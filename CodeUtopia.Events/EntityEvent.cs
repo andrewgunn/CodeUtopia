@@ -5,8 +5,8 @@ namespace CodeUtopia.Events
     [Serializable]
     public abstract class EntityEvent : DomainEvent, IEntityEvent
     {
-        protected EntityEvent(Guid aggregateId, int versionNumber, Guid entityId)
-            : base(aggregateId, versionNumber)
+        protected EntityEvent(Guid aggregateId, int aggregateVersionNumber, Guid entityId)
+            : base(aggregateId, aggregateVersionNumber)
         {
             _entityId = entityId;
         }

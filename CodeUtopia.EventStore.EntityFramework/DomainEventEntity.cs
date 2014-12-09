@@ -8,10 +8,10 @@ namespace CodeUtopia.EventStore.EntityFramework
 
         public string AggregateType { get; set; }
 
+        public int AggregateVersionNumber { get; set; }
+
         public byte[] Data { get; set; }
 
         public string DomainEventType { get; set; }
-
-        public int VersionNumber { get; set; }
     }
 }

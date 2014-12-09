@@ -5,7 +5,7 @@ using CodeUtopia.Events;
 
 namespace CodeUtopia.Domain
 {
-    public abstract class Aggregate : IAggregate
+    public abstract class Aggregate : IAggregate, IEntityTracker, IVersionNumberProvider
     {
         protected Aggregate()
         {
@@ -17,9 +17,6 @@ namespace CodeUtopia.Domain
         protected void Apply(IDomainEvent domainEvent)
         {
             Handle(domainEvent);
-
-            //domainEvent.AggregateId = AggregateId;
-            //domainEvent.VersionNumber = GetNextVersionNumber();
 
             _appliedEvents.Add(domainEvent);
         }
@@ -42,7 +39,7 @@ namespace CodeUtopia.Domain
         IReadOnlyCollection<IDomainEvent> IAggregate.GetChanges()
         {
             return _appliedEvents.Concat(GetEntityEvents())
-                                 .OrderBy(x => x.VersionNumber)
+                                 .OrderBy(x => x.AggregateVersionNumber)
                                  .ToList();
         }
 
@@ -72,6 +69,8 @@ namespace CodeUtopia.Domain
             }
 
             eventHandler(domainEvent);
+
+            VersionNumber = domainEvent.AggregateVersionNumber;
         }
 
         public bool IsInitialized()
@@ -91,8 +90,6 @@ namespace CodeUtopia.Domain
                 Handle(domainEvent);
             }
 
-            VersionNumber = domainEvents.Last()
-                                        .VersionNumber;
             EventVersionNumber = VersionNumber;
         }
 
@@ -105,11 +102,6 @@ namespace CodeUtopia.Domain
         void IEntityTracker.RegisterForTracking(IEntity entity)
         {
             _entities.Add(entity);
-        }
-
-        public void UpdateVersionNumber(int versionNumber)
-        {
-            VersionNumber = versionNumber;
         }
 
         public Guid AggregateId { get; protected set; }

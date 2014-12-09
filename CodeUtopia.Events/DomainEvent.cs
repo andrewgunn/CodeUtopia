@@ -5,10 +5,10 @@ namespace CodeUtopia.Events
     [Serializable]
     public abstract class DomainEvent : IDomainEvent
     {
-        protected DomainEvent(Guid aggregateId, int versionNumber)
+        protected DomainEvent(Guid aggregateId, int aggregateVersionNumber)
         {
             _aggregateId = aggregateId;
-            _versionNumber = versionNumber;
+            _aggregateVersionNumber = aggregateVersionNumber;
         }
 
         public Guid AggregateId
@@ -19,16 +19,16 @@ namespace CodeUtopia.Events
             }
         }
 
-        public int VersionNumber
+        public int AggregateVersionNumber
         {
             get
             {
-                return _versionNumber;
+                return _aggregateVersionNumber;
             }
         }
 
         private readonly Guid _aggregateId;
 
-        private readonly int _versionNumber;
+        private readonly int _aggregateVersionNumber;
     }
 }

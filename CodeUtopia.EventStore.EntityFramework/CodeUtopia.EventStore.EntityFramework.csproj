@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CodeUtopia.EventStore.EntityFramework</RootNamespace>
     <AssemblyName>CodeUtopia.EventStore.EntityFramework</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConcurrencyViolationException.cs" />
+    <Compile Include="AggregateConcurrencyViolationException.cs" />
     <Compile Include="DomainEventEntity.cs" />
+    <Compile Include="DomainEventsCannotBeDeletedException.cs" />
+    <Compile Include="DomainEventsCannotBeUpdatedException.cs" />
     <Compile Include="SnapshotEntityConfiguration.cs" />
     <Compile Include="DomainEventEntityConfiguration.cs" />
     <Compile Include="EntityFrameworkEventStore.cs" />

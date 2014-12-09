@@ -31,20 +31,10 @@ namespace CodeUtopia.EventStore.EntityFramework
             }
         }
 
-        private int GetAggregateVersionNumber(Guid aggregateId)
-        {
-            var versionNumber = _databaseContext.DomainEvents.Where(x => x.AggregateId == aggregateId)
-                                                .OrderByDescending(x => x.VersionNumber)
-                                                .Select(x => x.VersionNumber)
-                                                .FirstOrDefault();
-
-            return versionNumber;
-        }
-
         public IReadOnlyCollection<IDomainEvent> GetAll(Guid aggregateId)
         {
             return _databaseContext.DomainEvents.Where(x => x.AggregateId == aggregateId)
-                                   .OrderBy(x => x.VersionNumber)
+                                   .OrderBy(x => x.AggregateVersionNumber)
                                    .ToList()
                                    .Select(x => Deserialize<IDomainEvent>(x.Data))
                                    .ToList();
@@ -53,7 +43,7 @@ namespace CodeUtopia.EventStore.EntityFramework
         public IReadOnlyCollection<IDomainEvent> GetAll(int skip, int take)
         {
             return _databaseContext.DomainEvents.OrderBy(x => x.AggregateId)
-                                   .ThenBy(x => x.VersionNumber)
+                                   .ThenBy(x => x.AggregateVersionNumber)
                                    .Skip(skip)
                                    .Take(take)
                                    .ToList()
@@ -70,8 +60,8 @@ namespace CodeUtopia.EventStore.EntityFramework
             return
                 _databaseContext.DomainEvents.Where(
                                                     x =>
-                                                    x.AggregateId == aggregateId && x.VersionNumber > snapshotVersion)
-                                .OrderBy(x => x.VersionNumber)
+                                                    x.AggregateId == aggregateId && x.AggregateVersionNumber > snapshotVersion)
+                                .OrderBy(x => x.AggregateVersionNumber)
                                 .ToList()
                                 .Select(x => Deserialize<IDomainEvent>(x.Data))
                                 .ToList();
@@ -92,15 +82,8 @@ namespace CodeUtopia.EventStore.EntityFramework
 
         public void SaveChanges(IAggregate aggregate)
         {
-            var versionNumber = GetAggregateVersionNumber(aggregate.AggregateId);
-
-            if (versionNumber != aggregate.VersionNumber)
-            {
-                throw new ConcurrencyViolationException();
-            }
-
             var domainEvents = aggregate.GetChanges()
-                                        .OrderBy(x => x.VersionNumber);
+                                        .OrderBy(x => x.AggregateVersionNumber);
 
             if (!domainEvents.Any())
             {
@@ -116,13 +99,10 @@ namespace CodeUtopia.EventStore.EntityFramework
                                                                                .FullName,
                                                       DomainEventType = domainEvent.GetType()
                                                                                    .FullName,
-                                                      VersionNumber = domainEvent.VersionNumber,
+                                                      AggregateVersionNumber = domainEvent.AggregateVersionNumber,
                                                       Data = Serialize(domainEvent),
                                                   });
             }
-
-            aggregate.UpdateVersionNumber(domainEvents.Last()
-                                                      .VersionNumber);
         }
 
         public void SaveSnapshot<TAggregate>(TAggregate aggregate) where TAggregate : IAggregate, IOriginator

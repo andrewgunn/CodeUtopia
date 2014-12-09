@@ -41,7 +41,7 @@ namespace CodeUtopia.Domain
 
         public IEnumerable<IEntityEvent> GetChanges()
         {
-            return _appliedEvents.OrderBy(x => x.VersionNumber);
+            return _appliedEvents.OrderBy(x => x.AggregateVersionNumber);
         }
 
         protected int GetNextVersionNumber()

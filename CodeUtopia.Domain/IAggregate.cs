@@ -4,7 +4,7 @@ using CodeUtopia.Events;
 
 namespace CodeUtopia.Domain
 {
-    public interface IAggregate : IEntityTracker, IVersionNumberProvider
+    public interface IAggregate //: IEntityTracker, IVersionNumberProvider
     {
         void ClearChanges();
 
