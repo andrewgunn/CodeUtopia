@@ -1,5 +1,4 @@
 using System;
-using CodeUtopia.Domain;
 
 namespace CodeUtopia.EventStore
 {
@@ -7,6 +6,6 @@ namespace CodeUtopia.EventStore
     {
         ISnapshot GetLastSnapshot(Guid aggregateId);
 
-        void SaveSnapshot<TAggregate>(TAggregate aggregate) where TAggregate : IAggregate, IOriginator;
+        void SaveSnapshot(Guid aggregateId, int aggregateVersionNumber, object memento);
     }
 }

@@ -11,7 +11,7 @@ namespace CodeUtopia.EventStore.EntityFramework
             HasKey(x => new
                         {
                             x.AggregateId,
-                            x.VersionNumber
+                            x.AggregateVersionNumber
                         });
 
             var columnOrder = 0;
@@ -19,7 +19,7 @@ namespace CodeUtopia.EventStore.EntityFramework
             Property(p => p.AggregateId)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();
-            Property(p => p.VersionNumber)
+            Property(p => p.AggregateVersionNumber)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();
             Property(p => p.Data)

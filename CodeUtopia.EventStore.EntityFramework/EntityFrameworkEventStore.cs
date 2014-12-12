@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using CodeUtopia.Domain;
 using CodeUtopia.Events;
 
 namespace CodeUtopia.EventStore.EntityFramework
@@ -55,12 +54,13 @@ namespace CodeUtopia.EventStore.EntityFramework
         {
             var snapshot = GetLastSnapshot(aggregateId);
 
-            var snapshotVersion = snapshot == null ? -1 : snapshot.VersionNumber;
+            var snapshotVersion = snapshot == null ? -1 : snapshot.AggregateVersionNumber;
 
             return
                 _databaseContext.DomainEvents.Where(
                                                     x =>
-                                                    x.AggregateId == aggregateId && x.AggregateVersionNumber > snapshotVersion)
+                                                    x.AggregateId == aggregateId &&
+                                                    x.AggregateVersionNumber > snapshotVersion)
                                 .OrderBy(x => x.AggregateVersionNumber)
                                 .ToList()
                                 .Select(x => Deserialize<IDomainEvent>(x.Data))
@@ -69,7 +69,7 @@ namespace CodeUtopia.EventStore.EntityFramework
 
         public ISnapshot GetLastSnapshot(Guid aggregateId)
         {
-            var snapshot = _databaseContext.Snapshots.OrderByDescending(x => x.VersionNumber)
+            var snapshot = _databaseContext.Snapshots.OrderByDescending(x => x.AggregateVersionNumber)
                                            .FirstOrDefault(x => x.AggregateId == aggregateId);
 
             return snapshot == null ? null : Deserialize<ISnapshot>(snapshot.Data);
@@ -80,23 +80,19 @@ namespace CodeUtopia.EventStore.EntityFramework
             _databaseContext = new EventStoreContext(_nameOrConnectionString);
         }
 
-        public void SaveChanges(IAggregate aggregate)
+        public void SaveChanges(Guid aggregateId, IReadOnlyCollection<IDomainEvent> domainEvents)
         {
-            var domainEvents = aggregate.GetChanges()
-                                        .OrderBy(x => x.AggregateVersionNumber);
-
-            if (!domainEvents.Any())
+            if (domainEvents == null || !domainEvents.Any())
             {
                 return;
             }
 
-            foreach (var domainEvent in domainEvents)
+            foreach (var domainEvent in domainEvents.OrderBy(x => x.AggregateVersionNumber)
+                                                    .ToList())
             {
                 _databaseContext.DomainEvents.Add(new DomainEventEntity
                                                   {
-                                                      AggregateId = aggregate.AggregateId,
-                                                      AggregateType = aggregate.GetType()
-                                                                               .FullName,
+                                                      AggregateId = aggregateId,
                                                       DomainEventType = domainEvent.GetType()
                                                                                    .FullName,
                                                       AggregateVersionNumber = domainEvent.AggregateVersionNumber,
@@ -105,13 +101,13 @@ namespace CodeUtopia.EventStore.EntityFramework
             }
         }
 
-        public void SaveSnapshot<TAggregate>(TAggregate aggregate) where TAggregate : IAggregate, IOriginator
+        public void SaveSnapshot(Guid aggregateId, int aggregateVersionNumber, object memento)
         {
             _databaseContext.Snapshots.Add(new SnapshotEntity
                                            {
-                                               AggregateId = aggregate.AggregateId,
-                                               VersionNumber = aggregate.VersionNumber,
-                                               Data = Serialize(aggregate.CreateMemento())
+                                               AggregateId = aggregateId,
+                                               AggregateVersionNumber = aggregateVersionNumber,
+                                               Data = Serialize(memento)
                                            });
         }
 

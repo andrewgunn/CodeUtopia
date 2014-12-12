@@ -24,8 +24,6 @@ namespace CodeUtopia.Domain
         void IAggregate.ClearChanges()
         {
             _appliedEvents.Clear();
-
-            EventVersionNumber = VersionNumber;
         }
 
         protected void EnsureIsInitialized()
@@ -48,12 +46,7 @@ namespace CodeUtopia.Domain
             return _entities.SelectMany(x => x.GetChanges());
         }
 
-        protected int GetNextVersionNumber()
-        {
-            return ((IVersionNumberProvider)this).GetNextVersionNumber();
-        }
-
-        int IVersionNumberProvider.GetNextVersionNumber()
+        public int GetNextVersionNumber()
         {
             return ++EventVersionNumber;
         }
@@ -70,7 +63,7 @@ namespace CodeUtopia.Domain
 
             eventHandler(domainEvent);
 
-            VersionNumber = domainEvent.AggregateVersionNumber;
+            AggregateVersionNumber = domainEvent.AggregateVersionNumber;
         }
 
         public bool IsInitialized()
@@ -90,7 +83,7 @@ namespace CodeUtopia.Domain
                 Handle(domainEvent);
             }
 
-            EventVersionNumber = VersionNumber;
+            EventVersionNumber = AggregateVersionNumber;
         }
 
         protected void RegisterEventHandler<TDomainEvent>(Action<TDomainEvent> eventHandler)
@@ -108,7 +101,7 @@ namespace CodeUtopia.Domain
 
         public int EventVersionNumber { get; private set; }
 
-        public int VersionNumber { get; protected set; }
+        public int AggregateVersionNumber { get; protected set; }
 
         private readonly List<IDomainEvent> _appliedEvents;
 

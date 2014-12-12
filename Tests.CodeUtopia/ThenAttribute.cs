@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Test.CodeUtopia
+namespace Tests.CodeUtopia
 {
     public class ThenAttribute : TestAttribute
     {

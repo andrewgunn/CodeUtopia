@@ -16,6 +16,6 @@ namespace CodeUtopia.EventStore
 
         IReadOnlyCollection<IDomainEvent> GetAllSinceLastSnapshot(Guid aggregateId);
 
-        void SaveChanges(IAggregate aggregate);
+        void SaveChanges(Guid aggregateId, IReadOnlyCollection<IDomainEvent> domainEvents);
     }
 }

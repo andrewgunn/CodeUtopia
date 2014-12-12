@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Test.CodeUtopia
+namespace Tests.CodeUtopia
 {
     [Specification]
     public abstract class TestFixture

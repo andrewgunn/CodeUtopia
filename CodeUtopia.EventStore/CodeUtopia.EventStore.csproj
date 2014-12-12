@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeUtopia.Domain\CodeUtopia.Domain.csproj">
-      <Project>{B05CBD95-7133-4B24-92B7-9C273E69A4D2}</Project>
+      <Project>{b05cbd95-7133-4b24-92b7-9c273e69a4d2}</Project>
       <Name>CodeUtopia.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">

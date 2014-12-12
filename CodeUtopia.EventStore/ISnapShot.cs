@@ -7,8 +7,8 @@ namespace CodeUtopia.EventStore
     {
         Guid AggregateId { get; }
 
-        IMemento Memento { get; }
+        int AggregateVersionNumber { get; }
 
-        int VersionNumber { get; }
+        object Memento { get; }
     }
 }

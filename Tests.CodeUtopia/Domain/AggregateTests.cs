@@ -5,7 +5,7 @@ using CodeUtopia.Domain;
 using CodeUtopia.Events;
 using NUnit.Framework;
 
-namespace Test.CodeUtopia.Core.Domain
+namespace Tests.CodeUtopia.Domain
 {
     public class When_clearing_the_changes : AggregateTestFixture<Customer>
     {
@@ -83,7 +83,7 @@ namespace Test.CodeUtopia.Core.Domain
         [Then]
         public void Then_the_aggregate_and_the_first_event_have_a_different_version_number()
         {
-            Assert.That(Aggregate.VersionNumber,
+            Assert.That(Aggregate.AggregateVersionNumber,
                         Is.Not.EqualTo(Changes.ElementAt(0)
                                               .AggregateVersionNumber));
         }
@@ -99,7 +99,7 @@ namespace Test.CodeUtopia.Core.Domain
         [Then]
         public void Then_the_aggregate_and_the_last_event_have_a_different_version_number()
         {
-            Assert.That(Aggregate.VersionNumber,
+            Assert.That(Aggregate.AggregateVersionNumber,
                         Is.Not.EqualTo(Changes.Last()
                                               .AggregateVersionNumber));
         }
@@ -123,7 +123,7 @@ namespace Test.CodeUtopia.Core.Domain
         [Then]
         public void Then_the_aggregate_and_the_second_event_have_a_different_version_number()
         {
-            Assert.That(Aggregate.VersionNumber,
+            Assert.That(Aggregate.AggregateVersionNumber,
                         Is.Not.EqualTo(Changes.ElementAt(1)
                                               .AggregateVersionNumber));
         }
@@ -183,7 +183,7 @@ namespace Test.CodeUtopia.Core.Domain
         [Then]
         public void Then_the_aggregate_version_number_is_one()
         {
-            Assert.That(Aggregate.VersionNumber, Is.EqualTo(1));
+            Assert.That(Aggregate.AggregateVersionNumber, Is.EqualTo(1));
         }
 
         [Then]

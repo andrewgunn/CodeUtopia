@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CodeUtopia.Domain;
+using CodeUtopia.Events;
 using CodeUtopia.Messaging;
 
 namespace CodeUtopia.EventStore
@@ -25,7 +26,12 @@ namespace CodeUtopia.EventStore
         {
             foreach (var aggregate in _aggregates)
             {
-                _eventStorage.SaveChanges(aggregate);
+                var domainEvents = aggregate.GetChanges();
+
+                if (domainEvents != null  && domainEvents.Any())
+                { 
+                    _eventStorage.SaveChanges(aggregate.AggregateId, domainEvents);
+                }
 
                 foreach (var domainEvent in aggregate.GetChanges())
                 {
@@ -54,41 +60,33 @@ namespace CodeUtopia.EventStore
         private TAggregate LoadFromHistory<TAggregate>(Guid aggregateId) where TAggregate : class, IAggregate, new()
         {
             var aggregate = new TAggregate();
-
+            IReadOnlyCollection<IDomainEvent> domainEvents;
             var originator = aggregate as IOriginator;
 
-            if (originator != null)
-            {
-                LoadFromLastSnapshotIfExists(aggregateId, originator);
-            }
-
-            LoadFromHistorySinceLastSnapshot(aggregateId, aggregate);
-
-            return aggregate;
-        }
-
-        private void LoadFromHistorySinceLastSnapshot(Guid aggregateId, IAggregate aggregate)
-        {
-            var domainEvents = _eventStorage.GetAllSinceLastSnapshot(aggregateId);
-
-            if (!domainEvents.Any())
+            if (originator == null)
             {
                 domainEvents = _eventStorage.GetAll(aggregateId);
             }
-
-            aggregate.LoadFromHistory(domainEvents);
-        }
-
-        private void LoadFromLastSnapshotIfExists(Guid aggregateId, IOriginator aggregate)
-        {
-            var snapshot = _eventStorage.GetLastSnapshot(aggregateId);
-
-            if (snapshot == null)
+            else
             {
-                return;
+                var snapshot = _eventStorage.GetLastSnapshot(aggregateId);
+
+                if (snapshot != null)
+                {
+                    originator.LoadFromMemento(snapshot.AggregateId, snapshot.AggregateVersionNumber, snapshot.Memento);
+                }
+
+                domainEvents = _eventStorage.GetAllSinceLastSnapshot(aggregateId);
+
+                if (domainEvents.Count > 10 /* TODO Make this value configurable. */)
+                {
+                    _eventStorage.SaveSnapshot(aggregate.AggregateId, aggregate.AggregateVersionNumber, originator.CreateMemento());
+                }
             }
 
-            aggregate.LoadFromMemento(snapshot.AggregateId, snapshot.VersionNumber, snapshot.Memento);
+            aggregate.LoadFromHistory(domainEvents);
+
+            return aggregate;
         }
 
         public void Rollback()

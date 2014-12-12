@@ -51,7 +51,6 @@
     <Compile Include="IAggregate.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IEntityTracker.cs" />
-    <Compile Include="IMemento.cs" />
     <Compile Include="IOriginator.cs" />
     <Compile Include="IVersionNumberProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

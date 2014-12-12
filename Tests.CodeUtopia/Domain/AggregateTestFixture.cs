@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CodeUtopia.Domain;
 using CodeUtopia.Events;
 
-namespace Test.CodeUtopia.Core.Domain
+namespace Tests.CodeUtopia.Domain
 {
     [Specification]
     public abstract class AggregateTestFixture<TAggregate>
