@@ -17,7 +17,7 @@ namespace Application.Domain.Application
             Apply(new ApplicationCreatedEvent(applicationId, GetNextVersionNumber(), loanAmount, loanTermInMonths));
         }
 
-        public Borrower AddBorrower(Guid borrowerId, string firstName, string lastName, string emailAddress)
+        public Borrower AddBorrower(Guid borrowerId, FirstName firstName, LastName lastName, EmailAddress emailAddress)
         {
             var borrower = Borrower.Create(borrowerId, firstName, lastName, emailAddress);
 

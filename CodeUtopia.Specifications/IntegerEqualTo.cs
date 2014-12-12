@@ -1,15 +1,15 @@
 ﻿namespace CodeUtopia.Specifications
 {
-    public class IntegerEqualToValidator : ISpecification<int>
+    public class IntegerEqualTo : ISpecification<int>
     {
-        public IntegerEqualToValidator(int equalValue)
+        public IntegerEqualTo(int equalValue)
         {
             _equalValue = equalValue;
         }
 
         public bool IsSatisfiedBy(int candidate)
         {
-            return Equals(candidate, _equalValue);
+            return candidate == _equalValue;
         }
 
         private readonly int _equalValue;

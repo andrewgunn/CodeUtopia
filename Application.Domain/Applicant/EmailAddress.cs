@@ -1,9 +1,16 @@
-﻿namespace Application.Domain.Application
+﻿using System;
+
+namespace Application.Domain.Applicant
 {
     public class EmailAddress
     {
         public EmailAddress(string emailAddress)
         {
+            if (emailAddress == null)
+            {
+                throw new ArgumentNullException("emailAddress");
+            }
+
             _emailAddress = emailAddress;
         }
 

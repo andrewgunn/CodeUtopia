@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8C8F68FC-7720-4039-8484-47A144FA1A33}</ProjectGuid>
+    <ProjectGuid>{DDAD5E22-C41D-4268-A53B-A7BF66791304}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Application.Specifications</RootNamespace>
-    <AssemblyName>Application.Specifications</AssemblyName>
+    <RootNamespace>Application.Validators</RootNamespace>
+    <AssemblyName>Application.Validators</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,16 +39,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoanTermValidator.cs" />
-    <Compile Include="LastNameValidator.cs" />
-    <Compile Include="FirstNameValidator.cs" />
+    <Compile Include="EmailAddressValidationError.cs" />
     <Compile Include="EmailAddressValidator.cs" />
+    <Compile Include="LastNameValidationError.cs" />
+    <Compile Include="FirstNameValidationError.cs" />
+    <Compile Include="FirstNameValidator.cs" />
+    <Compile Include="LastNameValidator.cs" />
+    <Compile Include="LoanTermValidationError.cs" />
+    <Compile Include="LoanTermValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeUtopia.Specifications\CodeUtopia.Specifications.csproj">
       <Project>{ea901496-33b2-4c21-a08e-1539c49bc0e9}</Project>
       <Name>CodeUtopia.Specifications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Validators\CodeUtopia.Validators.csproj">
+      <Project>{346F0DF7-8279-44A2-AF14-67243F88FAF6}</Project>
+      <Name>CodeUtopia.Validators</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

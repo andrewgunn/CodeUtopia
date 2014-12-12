@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Application.Domain.Application
+namespace Application.Domain.Applicant
 {
     public class FirstName
     {
@@ -11,7 +11,7 @@ namespace Application.Domain.Application
                 throw new ArgumentNullException("firstName");
             }
 
-            _firstName = string.Format("{0}{1}", char.ToUpper(firstName[0]), firstName.Substring(1));
+            _firstName = firstName;
         }
 
         public static implicit operator string(FirstName firstName)

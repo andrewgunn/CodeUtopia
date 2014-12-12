@@ -1,8 +1,8 @@
 ﻿namespace CodeUtopia.Specifications
 {
-    public class IntegerNotGreaterThanValidator : ISpecification<int>
+    public class IntegerNotGreaterThan : ISpecification<int>
     {
-        public IntegerNotGreaterThanValidator(int maximumValue)
+        public IntegerNotGreaterThan(int maximumValue)
         {
             _maximumValue = maximumValue;
         }

@@ -1,9 +1,16 @@
-﻿namespace Application.Domain.Application
+﻿using System;
+
+namespace Application.Domain.Applicant
 {
     public class LastName
     {
         public LastName(string lastName)
         {
+            if (lastName == null)
+            {
+                throw new ArgumentNullException("lastName");
+            }
+
             _lastName = lastName;
         }
 

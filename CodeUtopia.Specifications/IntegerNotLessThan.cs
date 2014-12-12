@@ -1,8 +1,8 @@
 ﻿namespace CodeUtopia.Specifications
 {
-    public class IntegerNotLessThanValidator : ISpecification<int>
+    public class IntegerNotLessThan : ISpecification<int>
     {
-        public IntegerNotLessThanValidator(int minimumValue)
+        public IntegerNotLessThan(int minimumValue)
         {
             _minimumValue = minimumValue;
         }

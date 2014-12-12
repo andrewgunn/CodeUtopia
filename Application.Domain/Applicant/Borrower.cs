@@ -1,25 +1,41 @@
 ﻿using System;
+using System.Collections.Generic;
 using Application.Events;
+using Application.Validators;
+using CodeUtopia.Validators;
 
 namespace Application.Domain.Applicant
 {
-    public class FirstName
-    {
-    }
-
     public class Borrower : Applicant
     {
         public Borrower()
         {
+            _firstName = new FirstName("");
+            _lastName = new LastName("");
+            _emailAddress = new EmailAddress("");
+
             RegisterEventHandlers();
         }
 
-        private Borrower(Guid borrowerId, string firstName, string lastName, string emailAddress)
+        private Borrower(Guid borrowerId, FirstName firstName, LastName lastName, EmailAddress emailAddress)
+            : this()
         {
+            var validationErrors = new List<IValidationError>
+                                   {
+                                       new FirstNameValidator().Validate(firstName),
+                                       new LastNameValidator().Validate(lastName),
+                                       new EmailAddressValidator().Validate(emailAddress)
+                                   };
+
+            //if (validationErrors.Any())
+            //{
+            //    throw new AggregateValidationErrorException(validationErrors);
+            //}
+
             Apply(new BorrowerCreatedEvent(borrowerId, GetNextVersionNumber(), firstName, lastName, emailAddress));
         }
 
-        public static Borrower Create(Guid borrowerId, string firstName, string lastName, string emailAddress)
+        public static Borrower Create(Guid borrowerId, FirstName firstName, LastName lastName, EmailAddress emailAddress)
         {
             return new Borrower(borrowerId, firstName, lastName, emailAddress);
         }
@@ -36,10 +52,10 @@ namespace Application.Domain.Applicant
             RegisterEventHandler<BorrowerCreatedEvent>(OnBorrowerCreatedEvent);
         }
 
-        private string _emailAddress;
+        private EmailAddress _emailAddress;
 
-        private string _firstName;
+        private FirstName _firstName;
 
-        private string _lastName;
+        private LastName _lastName;
     }
 }
