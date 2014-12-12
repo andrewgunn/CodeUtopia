@@ -28,8 +28,8 @@ namespace CodeUtopia.EventStore
             {
                 var domainEvents = aggregate.GetChanges();
 
-                if (domainEvents != null  && domainEvents.Any())
-                { 
+                if (domainEvents != null && domainEvents.Any())
+                {
                     _eventStorage.SaveChanges(aggregate.AggregateId, domainEvents);
                 }
 
@@ -80,7 +80,9 @@ namespace CodeUtopia.EventStore
 
                 if (domainEvents.Count > 10 /* TODO Make this value configurable. */)
                 {
-                    _eventStorage.SaveSnapshot(aggregate.AggregateId, aggregate.AggregateVersionNumber, originator.CreateMemento());
+                    _eventStorage.SaveSnapshot(aggregate.AggregateId,
+                                               aggregate.AggregateVersionNumber,
+                                               originator.CreateMemento());
                 }
             }
 

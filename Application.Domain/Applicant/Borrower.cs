@@ -3,6 +3,10 @@ using Application.Events;
 
 namespace Application.Domain.Applicant
 {
+    public class FirstName
+    {
+    }
+
     public class Borrower : Applicant
     {
         public Borrower()

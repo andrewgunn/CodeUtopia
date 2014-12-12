@@ -7,8 +7,8 @@
     <ProjectGuid>{EA901496-33B2-4C21-A08E-1539C49BC0E9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeUtopia.Validators</RootNamespace>
-    <AssemblyName>CodeUtopia.Validators</AssemblyName>
+    <RootNamespace>CodeUtopia.Specifications</RootNamespace>
+    <AssemblyName>CodeUtopia.Specifications</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,24 +39,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IntegerInRangeValidator.cs" />
+    <Compile Include="AndSpecification`1.cs" />
+    <Compile Include="SpecificationExtensions.cs" />
+    <Compile Include="IntegerRangeValidator.cs" />
     <Compile Include="IntegerEqualToValidator.cs" />
     <Compile Include="IntegerNotGreaterThanValidator.cs" />
-    <Compile Include="ValidationErrors\IntegerNotEqualToValidationError.cs" />
-    <Compile Include="ValidationErrors\IntegerGreaterThanValidationError.cs" />
+    <Compile Include="ISpecification`1.cs" />
+    <Compile Include="NotSpecification`1.cs" />
+    <Compile Include="OrSpecification`1.cs" />
     <Compile Include="IntegerNotEqualToValidator.cs" />
-    <Compile Include="ValidationErrors\IntegerEqualToValidationError.cs" />
-    <Compile Include="ValidationErrors\IValidationError.cs" />
-    <Compile Include="IValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValidationErrors\IntegerLessThanValidationError.cs" />
-    <Compile Include="ValidationErrors\StringNullOrWhiteSpaceValidationError.cs" />
     <Compile Include="IntegerNotLessThanValidator.cs" />
     <Compile Include="StringNotNullOrWhiteSpaceValidator.cs" />
-    <Compile Include="ValidationErrors\ValidationError.cs" />
-    <Compile Include="AggregateValidationException.cs" />
-    <Compile Include="ValidationException.cs" />
-    <Compile Include="Validator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

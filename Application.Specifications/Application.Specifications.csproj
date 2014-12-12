@@ -7,8 +7,8 @@
     <ProjectGuid>{8C8F68FC-7720-4039-8484-47A144FA1A33}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Application.Validators</RootNamespace>
-    <AssemblyName>Application.Validators</AssemblyName>
+    <RootNamespace>Application.Specifications</RootNamespace>
+    <AssemblyName>Application.Specifications</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -46,9 +46,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CodeUtopia.Validators\CodeUtopia.Validators.csproj">
-      <Project>{EA901496-33B2-4C21-A08E-1539C49BC0E9}</Project>
-      <Name>CodeUtopia.Validators</Name>
+    <ProjectReference Include="..\CodeUtopia.Specifications\CodeUtopia.Specifications.csproj">
+      <Project>{ea901496-33b2-4c21-a08e-1539c49bc0e9}</Project>
+      <Name>CodeUtopia.Specifications</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

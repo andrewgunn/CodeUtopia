@@ -33,9 +33,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Domain", "Appli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Events", "Application.Events\Application.Events.csproj", "{C8A0E9D8-1BB9-4DAC-9132-F8D79BB99F68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Validators", "Application.Validators\Application.Validators.csproj", "{8C8F68FC-7720-4039-8484-47A144FA1A33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Specifications", "Application.Specifications\Application.Specifications.csproj", "{8C8F68FC-7720-4039-8484-47A144FA1A33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeUtopia.Validators", "CodeUtopia.Validators\CodeUtopia.Validators.csproj", "{EA901496-33B2-4C21-A08E-1539C49BC0E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeUtopia.Specifications", "CodeUtopia.Specifications\CodeUtopia.Specifications.csproj", "{EA901496-33B2-4C21-A08E-1539C49BC0E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

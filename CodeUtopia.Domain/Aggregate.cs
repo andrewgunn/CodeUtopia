@@ -99,9 +99,9 @@ namespace CodeUtopia.Domain
 
         public Guid AggregateId { get; protected set; }
 
-        public int EventVersionNumber { get; private set; }
-
         public int AggregateVersionNumber { get; protected set; }
+
+        public int EventVersionNumber { get; private set; }
 
         private readonly List<IDomainEvent> _appliedEvents;
 

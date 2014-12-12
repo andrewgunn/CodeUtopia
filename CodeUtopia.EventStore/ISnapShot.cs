@@ -1,5 +1,4 @@
 using System;
-using CodeUtopia.Domain;
 
 namespace CodeUtopia.EventStore
 {
