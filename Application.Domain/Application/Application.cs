@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Application.Events;
+using Application.Validators;
 using CodeUtopia.Domain;
+using CodeUtopia.Validators;
 
 namespace Application.Domain.Application
 {
@@ -51,8 +54,19 @@ namespace Application.Domain.Application
             throw new NotImplementedException();
         }
 
-        private void OnApplicationCreateEvent(ApplicationCreatedEvent applicationCreatedEvent)
+        private void OnApplicationCreatedEvent(ApplicationCreatedEvent applicationCreatedEvent)
         {
+            var validationErrors = new List<IValidationError>
+                                   {
+                                       new LoanAmountValidator().Validate(applicationCreatedEvent.LoanAmount),
+                                       new LoanTermInMonthsValidator().Validate(applicationCreatedEvent.LoanTermInMonths)
+                                   };
+
+            if (validationErrors.Any())
+            {
+                throw new AggregateValidationErrorException(validationErrors);
+            }
+
             AggregateId = applicationCreatedEvent.AggregateId;
             _loanAmount = applicationCreatedEvent.LoanAmount;
             _loanTermInMonths = applicationCreatedEvent.LoanTermInMonths;
@@ -72,7 +86,7 @@ namespace Application.Domain.Application
 
         private void RegisterEventHandlers()
         {
-            RegisterEventHandler<ApplicationCreatedEvent>(OnApplicationCreateEvent);
+            RegisterEventHandler<ApplicationCreatedEvent>(OnApplicationCreatedEvent);
             RegisterEventHandler<BorrowerAddedToApplicationEvent>(OnBorrowerAddedToApplicationEvent);
         }
 

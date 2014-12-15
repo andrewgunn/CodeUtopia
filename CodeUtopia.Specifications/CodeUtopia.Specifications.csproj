@@ -40,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AndSpecification`1.cs" />
+    <Compile Include="DecimalInRange.cs" />
+    <Compile Include="DecimalNotLessThan.cs" />
+    <Compile Include="DecimalNotGreaterThan.cs" />
     <Compile Include="SpecificationExtensions.cs" />
     <Compile Include="IntegerInRange.cs" />
     <Compile Include="IntegerEqualTo.cs" />

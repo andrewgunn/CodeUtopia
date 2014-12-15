@@ -3,7 +3,7 @@ using CodeUtopia.Validators;
 
 namespace Application.Validators
 {
-    public class LoanTermValidator : IValidator<int>
+    public class LoanTermInMonthsValidator : IValidator<int>
     {
         public IValidationError Validate(int candidate)
         {
@@ -11,7 +11,7 @@ namespace Application.Validators
                                                       .Or(new IntegerEqualTo(24))
                                                       .Or(new IntegerEqualTo(36));
 
-            return specification.IsSatisfiedBy(candidate) ? null : new LoanTermValidationError(candidate);
+            return specification.IsSatisfiedBy(candidate) ? null : new LoanTermInMonthsValidationError(candidate);
         }
     }
 }

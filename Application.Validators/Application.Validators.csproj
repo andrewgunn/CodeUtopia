@@ -45,8 +45,10 @@
     <Compile Include="FirstNameValidationError.cs" />
     <Compile Include="FirstNameValidator.cs" />
     <Compile Include="LastNameValidator.cs" />
-    <Compile Include="LoanTermValidationError.cs" />
-    <Compile Include="LoanTermValidator.cs" />
+    <Compile Include="LoanAmountValidationError.cs" />
+    <Compile Include="LoanTermInMonthsValidationError.cs" />
+    <Compile Include="LoanAmountValidator.cs" />
+    <Compile Include="LoanTermInMonthsValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -18,12 +18,6 @@ namespace Application.Domain.Application
                         string emailAddress)
             : base(applicationId, versionNumberProvider, borrowerId)
         {
-            _firstName = firstName;
-            _lastName = lastName;
-            _emailAddress = emailAddress;
-
-            RegisterEventHandlers();
-
             var validationErrors = new List<IValidationError>
                                    {
                                        new FirstNameValidator().Validate(firstName),
@@ -35,6 +29,12 @@ namespace Application.Domain.Application
             {
                 throw new AggregateValidationErrorException(validationErrors);
             }
+
+            _firstName = firstName;
+            _lastName = lastName;
+            _emailAddress = emailAddress;
+
+            RegisterEventHandlers();
         }
 
         public void MoveAddress(Address address)

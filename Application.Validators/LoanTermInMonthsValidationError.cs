@@ -2,9 +2,9 @@
 
 namespace Application.Validators
 {
-    public class LoanTermValidationError : IValidationError
+    public class LoanTermInMonthsValidationError : IValidationError
     {
-        public LoanTermValidationError(int loanTerm)
+        public LoanTermInMonthsValidationError(int loanTerm)
         {
             _loanTerm = loanTerm;
             _message = string.Format("The loan term is invalid.");
