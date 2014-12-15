@@ -3,20 +3,28 @@ using CodeUtopia.Events;
 
 namespace Application.Events
 {
-    public class BorrowerAddedEvent : DomainEvent
+    public class BorrowerAddedToApplicationEvent : DomainEvent
     {
-        public BorrowerAddedEvent(Guid applicationId,
-                                  int aggregateVersionNumber,
-                                  Guid borrowerId,
-                                  string firstName,
-                                  string lastName,
-                                  string emailAddress)
+        public BorrowerAddedToApplicationEvent(Guid applicationId,
+                                               int aggregateVersionNumber,
+                                               Guid borrowerId,
+                                               string firstName,
+                                               string lastName,
+                                               string emailAddress)
             : base(applicationId, aggregateVersionNumber)
         {
             _borrowerId = borrowerId;
             _firstName = firstName;
             _lastName = lastName;
             _emailAddress = emailAddress;
+        }
+
+        public Guid ApplicationId
+        {
+            get
+            {
+                return ((IDomainEvent)this).AggregateId;
+            }
         }
 
         public Guid BorrowerId

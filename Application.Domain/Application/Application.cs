@@ -1,5 +1,4 @@
 ﻿using System;
-using Application.Domain.Applicant;
 using Application.Events;
 using CodeUtopia.Domain;
 
@@ -17,16 +16,16 @@ namespace Application.Domain.Application
             Apply(new ApplicationCreatedEvent(applicationId, GetNextVersionNumber(), loanAmount, loanTermInMonths));
         }
 
-        public Borrower AddBorrower(Guid borrowerId, FirstName firstName, LastName lastName, EmailAddress emailAddress)
+        public Borrower AddBorrower(Guid borrowerId, string firstName, string lastName, string emailAddress)
         {
-            var borrower = Borrower.Create(borrowerId, firstName, lastName, emailAddress);
+            var borrower = new Borrower(AggregateId, this, borrowerId, firstName, lastName, emailAddress);
 
-            Apply(new BorrowerAddedEvent(AggregateId,
-                                         GetNextVersionNumber(),
-                                         borrowerId,
-                                         firstName,
-                                         lastName,
-                                         emailAddress));
+            Apply(new BorrowerAddedToApplicationEvent(AggregateId,
+                                                      GetNextVersionNumber(),
+                                                      borrowerId,
+                                                      firstName,
+                                                      lastName,
+                                                      emailAddress));
 
             return borrower;
         }

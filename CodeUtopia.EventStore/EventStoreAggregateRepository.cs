@@ -30,7 +30,7 @@ namespace CodeUtopia.EventStore
 
                 if (domainEvents != null && domainEvents.Any())
                 {
-                    _eventStorage.SaveChanges(aggregate.AggregateId, domainEvents);
+                    _eventStorage.SaveEvents(domainEvents);
                 }
 
                 foreach (var domainEvent in aggregate.GetChanges())
@@ -65,22 +65,22 @@ namespace CodeUtopia.EventStore
 
             if (originator == null)
             {
-                domainEvents = _eventStorage.GetAll(aggregateId);
+                domainEvents = _eventStorage.GetEventsForAggregate(aggregateId);
             }
             else
             {
-                var snapshot = _eventStorage.GetLastSnapshot(aggregateId);
+                var snapshot = _eventStorage.GetLastSnapshotForAggregate(aggregateId);
 
                 if (snapshot != null)
                 {
                     originator.LoadFromMemento(snapshot.AggregateId, snapshot.AggregateVersionNumber, snapshot.Memento);
                 }
 
-                domainEvents = _eventStorage.GetAllSinceLastSnapshot(aggregateId);
+                domainEvents = _eventStorage.GetEventsForAggregateSinceLastSnapshot(aggregateId);
 
                 if (domainEvents.Count > 10 /* TODO Make this value configurable. */)
                 {
-                    _eventStorage.SaveSnapshot(aggregate.AggregateId,
+                    _eventStorage.SaveSnapshotForAggregate(aggregate.AggregateId,
                                                aggregate.AggregateVersionNumber,
                                                originator.CreateMemento());
                 }

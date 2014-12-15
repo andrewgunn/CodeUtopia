@@ -13,7 +13,7 @@ namespace Tests.CodeUtopia.Domain
         {
         }
 
-        protected virtual IReadOnlyCollection<IDomainEvent> Given()
+        protected virtual IReadOnlyCollection<IDomainEvent> GivenEvents()
         {
             return new List<IDomainEvent>();
         }
@@ -26,7 +26,7 @@ namespace Tests.CodeUtopia.Domain
 
             try
             {
-                Aggregate.LoadFromHistory(Given());
+                Aggregate.LoadFromHistory(GivenEvents());
                 When();
                 Changes = Aggregate.GetChanges();
             }
@@ -42,10 +42,10 @@ namespace Tests.CodeUtopia.Domain
 
         protected abstract void When();
 
-        protected TAggregate Aggregate;
+        protected TAggregate Aggregate { get; private set; }
 
-        protected IReadOnlyCollection<IDomainEvent> Changes;
+        protected IReadOnlyCollection<IDomainEvent> Changes { get; private set; }
 
-        protected Exception Exception;
+        protected Exception Exception { get; private set; }
     }
 }

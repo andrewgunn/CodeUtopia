@@ -30,7 +30,7 @@ namespace CodeUtopia.EventStore.EntityFramework
             }
         }
 
-        public IReadOnlyCollection<IDomainEvent> GetAll(Guid aggregateId)
+        public IReadOnlyCollection<IDomainEvent> GetEventsForAggregate(Guid aggregateId)
         {
             return _databaseContext.DomainEvents.Where(x => x.AggregateId == aggregateId)
                                    .OrderBy(x => x.AggregateVersionNumber)
@@ -39,7 +39,7 @@ namespace CodeUtopia.EventStore.EntityFramework
                                    .ToList();
         }
 
-        public IReadOnlyCollection<IDomainEvent> GetAll(int skip, int take)
+        public IReadOnlyCollection<IDomainEvent> GetEvents(int skip, int take)
         {
             return _databaseContext.DomainEvents.OrderBy(x => x.AggregateId)
                                    .ThenBy(x => x.AggregateVersionNumber)
@@ -50,9 +50,9 @@ namespace CodeUtopia.EventStore.EntityFramework
                                    .ToList();
         }
 
-        public IReadOnlyCollection<IDomainEvent> GetAllSinceLastSnapshot(Guid aggregateId)
+        public IReadOnlyCollection<IDomainEvent> GetEventsForAggregateSinceLastSnapshot(Guid aggregateId)
         {
-            var snapshot = GetLastSnapshot(aggregateId);
+            var snapshot = GetLastSnapshotForAggregate(aggregateId);
 
             var snapshotVersion = snapshot == null ? -1 : snapshot.AggregateVersionNumber;
 
@@ -67,7 +67,7 @@ namespace CodeUtopia.EventStore.EntityFramework
                                 .ToList();
         }
 
-        public ISnapshot GetLastSnapshot(Guid aggregateId)
+        public ISnapshot GetLastSnapshotForAggregate(Guid aggregateId)
         {
             var snapshot = _databaseContext.Snapshots.OrderByDescending(x => x.AggregateVersionNumber)
                                            .FirstOrDefault(x => x.AggregateId == aggregateId);
@@ -80,7 +80,7 @@ namespace CodeUtopia.EventStore.EntityFramework
             _databaseContext = new EventStoreContext(_nameOrConnectionString);
         }
 
-        public void SaveChanges(Guid aggregateId, IReadOnlyCollection<IDomainEvent> domainEvents)
+        public void SaveEvents(IReadOnlyCollection<IDomainEvent> domainEvents)
         {
             if (domainEvents == null || !domainEvents.Any())
             {
@@ -92,16 +92,16 @@ namespace CodeUtopia.EventStore.EntityFramework
             {
                 _databaseContext.DomainEvents.Add(new DomainEventEntity
                                                   {
-                                                      AggregateId = aggregateId,
+                                                      AggregateId = domainEvent.AggregateId,
+                                                      AggregateVersionNumber = domainEvent.AggregateVersionNumber,
                                                       DomainEventType = domainEvent.GetType()
                                                                                    .FullName,
-                                                      AggregateVersionNumber = domainEvent.AggregateVersionNumber,
                                                       Data = Serialize(domainEvent),
                                                   });
             }
         }
 
-        public void SaveSnapshot(Guid aggregateId, int aggregateVersionNumber, object memento)
+        public void SaveSnapshotForAggregate(Guid aggregateId, int aggregateVersionNumber, object memento)
         {
             _databaseContext.Snapshots.Add(new SnapshotEntity
                                            {

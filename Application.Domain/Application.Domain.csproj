@@ -39,13 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Applicant\EmailAddress.cs" />
-    <Compile Include="Applicant\FirstName.cs" />
-    <Compile Include="Applicant\LastName.cs" />
     <Compile Include="Application\Address.cs" />
-    <Compile Include="Applicant\Applicant.cs" />
+    <Compile Include="Application\Applicant.cs" />
     <Compile Include="Application\Application.cs" />
-    <Compile Include="Applicant\Borrower.cs" />
+    <Compile Include="Application\Borrower.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

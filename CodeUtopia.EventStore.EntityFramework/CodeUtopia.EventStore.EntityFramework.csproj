@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregateConcurrencyViolationException.cs" />
+    <Compile Include="PrimaryKeyConstraintViolationException.cs" />
     <Compile Include="DomainEventEntity.cs" />
     <Compile Include="DomainEventsCannotBeDeletedException.cs" />
     <Compile Include="DomainEventsCannotBeUpdatedException.cs" />

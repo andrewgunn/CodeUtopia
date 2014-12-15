@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using CodeUtopia.Domain;
 using CodeUtopia.Events;
 using NUnit.Framework;
 
 namespace Tests.CodeUtopia.Domain
 {
-    public class When_clearing_the_changes : AggregateTestFixture<Customer>
+    public class When_clearing_the_changes : AggregateTestFixture<Book>
     {
-        protected override IReadOnlyCollection<IDomainEvent> Given()
+        protected override IReadOnlyCollection<IDomainEvent> GivenEvents()
         {
             return new IDomainEvent[]
                    {
-                       new CustomerCreated(Guid.NewGuid(), 1)
+                       new BookRegisteredEvent(Guid.NewGuid(), 1, "Lorem Ipsum")
                    };
         }
 
@@ -29,13 +28,14 @@ namespace Tests.CodeUtopia.Domain
         }
     }
 
-    public class When_loading_a_single_event_without_a_registered_handler : AggregateTestFixture<Customer>
+    public class When_loading_an_event_without_a_registered_handler : AggregateTestFixture<Book>
     {
-        protected override IReadOnlyCollection<IDomainEvent> Given()
+        protected override IReadOnlyCollection<IDomainEvent> GivenEvents()
         {
             return new IDomainEvent[]
                    {
-                       new CustomerCreated(Guid.NewGuid(), 1), new CustomerDidSomethingElse(Aggregate.AggregateId, 1)
+                       new BookRegisteredEvent(Guid.NewGuid(), 1, "Lorem Ipsum"),
+                       new BookStolenEvent(Aggregate.AggregateId, 2, DateTime.UtcNow)
                    };
         }
 
@@ -43,141 +43,6 @@ namespace Tests.CodeUtopia.Domain
         public void Then_an_exception_will_be_thrown()
         {
             Assert.That(Exception, Is.InstanceOf<DomainEventHandlerNotRegisteredException>());
-        }
-
-        [Then]
-        public void Then_there_are_no_changes()
-        {
-            Assert.That(Changes.Count, Is.EqualTo(0));
-        }
-
-        protected override void When()
-        {
-        }
-    }
-
-    public class When_triggering_behaviour_on_the_aggregate_and_entities : AggregateTestFixture<Customer>
-    {
-        protected override IReadOnlyCollection<IDomainEvent> Given()
-        {
-            return new IDomainEvent[]
-                   {
-                       new CustomerCreated(Guid.NewGuid(), 1)
-                   };
-        }
-
-        [Then]
-        public void Then_an_exception_is_not_thrown()
-        {
-            Assert.That(Exception, Is.EqualTo(null));
-        }
-
-        [Then]
-        public void Then_the_aggregate_and_the_first_event_have_a_different_event_version_number()
-        {
-            Assert.That(Aggregate.EventVersionNumber,
-                        Is.Not.EqualTo(Changes.ElementAt(0)
-                                              .AggregateVersionNumber));
-        }
-
-        [Then]
-        public void Then_the_aggregate_and_the_first_event_have_a_different_version_number()
-        {
-            Assert.That(Aggregate.AggregateVersionNumber,
-                        Is.Not.EqualTo(Changes.ElementAt(0)
-                                              .AggregateVersionNumber));
-        }
-
-        [Then]
-        public void Then_the_aggregate_and_the_first_event_have_the_same_id()
-        {
-            Assert.That(Aggregate.AggregateId,
-                        Is.EqualTo(Changes.ElementAt(0)
-                                          .AggregateId));
-        }
-
-        [Then]
-        public void Then_the_aggregate_and_the_last_event_have_a_different_version_number()
-        {
-            Assert.That(Aggregate.AggregateVersionNumber,
-                        Is.Not.EqualTo(Changes.Last()
-                                              .AggregateVersionNumber));
-        }
-
-        [Then]
-        public void Then_the_aggregate_and_the_last_event_have_the_same_event_version_number()
-        {
-            Assert.That(Aggregate.EventVersionNumber,
-                        Is.EqualTo(Changes.Last()
-                                          .AggregateVersionNumber));
-        }
-
-        [Then]
-        public void Then_the_aggregate_and_the_second_event_have_a_different_event_version_number()
-        {
-            Assert.That(Aggregate.EventVersionNumber,
-                        Is.Not.EqualTo(Changes.ElementAt(1)
-                                              .AggregateVersionNumber));
-        }
-
-        [Then]
-        public void Then_the_aggregate_and_the_second_event_have_a_different_version_number()
-        {
-            Assert.That(Aggregate.AggregateVersionNumber,
-                        Is.Not.EqualTo(Changes.ElementAt(1)
-                                              .AggregateVersionNumber));
-        }
-
-        [Then]
-        public void Then_the_first_event_was_customer_did_something()
-        {
-            Assert.That(Changes.ElementAt(0), Is.InstanceOf<CustomerDidSomething>());
-        }
-
-        [Then]
-        public void Then_the_second_event_was_order_added_to_customer()
-        {
-            Assert.That(Changes.ElementAt(1), Is.InstanceOf<OrderAddedToCustomer>());
-        }
-
-        [Then]
-        public void Then_the_third_event_was_order_did_something_else()
-        {
-            Assert.That(Changes.ElementAt(2), Is.InstanceOf<OrderDidSomething>());
-        }
-
-        [Then]
-        public void Then_there_are_three_changes()
-        {
-            Assert.That(Changes.Count, Is.EqualTo(3));
-        }
-
-        protected override void When()
-        {
-            Aggregate.DoSomething();
-
-            var orderId = Guid.NewGuid();
-            Aggregate.AddOrder(orderId);
-
-            var order = Aggregate.GetOrder(orderId);
-            order.DoSomething();
-        }
-    }
-
-    public class When_loading_a_single_event_with_a_registered_handler : AggregateTestFixture<Customer>
-    {
-        protected override IReadOnlyCollection<IDomainEvent> Given()
-        {
-            return new IDomainEvent[]
-                   {
-                       new CustomerCreated(Guid.NewGuid(), 1), new CustomerDidSomething(Aggregate.AggregateId, 1)
-                   };
-        }
-
-        [Then]
-        public void Then_an_exception_is_not_thrown()
-        {
-            Assert.That(Exception, Is.EqualTo(null));
         }
 
         [Then]
@@ -197,189 +62,217 @@ namespace Tests.CodeUtopia.Domain
         }
     }
 
-    public class Customer : Aggregate
+    public class When_loading_an_event_with_a_registered_handler : AggregateTestFixture<Book>
     {
-        public Customer()
+        protected override IReadOnlyCollection<IDomainEvent> GivenEvents()
         {
-            _orders = new EntityList<Order>(this);
+            return new IDomainEvent[]
+                   {
+                       new BookRegisteredEvent(Guid.NewGuid(), 1, "Lorem Ipsum"),
+                       new BookLentEvent(Aggregate.AggregateId, 2, DateTime.UtcNow)
+                   };
+        }
 
+        [Then]
+        public void Then_an_exception_is_not_thrown()
+        {
+            Assert.That(Exception, Is.EqualTo(null));
+        }
+
+        [Then]
+        public void Then_the_aggregate_version_number_is_two()
+        {
+            Assert.That(Aggregate.AggregateVersionNumber, Is.EqualTo(2));
+        }
+
+        [Then]
+        public void Then_there_are_no_changes()
+        {
+            Assert.That(Changes.Count, Is.EqualTo(0));
+        }
+
+        protected override void When()
+        {
+        }
+    }
+
+    public class Book : Aggregate
+    {
+        public Book()
+        {
             RegisterEventHandlers();
         }
 
-        private Customer(Guid customerId)
+        private Book(Guid bookId, string title)
+            : this()
         {
-            Apply(new CustomerCreated(customerId, GetNextVersionNumber()));
+            Apply(new BookRegisteredEvent(bookId, BookVersionNumber, title));
         }
 
-        public void AddOrder(Guid orderId)
+        public void Lend(DateTime lentAt)
         {
-            Apply(new OrderAddedToCustomer(AggregateId, GetNextVersionNumber(), orderId));
+            Apply(new BookLentEvent(BookId, BookVersionNumber, lentAt));
         }
 
-        public static Customer Create(Guid customerId)
+        private void OnBookLent(BookLentEvent bookLentAt)
         {
-            return new Customer(customerId);
+            _lentAt = bookLentAt.LentAt;
         }
 
-        public void DoSomething()
+        private void OnBookRegistered(BookRegisteredEvent bookRegisteredEvent)
         {
-            Apply(new CustomerDidSomething(AggregateId, GetNextVersionNumber()));
+            AggregateId = bookRegisteredEvent.AggregateId;
+            _title = bookRegisteredEvent.Title;
         }
 
-        public void DoSomethingElse()
+        private void OnBookReturned(BookReturnedEvent bookReturnedEvent)
         {
-            Apply(new CustomerDidSomethingElse(AggregateId, GetNextVersionNumber()));
+            _lentAt = null;
         }
 
-        public Order GetOrder(Guid orderId)
+        public static Book Register(Guid bookId, string title)
         {
-            Order order;
-
-            if (!_orders.TryGetValue(orderId, out order))
-            {
-                throw new OrderNotFoundException(orderId);
-            }
-
-            return order;
-        }
-
-        private void OnCustomerCreated(CustomerCreated customerCreated)
-        {
-            AggregateId = customerCreated.CustomerId;
-        }
-
-        private void OnOrderAddedToCustomer(OrderAddedToCustomer orderAddedToCustomer)
-        {
-            var order = Order.Create(AggregateId, this, orderAddedToCustomer.OrderId);
-
-            _orders.Add(order);
+            return new Book(bookId, title);
         }
 
         private void RegisterEventHandlers()
         {
-            RegisterEventHandler<CustomerCreated>(OnCustomerCreated);
-            RegisterEventHandler<CustomerDidSomething>(x =>
-                                                       {
-                                                       });
-            RegisterEventHandler<OrderAddedToCustomer>(OnOrderAddedToCustomer);
+            RegisterEventHandler<BookRegisteredEvent>(OnBookRegistered);
+            RegisterEventHandler<BookLentEvent>(OnBookLent);
+            RegisterEventHandler<BookReturnedEvent>(OnBookReturned);
         }
 
-        private readonly EntityList<Order> _orders;
-    }
-
-    public class OrderAddedToCustomer : DomainEvent
-    {
-        public OrderAddedToCustomer(Guid aggregateId, int aggregateVersionNumber, Guid orderId)
-            : base(aggregateId, aggregateVersionNumber)
+        public void Return(DateTime returnedAt)
         {
-            _orderId = orderId;
+            Apply(new BookReturnedEvent(BookId, BookVersionNumber, returnedAt));
         }
 
-        public Guid OrderId
+        private Guid BookId
         {
             get
             {
-                return _orderId;
+                return AggregateId;
             }
         }
 
-        private readonly Guid _orderId;
-    }
-
-    public class CustomerCreated : DomainEvent
-    {
-        public CustomerCreated(Guid aggregateId, int aggregateVersionNumber)
-            : base(aggregateId, aggregateVersionNumber)
+        private int BookVersionNumber
         {
+            get
+            {
+                return AggregateVersionNumber;
+            }
         }
 
-        public Guid CustomerId
+        private DateTime? _lentAt;
+
+        private string _title;
+    }
+
+    public class BookRegisteredEvent : DomainEvent
+    {
+        public BookRegisteredEvent(Guid bookId, int bookVersionNumber, string title)
+            : base(bookId, bookVersionNumber)
+        {
+            _title = title;
+        }
+
+        public Guid BookId
         {
             get
             {
                 return ((IDomainEvent)this).AggregateId;
             }
         }
+
+        public string Title
+        {
+            get
+            {
+                return _title;
+            }
+        }
+
+        private readonly string _title;
     }
 
-    public class OrderNotFoundException : Exception
+    public class BookLentEvent : DomainEvent
     {
-        public OrderNotFoundException(Guid orderId)
-            : base(string.Format("The order {0} cannot be found.", orderId))
+        public BookLentEvent(Guid bookId, int bookVersionNumber, DateTime lentAt)
+            : base(bookId, bookVersionNumber)
         {
+            _lentAt = lentAt;
         }
+
+        public Guid BookId
+        {
+            get
+            {
+                return ((IDomainEvent)this).AggregateId;
+            }
+        }
+
+        public DateTime LentAt
+        {
+            get
+            {
+                return _lentAt;
+            }
+        }
+
+        private readonly DateTime _lentAt;
     }
 
-    public class Order : Entity
+    public class BookReturnedEvent : DomainEvent
     {
-        private Order(Guid aggregateId, IVersionNumberProvider versionNumberProvider, Guid orderId)
-            : base(aggregateId, versionNumberProvider)
+        public BookReturnedEvent(Guid bookId, int bookVersionNumber, DateTime returnedAt)
+            : base(bookId, bookVersionNumber)
         {
-            EntityId = orderId;
-
-            RegisterEventHandlers();
+            _returnedAt = returnedAt;
         }
 
-        public static Order Create(Guid aggregateId, IVersionNumberProvider versionNumberProvider, Guid orderId)
+        public Guid BookId
         {
-            return new Order(aggregateId, versionNumberProvider, orderId);
+            get
+            {
+                return ((IDomainEvent)this).AggregateId;
+            }
         }
 
-        public void DoSomething()
+        public DateTime ReturnedAt
         {
-            Apply(new OrderDidSomething(AggregateId, GetNextVersionNumber(), EntityId));
+            get
+            {
+                return _returnedAt;
+            }
         }
 
-        public void DoSomethingElse()
-        {
-            Apply(new OrderDidSomethingElse(AggregateId, GetNextVersionNumber(), EntityId));
-        }
-
-        private void RegisterEventHandlers()
-        {
-            RegisterEventHandler<OrderDidSomething>(x =>
-                                                    {
-                                                    });
-        }
+        private readonly DateTime _returnedAt;
     }
 
-    public class OrderCreated : DomainEvent
+    public class BookStolenEvent : DomainEvent
     {
-        public OrderCreated(Guid aggregateId, int aggregateVersionNumber)
-            : base(aggregateId, aggregateVersionNumber)
+        public BookStolenEvent(Guid bookId, int bookVersionNumber, DateTime stolenAt)
+            : base(bookId, bookVersionNumber)
         {
+            _stolenAt = stolenAt;
         }
-    }
 
-    public class OrderDidSomething : EntityEvent
-    {
-        public OrderDidSomething(Guid aggregateId, int aggregateVersionNumber, Guid entityId)
-            : base(aggregateId, aggregateVersionNumber, entityId)
+        public Guid BookId
         {
+            get
+            {
+                return ((IDomainEvent)this).AggregateId;
+            }
         }
-    }
 
-    public class OrderDidSomethingElse : EntityEvent
-    {
-        public OrderDidSomethingElse(Guid aggregateId, int aggregateVersionNumber, Guid entityId)
-            : base(aggregateId, aggregateVersionNumber, entityId)
+        public DateTime StolenAt
         {
+            get
+            {
+                return _stolenAt;
+            }
         }
-    }
 
-    public class CustomerDidSomething : DomainEvent
-    {
-        public CustomerDidSomething(Guid aggregateId, int aggregateVersionNumber)
-            : base(aggregateId, aggregateVersionNumber)
-        {
-        }
-    }
-
-    public class CustomerDidSomethingElse : DomainEvent
-    {
-        public CustomerDidSomethingElse(Guid aggregateId, int aggregateVersionNumber)
-            : base(aggregateId, aggregateVersionNumber)
-        {
-        }
+        private readonly DateTime _stolenAt;
     }
 }

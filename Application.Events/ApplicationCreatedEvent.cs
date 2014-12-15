@@ -15,6 +15,14 @@ namespace Application.Events
             _loanTermInMonths = loanTermInMonths;
         }
 
+        public Guid ApplicationId
+        {
+            get
+            {
+                return ((IDomainEvent)this).AggregateId;
+            }
+        }
+
         public decimal LoanAmount
         {
             get

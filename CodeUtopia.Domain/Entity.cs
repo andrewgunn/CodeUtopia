@@ -7,10 +7,12 @@ namespace CodeUtopia.Domain
 {
     public abstract class Entity : IEntity
     {
-        protected Entity(Guid aggregateId, IVersionNumberProvider versionNumberProvider)
+        protected Entity(Guid aggregateId, IVersionNumberProvider versionNumberProvider, Guid entityId)
         {
             _aggregateId = aggregateId;
             _versionNumberProvider = versionNumberProvider;
+            _entityId = entityId;
+
             _eventHandlers = new Dictionary<Type, Action<IEntityEvent>>();
             _appliedEvents = new List<IEntityEvent>();
         }
@@ -18,10 +20,6 @@ namespace CodeUtopia.Domain
         protected void Apply(IEntityEvent entityEvent)
         {
             Handle(entityEvent);
-
-            //entityEvent.AggregateId = AggregateId;
-            //entityEvent.VersionNumber = _versionNumberProvider.GetNextVersionNumber();
-            //entityEvent.EntityId = EntityId;
 
             _appliedEvents.Add(entityEvent);
         }
@@ -94,11 +92,19 @@ namespace CodeUtopia.Domain
             }
         }
 
-        public Guid EntityId { get; protected set; }
+        public Guid EntityId
+        {
+            get
+            {
+                return _entityId;
+            }
+        }
 
         private readonly Guid _aggregateId;
 
         private readonly List<IEntityEvent> _appliedEvents;
+
+        private readonly Guid _entityId;
 
         private readonly Dictionary<Type, Action<IEntityEvent>> _eventHandlers;
 

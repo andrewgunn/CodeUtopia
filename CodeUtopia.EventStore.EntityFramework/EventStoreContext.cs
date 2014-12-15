@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace CodeUtopia.EventStore.EntityFramework
 {
@@ -12,14 +15,6 @@ namespace CodeUtopia.EventStore.EntityFramework
             : base(nameOrConnectionString)
         {
             Configuration.LazyLoadingEnabled = false;
-        }
-
-        private int GetAggregateVersionNumber(Guid aggregateId)
-        {
-            return DomainEvents.Where(x => x.AggregateId == aggregateId)
-                               .OrderByDescending(x => x.AggregateVersionNumber)
-                               .Select(x => x.AggregateVersionNumber)
-                               .FirstOrDefault();
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -52,26 +47,37 @@ namespace CodeUtopia.EventStore.EntityFramework
                 exceptions.Add(new DomainEventsCannotBeUpdatedException(updatedDomainEvent));
             }
 
-            var createdDomainEvents = ChangeTracker.Entries<DomainEventEntity>()
-                                                   .Where(x => x.State == EntityState.Added)
-                                                   .Select(x => x.Entity)
-                                                   .ToList();
-            var aggregateIds = createdDomainEvents.Select(x => x.AggregateId)
-                                                  .Distinct();
-
-            foreach (var aggregateId in aggregateIds)
+            if (exceptions.Any())
             {
-                var aggregateVersionNumber = GetAggregateVersionNumber(aggregateId);
-
-                if (aggregateVersionNumber != createdDomainEvents.OrderBy(x => x.AggregateVersionNumber)
-                                                                 .Select(x => x.AggregateVersionNumber)
-                                                                 .First() - 1)
-                {
-                    exceptions.Add(new AggregateConcurrencyViolationException(aggregateId));
-                }
+                throw new AggregateException(exceptions);
             }
 
-            return base.SaveChanges();
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                var sqlException = dbUpdateException.GetBaseException() as SqlException;
+
+                if (sqlException == null)
+                {
+                    throw;
+                }
+
+                var match = Regex.Match(sqlException.Message,
+                                        @"Violation of PRIMARY KEY constraint '[^']+'. Cannot insert duplicate key in object '[^']+'. The duplicate key value is \(([^\)]+)\)");
+
+                if (!match.Success)
+                {
+                    throw;
+                }
+
+                throw new PrimaryKeyConstraintViolationException(Convert.ToString(match.Groups[1])
+                                                                        .Split(',')
+                                                                        .Select(x => x.Trim())
+                                                                        .ToArray());
+            }
         }
 
         public IDbSet<DomainEventEntity> DomainEvents { get; set; }
