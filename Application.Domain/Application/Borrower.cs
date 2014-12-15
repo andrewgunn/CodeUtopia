@@ -10,7 +10,12 @@ namespace Application.Domain.Application
 {
     public class Borrower : Applicant
     {
-        public Borrower(Guid applicationId, IVersionNumberProvider versionNumberProvider, Guid borrowerId, string firstName, string lastName, string emailAddress)
+        public Borrower(Guid applicationId,
+                        IVersionNumberProvider versionNumberProvider,
+                        Guid borrowerId,
+                        string firstName,
+                        string lastName,
+                        string emailAddress)
             : base(applicationId, versionNumberProvider, borrowerId)
         {
             _firstName = firstName;
@@ -32,26 +37,66 @@ namespace Application.Domain.Application
             }
         }
 
-        private void OnBorrowerCreatedEvent(BorrowerAddedToApplicationEvent borrowerCreatedEvent)
+        public void MoveAddress(Address address)
         {
-            _firstName = borrowerCreatedEvent.FirstName;
-            _lastName = borrowerCreatedEvent.LastName;
-            _emailAddress = borrowerCreatedEvent.EmailAddress;
+            Apply(new BorrowerMovedAddressEvent(ApplicationId,
+                                                GetNextVersionNumber(),
+                                                BorrowerId,
+                                                address.HouseName,
+                                                address.HouseNumber,
+                                                address.Flat,
+                                                address.Street,
+                                                address.Street2,
+                                                address.TownOrCity,
+                                                address.District,
+                                                address.County,
+                                                address.Postcode));
         }
 
-        public void ChangeCurrentAddress()
+        private void OnMovedAddressEvent(BorrowerMovedAddressEvent borrowerMovedAddressEvent)
         {
+            _previousAddresses.Add(_currentAddress);
 
+            _currentAddress = new Address(borrowerMovedAddressEvent.HouseName,
+                                          borrowerMovedAddressEvent.HouseNumber,
+                                          borrowerMovedAddressEvent.Flat,
+                                          borrowerMovedAddressEvent.Street,
+                                          borrowerMovedAddressEvent.Street2,
+                                          borrowerMovedAddressEvent.TownOrCity,
+                                          borrowerMovedAddressEvent.District,
+                                          borrowerMovedAddressEvent.County,
+                                          borrowerMovedAddressEvent.Postcode);
         }
 
         private void RegisterEventHandlers()
         {
+            RegisterEventHandler<BorrowerMovedAddressEvent>(OnMovedAddressEvent);
         }
+
+        protected Guid ApplicationId
+        {
+            get
+            {
+                return AggregateId;
+            }
+        }
+
+        protected Guid BorrowerId
+        {
+            get
+            {
+                return EntityId;
+            }
+        }
+
+        private Address _currentAddress;
 
         private string _emailAddress;
 
         private string _firstName;
 
         private string _lastName;
+
+        private List<Address> _previousAddresses;
     }
 }

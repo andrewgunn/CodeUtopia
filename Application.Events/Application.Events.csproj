@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="ApplicationCreatedEvent.cs" />
     <Compile Include="BorrowerAddedToApplicationEvent.cs" />
+    <Compile Include="BorrowerMovedAddressEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,10 +6,10 @@ namespace Application.Events
     public class ApplicationCreatedEvent : DomainEvent
     {
         public ApplicationCreatedEvent(Guid applicationId,
-                                       int aggregateVersionNumber,
+                                       int applicationVersionNumber,
                                        decimal loanAmount,
                                        int loanTermInMonths)
-            : base(applicationId, aggregateVersionNumber)
+            : base(applicationId, applicationVersionNumber)
         {
             _loanAmount = loanAmount;
             _loanTermInMonths = loanTermInMonths;

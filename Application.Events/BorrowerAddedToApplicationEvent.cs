@@ -6,12 +6,12 @@ namespace Application.Events
     public class BorrowerAddedToApplicationEvent : DomainEvent
     {
         public BorrowerAddedToApplicationEvent(Guid applicationId,
-                                               int aggregateVersionNumber,
+                                               int applicationVersionNumber,
                                                Guid borrowerId,
                                                string firstName,
                                                string lastName,
                                                string emailAddress)
-            : base(applicationId, aggregateVersionNumber)
+            : base(applicationId, applicationVersionNumber)
         {
             _borrowerId = borrowerId;
             _firstName = firstName;

@@ -106,26 +106,26 @@ namespace Tests.CodeUtopia.Domain
         private Book(Guid bookId, string title)
             : this()
         {
-            Apply(new BookRegisteredEvent(bookId, BookVersionNumber, title));
+            Apply(new BookRegisteredEvent(bookId, GetNextVersionNumber(), title));
         }
 
         public void Lend(DateTime lentAt)
         {
-            Apply(new BookLentEvent(BookId, BookVersionNumber, lentAt));
+            Apply(new BookLentEvent(BookId, GetNextVersionNumber(), lentAt));
         }
 
-        private void OnBookLent(BookLentEvent bookLentAt)
+        private void OnBookLentEvent(BookLentEvent bookLentAt)
         {
             _lentAt = bookLentAt.LentAt;
         }
 
-        private void OnBookRegistered(BookRegisteredEvent bookRegisteredEvent)
+        private void OnBookRegisteredEvent(BookRegisteredEvent bookRegisteredEvent)
         {
             AggregateId = bookRegisteredEvent.AggregateId;
             _title = bookRegisteredEvent.Title;
         }
 
-        private void OnBookReturned(BookReturnedEvent bookReturnedEvent)
+        private void OnBookReturnedEvent(BookReturnedEvent bookReturnedEvent)
         {
             _lentAt = null;
         }
@@ -137,29 +137,21 @@ namespace Tests.CodeUtopia.Domain
 
         private void RegisterEventHandlers()
         {
-            RegisterEventHandler<BookRegisteredEvent>(OnBookRegistered);
-            RegisterEventHandler<BookLentEvent>(OnBookLent);
-            RegisterEventHandler<BookReturnedEvent>(OnBookReturned);
+            RegisterEventHandler<BookRegisteredEvent>(OnBookRegisteredEvent);
+            RegisterEventHandler<BookLentEvent>(OnBookLentEvent);
+            RegisterEventHandler<BookReturnedEvent>(OnBookReturnedEvent);
         }
 
         public void Return(DateTime returnedAt)
         {
-            Apply(new BookReturnedEvent(BookId, BookVersionNumber, returnedAt));
+            Apply(new BookReturnedEvent(BookId, GetNextVersionNumber(), returnedAt));
         }
 
-        private Guid BookId
+        protected Guid BookId
         {
             get
             {
                 return AggregateId;
-            }
-        }
-
-        private int BookVersionNumber
-        {
-            get
-            {
-                return AggregateVersionNumber;
             }
         }
 
