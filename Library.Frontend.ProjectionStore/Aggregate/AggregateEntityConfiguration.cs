@@ -15,7 +15,7 @@ namespace Library.Frontend.ProjectionStore.Aggregate
             Property(p => p.AggregateId)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();
-            Property(p => p.VersionNumber)
+            Property(p => p.AggregateVersionNumber)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();
         }

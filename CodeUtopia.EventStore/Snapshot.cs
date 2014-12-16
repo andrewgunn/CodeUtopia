@@ -4,10 +4,10 @@ namespace CodeUtopia.EventStore
 {
     public abstract class Snapshot : ISnapshot
     {
-        protected Snapshot(Guid aggregateId, int versionNumber, object memento)
+        protected Snapshot(Guid aggregateId, int aggregateVersionNumber, object memento)
         {
             _aggregateId = aggregateId;
-            _versionNumber = versionNumber;
+            _aggregateVersionNumber = aggregateVersionNumber;
             _memento = memento;
         }
 
@@ -23,7 +23,7 @@ namespace CodeUtopia.EventStore
         {
             get
             {
-                return _versionNumber;
+                return _aggregateVersionNumber;
             }
         }
 
@@ -37,8 +37,9 @@ namespace CodeUtopia.EventStore
 
         private readonly Guid _aggregateId;
 
+        private readonly int _aggregateVersionNumber;
+
         private readonly object _memento;
 
-        private readonly int _versionNumber;
     }
 }

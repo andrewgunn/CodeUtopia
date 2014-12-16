@@ -6,6 +6,6 @@ namespace Library.Frontend.ProjectionStore.Aggregate
     {
         public Guid AggregateId { get; set; }
 
-        public int VersionNumber { get; set; }
+        public int AggregateVersionNumber { get; set; }
     }
 }

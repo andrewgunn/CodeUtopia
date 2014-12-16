@@ -54,7 +54,7 @@
     <Compile Include="Book\BookEntity.cs" />
     <Compile Include="Book\BookEntityConfiguration.cs" />
     <Compile Include="Book\EventHandlers\BookReturnedEventHandler.cs" />
-    <Compile Include="Book\EventHandlers\BookLentEventHandler.cs" />
+    <Compile Include="Book\EventHandlers\BookBorrowedEventHandler.cs" />
     <Compile Include="Book\EventHandlers\BookRegisteredEventHandler.cs" />
     <Compile Include="IProjectionStoreDatabaseSettings.cs" />
     <Compile Include="ProjectionStoreContext.cs" />

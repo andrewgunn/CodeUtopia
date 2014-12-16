@@ -55,7 +55,9 @@ namespace Library.Frontend.Host
                 return;
             }
 
-            bus.Send(new RepublishAllEventsCommand());
+            var command = new RepublishAllEventsCommand();
+
+            bus.Send(command);
         }
 
         private static BusConfiguration ConfigureBus(BusConfiguration busConfiguration, ILifetimeScope lifetimeScope)
