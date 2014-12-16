@@ -1,4 +1,3 @@
-
 using Autofac;
 using Library.Backend.Autofac;
 using NServiceBus;
@@ -9,22 +8,7 @@ namespace Library.Backend.Host
 {
     public class EndpointConfig : IConfigureThisEndpoint
     {
-        public void Customize(BusConfiguration configuration)
-        {
-            configuration.EnableOutbox();
-            configuration.EndpointName("LibraryBackend");
-            configuration.UsePersistence<InMemoryPersistence>();
-
-            var builder = new ContainerBuilder();
-            builder.RegisterModule(new LibraryBackendModule());
-
-            var container = builder.Build();
-
-            ConfigureBus(configuration, container);
-
-        }
-
-        private void ConfigureBus(BusConfiguration busConfiguration, ILifetimeScope lifetimeScope)
+        private static void ConfigureBus(BusConfiguration busConfiguration, ILifetimeScope lifetimeScope)
         {
             LogManager.Use<DefaultFactory>();
 
@@ -39,6 +23,20 @@ namespace Library.Backend.Host
             conventions.DefiningEventsAs(x => x.Name.EndsWith("Event"));
 
             busConfiguration.UsePersistence<InMemoryPersistence>();
+        }
+
+        public void Customize(BusConfiguration configuration)
+        {
+            configuration.EnableOutbox();
+            configuration.EndpointName("LibraryBackend");
+            configuration.UsePersistence<InMemoryPersistence>();
+
+            var builder = new ContainerBuilder();
+            builder.RegisterModule(new LibraryBackendModule());
+
+            var container = builder.Build();
+
+            ConfigureBus(configuration, container);
         }
     }
 }

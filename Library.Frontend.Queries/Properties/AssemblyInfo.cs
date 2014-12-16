@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Library.CommandHandlers")]
+[assembly: AssemblyTitle("Library.Frontend.Queries")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Library.CommandHandlers")]
+[assembly: AssemblyProduct("Library.Frontend.Queries")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
-[assembly: Guid("ceabc555-c18c-44d8-9ce7-bc868c3ab741")]
+[assembly: Guid("701cd3cf-d2ee-453c-883d-94260a616949")]
 
 // Version information for an assembly consists of the following four values:
 //
