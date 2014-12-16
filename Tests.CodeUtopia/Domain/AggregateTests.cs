@@ -6,13 +6,13 @@ using NUnit.Framework;
 
 namespace Tests.CodeUtopia.Domain
 {
-    public class When_clearing_the_changes : AggregateTestFixture<Book>
+    public class When_clearing_the_changes : AggregateTestFixture<TodoList>
     {
         protected override IReadOnlyCollection<IDomainEvent> GivenEvents()
         {
             return new IDomainEvent[]
                    {
-                       new BookRegisteredEvent(Guid.NewGuid(), 1, "Lorem Ipsum")
+                       new TodoListCreatedEvent(Guid.NewGuid(), 1, "Todo")
                    };
         }
 
@@ -28,14 +28,14 @@ namespace Tests.CodeUtopia.Domain
         }
     }
 
-    public class When_loading_an_event_without_a_registered_handler : AggregateTestFixture<Book>
+    public class When_loading_an_event_without_a_registered_handler : AggregateTestFixture<TodoList>
     {
         protected override IReadOnlyCollection<IDomainEvent> GivenEvents()
         {
             return new IDomainEvent[]
                    {
-                       new BookRegisteredEvent(Guid.NewGuid(), 1, "Lorem Ipsum"),
-                       new BookStolenEvent(Aggregate.AggregateId, 2, DateTime.UtcNow)
+                       new TodoListCreatedEvent(Guid.NewGuid(), 1, "Todo"),
+                       new TodoListItemRemovedEvent(Aggregate.AggregateId, 2, Guid.NewGuid())
                    };
         }
 
@@ -62,14 +62,14 @@ namespace Tests.CodeUtopia.Domain
         }
     }
 
-    public class When_loading_an_event_with_a_registered_handler : AggregateTestFixture<Book>
+    public class When_loading_an_event_with_a_registered_handler : AggregateTestFixture<TodoList>
     {
         protected override IReadOnlyCollection<IDomainEvent> GivenEvents()
         {
             return new IDomainEvent[]
                    {
-                       new BookRegisteredEvent(Guid.NewGuid(), 1, "Lorem Ipsum"),
-                       new BookLentEvent(Aggregate.AggregateId, 2, DateTime.UtcNow)
+                       new TodoListCreatedEvent(Guid.NewGuid(), 1, "Todo"),
+                       new TodoListItemAddedEvent(Aggregate.AggregateId, 2, Guid.NewGuid(), "Buy milk")
                    };
         }
 
@@ -94,177 +94,5 @@ namespace Tests.CodeUtopia.Domain
         protected override void When()
         {
         }
-    }
-
-    public class Book : Aggregate
-    {
-        public Book()
-        {
-            RegisterEventHandlers();
-        }
-
-        private Book(Guid bookId, string title)
-            : this()
-        {
-            Apply(new BookRegisteredEvent(bookId, GetNextVersionNumber(), title));
-        }
-
-        public void Lend(DateTime lentAt)
-        {
-            Apply(new BookLentEvent(BookId, GetNextVersionNumber(), lentAt));
-        }
-
-        private void OnBookLentEvent(BookLentEvent bookLentAt)
-        {
-            _lentAt = bookLentAt.LentAt;
-        }
-
-        private void OnBookRegisteredEvent(BookRegisteredEvent bookRegisteredEvent)
-        {
-            AggregateId = bookRegisteredEvent.AggregateId;
-            _title = bookRegisteredEvent.Title;
-        }
-
-        private void OnBookReturnedEvent(BookReturnedEvent bookReturnedEvent)
-        {
-            _lentAt = null;
-        }
-
-        public static Book Register(Guid bookId, string title)
-        {
-            return new Book(bookId, title);
-        }
-
-        private void RegisterEventHandlers()
-        {
-            RegisterEventHandler<BookRegisteredEvent>(OnBookRegisteredEvent);
-            RegisterEventHandler<BookLentEvent>(OnBookLentEvent);
-            RegisterEventHandler<BookReturnedEvent>(OnBookReturnedEvent);
-        }
-
-        public void Return(DateTime returnedAt)
-        {
-            Apply(new BookReturnedEvent(BookId, GetNextVersionNumber(), returnedAt));
-        }
-
-        protected Guid BookId
-        {
-            get
-            {
-                return AggregateId;
-            }
-        }
-
-        private DateTime? _lentAt;
-
-        private string _title;
-    }
-
-    public class BookRegisteredEvent : DomainEvent
-    {
-        public BookRegisteredEvent(Guid bookId, int bookVersionNumber, string title)
-            : base(bookId, bookVersionNumber)
-        {
-            _title = title;
-        }
-
-        public Guid BookId
-        {
-            get
-            {
-                return ((IDomainEvent)this).AggregateId;
-            }
-        }
-
-        public string Title
-        {
-            get
-            {
-                return _title;
-            }
-        }
-
-        private readonly string _title;
-    }
-
-    public class BookLentEvent : DomainEvent
-    {
-        public BookLentEvent(Guid bookId, int bookVersionNumber, DateTime lentAt)
-            : base(bookId, bookVersionNumber)
-        {
-            _lentAt = lentAt;
-        }
-
-        public Guid BookId
-        {
-            get
-            {
-                return ((IDomainEvent)this).AggregateId;
-            }
-        }
-
-        public DateTime LentAt
-        {
-            get
-            {
-                return _lentAt;
-            }
-        }
-
-        private readonly DateTime _lentAt;
-    }
-
-    public class BookReturnedEvent : DomainEvent
-    {
-        public BookReturnedEvent(Guid bookId, int bookVersionNumber, DateTime returnedAt)
-            : base(bookId, bookVersionNumber)
-        {
-            _returnedAt = returnedAt;
-        }
-
-        public Guid BookId
-        {
-            get
-            {
-                return ((IDomainEvent)this).AggregateId;
-            }
-        }
-
-        public DateTime ReturnedAt
-        {
-            get
-            {
-                return _returnedAt;
-            }
-        }
-
-        private readonly DateTime _returnedAt;
-    }
-
-    public class BookStolenEvent : DomainEvent
-    {
-        public BookStolenEvent(Guid bookId, int bookVersionNumber, DateTime stolenAt)
-            : base(bookId, bookVersionNumber)
-        {
-            _stolenAt = stolenAt;
-        }
-
-        public Guid BookId
-        {
-            get
-            {
-                return ((IDomainEvent)this).AggregateId;
-            }
-        }
-
-        public DateTime StolenAt
-        {
-            get
-            {
-                return _stolenAt;
-            }
-        }
-
-        private readonly DateTime _stolenAt;
     }
 }

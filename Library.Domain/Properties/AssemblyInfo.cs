@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Application.Validators")]
+[assembly: AssemblyTitle("Library.Domain")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Application.Validators")]
+[assembly: AssemblyProduct("Library.Domain")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
-[assembly: Guid("3a6ee959-8c24-495c-881e-2a0e85866429")]
+[assembly: Guid("8a119fe8-f521-4615-a3d3-f2cca7db030a")]
 
 // Version information for an assembly consists of the following four values:
 //

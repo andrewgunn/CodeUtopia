@@ -6,17 +6,17 @@ namespace Application.Events
     public class BorrowerMovedAddressEvent : EntityEvent
     {
         public BorrowerMovedAddressEvent(Guid applicationId,
-                                    int borrowerVersionNumber,
-                                    Guid borrowerId,
-                                    string houseName,
-                                    string houseNumber,
-                                    string flat,
-                                    string street,
-                                    string street2,
-                                    string townOrCity,
-                                    string district,
-                                    string county,
-                                    string postcode)
+                                         int borrowerVersionNumber,
+                                         Guid borrowerId,
+                                         string houseName,
+                                         string houseNumber,
+                                         string flat,
+                                         string street,
+                                         string street2,
+                                         string townOrCity,
+                                         string district,
+                                         string county,
+                                         string postcode)
             : base(applicationId, borrowerVersionNumber, borrowerId)
         {
             _houseName = houseName;

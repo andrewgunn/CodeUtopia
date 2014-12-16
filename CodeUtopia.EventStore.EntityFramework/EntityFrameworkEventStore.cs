@@ -30,21 +30,21 @@ namespace CodeUtopia.EventStore.EntityFramework
             }
         }
 
-        public IReadOnlyCollection<IDomainEvent> GetEventsForAggregate(Guid aggregateId)
-        {
-            return _databaseContext.DomainEvents.Where(x => x.AggregateId == aggregateId)
-                                   .OrderBy(x => x.AggregateVersionNumber)
-                                   .ToList()
-                                   .Select(x => Deserialize<IDomainEvent>(x.Data))
-                                   .ToList();
-        }
-
         public IReadOnlyCollection<IDomainEvent> GetEvents(int skip, int take)
         {
             return _databaseContext.DomainEvents.OrderBy(x => x.AggregateId)
                                    .ThenBy(x => x.AggregateVersionNumber)
                                    .Skip(skip)
                                    .Take(take)
+                                   .ToList()
+                                   .Select(x => Deserialize<IDomainEvent>(x.Data))
+                                   .ToList();
+        }
+
+        public IReadOnlyCollection<IDomainEvent> GetEventsForAggregate(Guid aggregateId)
+        {
+            return _databaseContext.DomainEvents.Where(x => x.AggregateId == aggregateId)
+                                   .OrderBy(x => x.AggregateVersionNumber)
                                    .ToList()
                                    .Select(x => Deserialize<IDomainEvent>(x.Data))
                                    .ToList();

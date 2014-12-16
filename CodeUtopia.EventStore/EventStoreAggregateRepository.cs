@@ -81,8 +81,8 @@ namespace CodeUtopia.EventStore
                 if (domainEvents.Count > 10 /* TODO Make this value configurable. */)
                 {
                     _eventStorage.SaveSnapshotForAggregate(aggregate.AggregateId,
-                                               aggregate.AggregateVersionNumber,
-                                               originator.CreateMemento());
+                                                           aggregate.AggregateVersionNumber,
+                                                           originator.CreateMemento());
                 }
             }
 

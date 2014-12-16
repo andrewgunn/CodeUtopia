@@ -18,16 +18,14 @@ namespace Tests.CodeUtopia.EventStore.EntityFramework
             var serializable = new Serializable();
 
             _domainEvent = new DomainEventEntity
-                              {
-                                  AggregateId = new Guid("753e7d92-a277-44f5-ab9b-15d4f134b9d1"),
-                                  AggregateVersionNumber = 1,
-                                  DomainEventType = serializable.GetType()
-                                                                .FullName,
-                                  Data = Serialize(serializable)
-                              };
+                           {
+                               AggregateId = new Guid("753e7d92-a277-44f5-ab9b-15d4f134b9d1"),
+                               AggregateVersionNumber = 1,
+                               DomainEventType = serializable.GetType()
+                                                             .FullName,
+                               Data = Serialize(serializable)
+                           };
         }
-
-        private readonly DomainEventEntity _domainEvent;
 
         protected override IReadOnlyCollection<DomainEventEntity> GivenDomainEvents()
         {
@@ -57,7 +55,8 @@ namespace Tests.CodeUtopia.EventStore.EntityFramework
             Assert.That(primaryKeyConstraintViolationException, Is.Not.Null);
             Assert.That(primaryKeyConstraintViolationException.Keys, Has.None.Null);
             Assert.That(primaryKeyConstraintViolationException.Keys, Has.Member(_domainEvent.AggregateId.ToString()));
-            Assert.That(primaryKeyConstraintViolationException.Keys, Has.Member(_domainEvent.AggregateVersionNumber.ToString(CultureInfo.InvariantCulture)));
+            Assert.That(primaryKeyConstraintViolationException.Keys,
+                        Has.Member(_domainEvent.AggregateVersionNumber.ToString(CultureInfo.InvariantCulture)));
         }
 
         protected override void When()
@@ -72,6 +71,8 @@ namespace Tests.CodeUtopia.EventStore.EntityFramework
                 databaseContext.SaveChanges();
             }
         }
+
+        private readonly DomainEventEntity _domainEvent;
 
         private readonly IFormatter _formatter;
 

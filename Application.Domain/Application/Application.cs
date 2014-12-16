@@ -90,6 +90,10 @@ namespace Application.Domain.Application
             RegisterEventHandler<BorrowerAddedToApplicationEvent>(OnBorrowerAddedToApplicationEvent);
         }
 
+        public void RequestQuotes(int creditScore)
+        {
+        }
+
         protected Guid ApplicationId
         {
             get
