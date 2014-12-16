@@ -10,8 +10,13 @@ using Library.Commands;
 using Library.Frontend.Autofac;
 using Library.Frontend.ProjectionStore;
 using Library.Frontend.Queries;
+using log4net.Appender;
+using log4net.Config;
+using log4net.Core;
+using log4net.Layout;
 using NServiceBus;
 using NServiceBus.Features;
+using NServiceBus.Log4Net;
 using NServiceBus.Logging;
 
 namespace Library.Frontend.Host
@@ -41,6 +46,8 @@ namespace Library.Frontend.Host
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
+            ConfigureBusLogging();
+
             var busConfiguration = new BusConfiguration();
             busConfiguration = ConfigureBus(busConfiguration, container);
 
@@ -62,8 +69,6 @@ namespace Library.Frontend.Host
 
         private static BusConfiguration ConfigureBus(BusConfiguration busConfiguration, ILifetimeScope lifetimeScope)
         {
-            LogManager.Use<DefaultFactory>();
-
             var conventions = busConfiguration.Conventions();
             conventions.DefiningCommandsAs(x => x.Name.EndsWith("Command"));
             conventions.DefiningEventsAs(x => x.Name.EndsWith("Event"));
@@ -76,6 +81,39 @@ namespace Library.Frontend.Host
             busConfiguration.UseTransport<RabbitMQTransport>();
 
             return busConfiguration;
+        }
+
+        private static void ConfigureBusLogging()
+        {
+            var layout = new PatternLayout
+            {
+                ConversionPattern = "%d [%t] %-5p %c [%x] - %m%n"
+            };
+            layout.ActivateOptions();
+            var consoleAppender = new ColoredConsoleAppender
+            {
+                Threshold = Level.Debug,
+                Layout = layout
+            };
+            consoleAppender.ActivateOptions();
+            var fileAppender = new RollingFileAppender
+            {
+                DatePattern = "yyyy-MM-dd'.log'",
+                RollingStyle = RollingFileAppender.RollingMode.Composite,
+                MaxFileSize = 10 * 1024 * 1024,
+                MaxSizeRollBackups = 10,
+                LockingModel = new FileAppender.MinimalLock(),
+                StaticLogFileName = false,
+                File = @"nsb_log_",
+                Layout = layout,
+                AppendToFile = true,
+                Threshold = Level.Debug,
+            };
+            fileAppender.ActivateOptions();
+
+            BasicConfigurator.Configure(fileAppender, consoleAppender);
+
+            LogManager.Use<Log4NetFactory>();
         }
     }
 }

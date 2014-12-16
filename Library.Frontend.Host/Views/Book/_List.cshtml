@@ -19,10 +19,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(book.BookId.ToString(), "Details", new
-                                                                        {
-                                                                            id = book.BookId
-                                                                        })
+                    @book.BookId
                 </td>
                 <td>
                     @Html.DisplayFor(model => book.Title)
