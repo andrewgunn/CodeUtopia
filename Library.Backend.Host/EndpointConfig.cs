@@ -12,25 +12,21 @@ namespace Library.Backend.Host
         {
             LogManager.Use<DefaultFactory>();
 
-            busConfiguration.UseSerialization<JsonSerializer>();
-            busConfiguration.DisableFeature<Sagas>();
-            busConfiguration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(lifetimeScope));
-
-            busConfiguration.UseTransport<RabbitMQTransport>();
-
             var conventions = busConfiguration.Conventions();
             conventions.DefiningCommandsAs(x => x.Name.EndsWith("Command"));
             conventions.DefiningEventsAs(x => x.Name.EndsWith("Event"));
 
+            busConfiguration.DisableFeature<Sagas>();
+            busConfiguration.EnableOutbox();
+            busConfiguration.EndpointName("LibraryBackend");
+            busConfiguration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(lifetimeScope));
             busConfiguration.UsePersistence<InMemoryPersistence>();
+            busConfiguration.UseSerialization<JsonSerializer>();
+            busConfiguration.UseTransport<RabbitMQTransport>();
         }
 
         public void Customize(BusConfiguration configuration)
         {
-            configuration.EnableOutbox();
-            configuration.EndpointName("LibraryBackend");
-            configuration.UsePersistence<InMemoryPersistence>();
-
             var builder = new ContainerBuilder();
             builder.RegisterModule(new LibraryBackendModule());
 

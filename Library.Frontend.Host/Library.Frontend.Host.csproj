@@ -150,7 +150,7 @@
       <Name>CodeUtopia</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library.Commands\Library.Commands.csproj">
-      <Project>{3A8F0F9A-4D61-4FF1-AE1F-6D3C9E397515}</Project>
+      <Project>{3a8f0f9a-4d61-4ff1-ae1f-6d3c9e397515}</Project>
       <Name>Library.Commands</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library.Frontend.Autofac\Library.Frontend.Autofac.csproj">

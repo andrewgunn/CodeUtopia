@@ -54,7 +54,6 @@
     <Compile Include="Book\BookEntity.cs" />
     <Compile Include="Book\BookEntityConfiguration.cs" />
     <Compile Include="Book\EventHandlers\BookRegisterEventHandler.cs" />
-    <Compile Include="IdempotentEventCoordinatorDecorator.cs" />
     <Compile Include="IProjectionStoreDatabaseSettings.cs" />
     <Compile Include="ProjectionStoreContext.cs" />
     <Compile Include="ProjectionStoreDatabaseSettings.cs" />

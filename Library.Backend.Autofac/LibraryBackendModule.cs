@@ -34,17 +34,6 @@ namespace Library.Backend.Autofac
                    .WithParameter("endpointName", "LibraryBackend")
                    .As<IBus>();
 
-            // Command handler resolver.
-            builder.RegisterType<CommandHandlerResolver>()
-                   .As<ICommandHandlerResolver>();
-
-            // Command sender.
-            builder.RegisterType<NServiceBusCommandSender>()
-                   .Named<ICommandSender>("CommandSender");
-
-            builder.RegisterDecorator<ICommandSender>((x, decorated) => new LoggingCommandSenderDecorator(decorated),
-                                                      "CommandSender");
-
             // Command handlers.
             var commandHandlerAssembly = Assembly.GetAssembly(typeof(RegisterBookCommandHandler));
 
@@ -53,29 +42,9 @@ namespace Library.Backend.Autofac
                                    .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(ICommandHandler<>)))
                                    .Select(interfaceType => new KeyedService("CommandHandler", interfaceType)));
 
-            builder.RegisterGenericDecorator(typeof(RetryCommandHandlerDecorator<>),
-                                             typeof(ICommandHandler<>),
-                                             "CommandHandler",
-                                             "RetryCommandHandler");
-
             builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerDecorator<>),
                                              typeof(ICommandHandler<>),
-                                             "RetryCommandHandler");
-
-            // Event coordinator.
-            builder.RegisterType<EventCoordinator>()
-                   .As<IEventCoordinator>();
-
-            // Event handler resolver.
-            builder.RegisterType<EventHandlerResolver>()
-                   .As<IEventHandlerResolver>();
-
-            // Event publisher.
-            builder.RegisterType<NServiceBusEventPublisher>()
-                   .Named<IEventPublisher>("EventPublisher");
-
-            builder.RegisterDecorator<IEventPublisher>((x, decorated) => new LoggingEventPublisherDecorator(decorated),
-                                                       "EventPublisher");
+                                             "CommandHandler");
 
             // Aggregate repository.
             builder.RegisterType<EventStoreAggregateRepository>()

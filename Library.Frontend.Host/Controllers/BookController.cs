@@ -11,9 +11,9 @@ namespace Library.Frontend.Host.Controllers
 {
     public class BookController : Controller
     {
-        public BookController(ICommandSender commandSender, IQueryExecutor queryExecutor)
+        public BookController(IBus bus, IQueryExecutor queryExecutor)
         {
-            _commandSender = commandSender;
+            _bus = bus;
             _queryExecutor = queryExecutor;
         }
 
@@ -41,12 +41,13 @@ namespace Library.Frontend.Host.Controllers
                               Title = title
                           };
 
-            _commandSender.Send(command);
+            _bus.Send(command);
+            _bus.Commit();
 
             return RedirectToAction("List");
         }
 
-        private readonly ICommandSender _commandSender;
+        private readonly IBus _bus;
 
         private readonly IQueryExecutor _queryExecutor;
     }

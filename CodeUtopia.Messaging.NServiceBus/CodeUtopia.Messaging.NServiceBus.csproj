@@ -43,8 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NServiceBusBus.cs" />
-    <Compile Include="NServiceBusCommandSender.cs" />
-    <Compile Include="NServiceBusEventPublisher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

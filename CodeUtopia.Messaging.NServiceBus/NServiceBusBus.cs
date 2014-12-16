@@ -32,11 +32,6 @@ namespace CodeUtopia.Messaging.NServiceBus
             _bus.Defer(delay, message);
         }
 
-        public void Listen<TCommand>() where TCommand : class
-        {
-            // Dont need this - NServiceBus listens to everything.
-        }
-
         public void Publish<TEvent>(TEvent message) where TEvent : class
         {
             _events.Enqueue(message);
@@ -56,11 +51,6 @@ namespace CodeUtopia.Messaging.NServiceBus
         public void Send<TCommand>(TCommand message) where TCommand : class
         {
             _commands.Enqueue(message);
-        }
-
-        public void Subscribe<TEvent>() where TEvent : class
-        {
-            _bus.Subscribe<TEvent>();
         }
 
         private readonly global::NServiceBus.IBus _bus;

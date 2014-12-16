@@ -41,6 +41,12 @@ namespace Library.Frontend.Host
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
+            var busConfiguration = new BusConfiguration();
+            busConfiguration = ConfigureBus(busConfiguration, container);
+
+            var startableBus = Bus.Create(busConfiguration);
+            var bus = startableBus.Start();
+
             var queryExecutor = container.Resolve<IQueryExecutor>();
             var projection = queryExecutor.Execute(new BooksQuery());
 
@@ -49,12 +55,6 @@ namespace Library.Frontend.Host
                 return;
             }
 
-            var busConfiguration = new BusConfiguration();
-            busConfiguration = ConfigureBus(busConfiguration, container);
-            busConfiguration.EndpointName("LibraryFrontend");
-            var startableBus = Bus.Create(busConfiguration);
-            var bus = startableBus.Start();
-
             bus.Send(new RepublishAllEventsCommand());
         }
 
@@ -62,17 +62,16 @@ namespace Library.Frontend.Host
         {
             LogManager.Use<DefaultFactory>();
 
-            busConfiguration.UseSerialization<JsonSerializer>();
-            busConfiguration.DisableFeature<Sagas>();
-            busConfiguration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(lifetimeScope));
-
-            busConfiguration.UseTransport<RabbitMQTransport>();
-
             var conventions = busConfiguration.Conventions();
             conventions.DefiningCommandsAs(x => x.Name.EndsWith("Command"));
             conventions.DefiningEventsAs(x => x.Name.EndsWith("Event"));
 
+            busConfiguration.DisableFeature<Sagas>();
+            busConfiguration.EndpointName("LibraryFrontend");
+            busConfiguration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(lifetimeScope));
             busConfiguration.UsePersistence<InMemoryPersistence>();
+            busConfiguration.UseSerialization<JsonSerializer>();
+            busConfiguration.UseTransport<RabbitMQTransport>();
 
             return busConfiguration;
         }
