@@ -4,10 +4,11 @@ namespace Library.Frontend.Host.Models
 {
     public class BookModel
     {
-        public BookModel(Guid bookId, string title)
+        public BookModel(Guid bookId, string title, bool isBorrowed)
         {
             _bookId = bookId;
             _title = title;
+            _isBorrowed = isBorrowed;
         }
 
         public Guid BookId
@@ -15,6 +16,14 @@ namespace Library.Frontend.Host.Models
             get
             {
                 return _bookId;
+            }
+        }
+
+        public bool IsBorrowed
+        {
+            get
+            {
+                return _isBorrowed;
             }
         }
 
@@ -27,6 +36,8 @@ namespace Library.Frontend.Host.Models
         }
 
         private readonly Guid _bookId;
+
+        private readonly bool _isBorrowed;
 
         private readonly string _title;
     }

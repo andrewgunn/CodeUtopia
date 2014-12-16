@@ -17,19 +17,28 @@ namespace Application.Domain.Application
 
         private Application(Guid applicationId, decimal loanAmount, int loanTermInMonths)
         {
-            Apply(new ApplicationCreatedEvent(applicationId, GetNextVersionNumber(), loanAmount, loanTermInMonths));
+            Apply(new ApplicationCreatedEvent
+                  {
+                      AggregateId = applicationId,
+                      AggregateVersionNumber = GetNextVersionNumber(),
+                      LoanAmount = loanAmount,
+                      LoanTermInMonths = loanTermInMonths
+                  });
         }
 
         public Borrower AddBorrower(Guid borrowerId, string firstName, string lastName, string emailAddress)
         {
             var borrower = new Borrower(AggregateId, this, borrowerId, firstName, lastName, emailAddress);
 
-            Apply(new BorrowerAddedToApplicationEvent(AggregateId,
-                                                      GetNextVersionNumber(),
-                                                      borrowerId,
-                                                      firstName,
-                                                      lastName,
-                                                      emailAddress));
+            Apply(new BorrowerAddedToApplicationEvent
+                  {
+                      AggregateId = AggregateId,
+                      AggregateVersionNumber = GetNextVersionNumber(),
+                      BorrowerId = borrowerId,
+                      FirstName = firstName,
+                      LastName = lastName,
+                      EmailAddress = emailAddress
+                  });
 
             return borrower;
         }
@@ -88,10 +97,6 @@ namespace Application.Domain.Application
         {
             RegisterEventHandler<ApplicationCreatedEvent>(OnApplicationCreatedEvent);
             RegisterEventHandler<BorrowerAddedToApplicationEvent>(OnBorrowerAddedToApplicationEvent);
-        }
-
-        public void RequestQuotes(int creditScore)
-        {
         }
 
         protected Guid ApplicationId

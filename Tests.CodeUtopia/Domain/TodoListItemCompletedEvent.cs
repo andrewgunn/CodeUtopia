@@ -3,27 +3,12 @@ using CodeUtopia.Events;
 
 namespace Tests.CodeUtopia.Domain
 {
-    public class TodoListItemCompletedEvent : EntityEvent
+    public class TodoListItemCompletedEvent : IEntityEvent
     {
-        public TodoListItemCompletedEvent(Guid todoListId, int todoListVersionNumber, Guid todoListItemId)
-            : base(todoListId, todoListVersionNumber, todoListItemId)
-        {
-        }
+        public Guid AggregateId { get; set; }
 
-        public Guid TodoListId
-        {
-            get
-            {
-                return ((IEntityEvent)this).AggregateId;
-            }
-        }
+        public int AggregateVersionNumber { get; set; }
 
-        public Guid TodoListItemId
-        {
-            get
-            {
-                return ((IEntityEvent)this).EntityId;
-            }
-        }
+        public Guid EntityId { get; set; }
     }
 }

@@ -3,137 +3,30 @@ using CodeUtopia.Events;
 
 namespace Application.Events
 {
-    public class BorrowerMovedAddressEvent : EntityEvent
+    public class BorrowerMovedAddressEvent : IEntityEvent
     {
-        public BorrowerMovedAddressEvent(Guid applicationId,
-                                         int borrowerVersionNumber,
-                                         Guid borrowerId,
-                                         string houseName,
-                                         string houseNumber,
-                                         string flat,
-                                         string street,
-                                         string street2,
-                                         string townOrCity,
-                                         string district,
-                                         string county,
-                                         string postcode)
-            : base(applicationId, borrowerVersionNumber, borrowerId)
-        {
-            _houseName = houseName;
-            _houseNumber = houseNumber;
-            _flat = flat;
-            _street = street;
-            _street2 = street2;
-            _townOrCity = townOrCity;
-            _district = district;
-            _county = county;
-            _postcode = postcode;
-        }
+        public Guid AggregateId { get; set; }
 
-        public Guid ApplicationId
-        {
-            get
-            {
-                return ((IEntityEvent)this).AggregateId;
-            }
-        }
+        public int AggregateVersionNumber { get; set; }
 
-        public Guid BorrowerId
-        {
-            get
-            {
-                return ((IEntityEvent)this).EntityId;
-            }
-        }
+        public string County { get; set; }
 
-        public string County
-        {
-            get
-            {
-                return _county;
-            }
-        }
+        public string District { get; set; }
 
-        public string District
-        {
-            get
-            {
-                return _district;
-            }
-        }
+        public Guid EntityId { get; set; }
 
-        public string Flat
-        {
-            get
-            {
-                return _flat;
-            }
-        }
+        public string Flat { get; set; }
 
-        public string HouseName
-        {
-            get
-            {
-                return _houseName;
-            }
-        }
+        public string HouseName { get; set; }
 
-        public string HouseNumber
-        {
-            get
-            {
-                return _houseNumber;
-            }
-        }
+        public string HouseNumber { get; set; }
 
-        public string Postcode
-        {
-            get
-            {
-                return _postcode;
-            }
-        }
+        public string Postcode { get; set; }
 
-        public string Street
-        {
-            get
-            {
-                return _street;
-            }
-        }
+        public string Street { get; set; }
 
-        public string Street2
-        {
-            get
-            {
-                return _street2;
-            }
-        }
+        public string Street2 { get; set; }
 
-        public string TownOrCity
-        {
-            get
-            {
-                return _townOrCity;
-            }
-        }
-
-        private readonly string _county;
-
-        private readonly string _district;
-
-        private readonly string _flat;
-
-        private readonly string _houseName;
-
-        private readonly string _houseNumber;
-
-        private readonly string _postcode;
-
-        private readonly string _street;
-
-        private readonly string _street2;
-
-        private readonly string _townOrCity;
+        public string TownOrCity { get; set; }
     }
 }

@@ -12,7 +12,12 @@ namespace Tests.CodeUtopia.Domain
         {
             return new IDomainEvent[]
                    {
-                       new TodoListCreatedEvent(Guid.NewGuid(), 1, "Todo")
+                       new TodoListCreatedEvent
+                       {
+                           AggregateId = Guid.NewGuid(),
+                           AggregateVersionNumber = 1,
+                           Name = "Todo"
+                       }
                    };
         }
 
@@ -34,8 +39,18 @@ namespace Tests.CodeUtopia.Domain
         {
             return new IDomainEvent[]
                    {
-                       new TodoListCreatedEvent(Guid.NewGuid(), 1, "Todo"),
-                       new TodoListItemRemovedEvent(Aggregate.AggregateId, 2, Guid.NewGuid())
+                       new TodoListCreatedEvent
+                       {
+                           AggregateId = Guid.NewGuid(),
+                           AggregateVersionNumber = 1,
+                           Name = "Todo"
+                       },
+                       new TodoListItemRemovedEvent
+                       {
+                           AggregateId = Aggregate.AggregateId,
+                           AggregateVersionNumber = 2,
+                           TodoListItemId = Guid.NewGuid()
+                       }
                    };
         }
 
@@ -68,8 +83,18 @@ namespace Tests.CodeUtopia.Domain
         {
             return new IDomainEvent[]
                    {
-                       new TodoListCreatedEvent(Guid.NewGuid(), 1, "Todo"),
-                       new TodoListItemAddedEvent(Aggregate.AggregateId, 2, Guid.NewGuid(), "Buy milk")
+                       new TodoListCreatedEvent
+                       {
+                           AggregateId = Guid.NewGuid(),
+                           AggregateVersionNumber = 1,
+                           Name = "Todo"
+                       },
+                       new TodoListItemAddedEvent
+                       {
+                           AggregateId = Aggregate.AggregateId,
+                           AggregateVersionNumber = 2,
+                           TodoListItemId = Guid.NewGuid()
+                       }
                    };
         }
 

@@ -17,10 +17,26 @@ namespace Library.Frontend.Host.Controllers
             _queryExecutor = queryExecutor;
         }
 
+        [HttpName]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public RedirectToRouteResult Borrow([Bind(Prefix = "id")] Guid bookId)
+        {
+            var command = new BorrowBookCommand
+                          {
+                              BookId = bookId,
+                          };
+
+            _bus.Send(command);
+            _bus.Commit();
+
+            return RedirectToAction("List");
+        }
+
         public ActionResult List()
         {
             var projection = _queryExecutor.Execute(new BooksQuery());
-            var model = projection.Books.Select(x => new BookModel(x.BookId, x.Title))
+            var model = projection.Books.Select(x => new BookModel(x.BookId, x.Title, x.IsBorrowed))
                                   .ToList();
 
             if (Request.IsAjaxRequest())
@@ -39,6 +55,22 @@ namespace Library.Frontend.Host.Controllers
                           {
                               BookId = Guid.NewGuid(),
                               Title = title
+                          };
+
+            _bus.Send(command);
+            _bus.Commit();
+
+            return RedirectToAction("List");
+        }
+
+        [HttpName]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public RedirectToRouteResult Return([Bind(Prefix = "id")] Guid bookId)
+        {
+            var command = new ReturnBookCommand
+                          {
+                              BookId = bookId,
                           };
 
             _bus.Send(command);

@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReturnBookCommand.cs" />
+    <Compile Include="LendBookCommand.cs" />
     <Compile Include="RegisterBookCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepublishAllEventsCommand.cs" />

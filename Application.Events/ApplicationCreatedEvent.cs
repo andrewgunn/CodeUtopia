@@ -3,44 +3,14 @@ using CodeUtopia.Events;
 
 namespace Application.Events
 {
-    public class ApplicationCreatedEvent : DomainEvent
+    public class ApplicationCreatedEvent : IDomainEvent
     {
-        public ApplicationCreatedEvent(Guid applicationId,
-                                       int applicationVersionNumber,
-                                       decimal loanAmount,
-                                       int loanTermInMonths)
-            : base(applicationId, applicationVersionNumber)
-        {
-            _loanAmount = loanAmount;
-            _loanTermInMonths = loanTermInMonths;
-        }
+        public Guid AggregateId { get; set; }
 
-        public Guid ApplicationId
-        {
-            get
-            {
-                return ((IDomainEvent)this).AggregateId;
-            }
-        }
+        public int AggregateVersionNumber { get; set; }
 
-        public decimal LoanAmount
-        {
-            get
-            {
-                return _loanAmount;
-            }
-        }
+        public decimal LoanAmount { get; set; }
 
-        public int LoanTermInMonths
-        {
-            get
-            {
-                return _loanTermInMonths;
-            }
-        }
-
-        private readonly decimal _loanAmount;
-
-        private readonly int _loanTermInMonths;
+        public int LoanTermInMonths { get; set; }
     }
 }

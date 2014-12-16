@@ -52,7 +52,7 @@
       <Name>CodeUtopia.Events</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library.Events\Library.Events.csproj">
-      <Project>{CD7B3948-C2CE-4752-B20C-73970BA46C50}</Project>
+      <Project>{cd7b3948-c2ce-4752-b20c-73970ba46c50}</Project>
       <Name>Library.Events</Name>
     </ProjectReference>
   </ItemGroup>

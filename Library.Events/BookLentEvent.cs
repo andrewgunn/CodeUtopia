@@ -4,12 +4,12 @@ using CodeUtopia.Events;
 namespace Library.Events
 {
     [Serializable]
-    public class BookLentEvent : IDomainEvent
+    public class BookBorrowedEvent : IDomainEvent
     {
         public Guid AggregateId { get; set; }
 
         public int AggregateVersionNumber { get; set; }
 
-        public DateTime LentAt { get; set; }
+        public DateTime BorrowedAt { get; set; }
     }
 }

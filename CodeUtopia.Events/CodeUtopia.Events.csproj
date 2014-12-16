@@ -40,8 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DomainEvent.cs" />
-    <Compile Include="EntityEvent.cs" />
     <Compile Include="IDomainEvent.cs" />
     <Compile Include="IEntityEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

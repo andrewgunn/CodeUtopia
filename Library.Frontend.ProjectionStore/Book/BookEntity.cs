@@ -6,6 +6,8 @@ namespace Library.Frontend.ProjectionStore.Book
     {
         public Guid BookId { get; set; }
 
+        public bool IsBorrowed { get; set; }
+
         public string Title { get; set; }
     }
 }

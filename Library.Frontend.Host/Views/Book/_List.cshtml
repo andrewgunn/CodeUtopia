@@ -12,6 +12,8 @@
                 @Html.DisplayNameFor(model => model.ElementAt(0)
                                                    .Title)
             </th>
+            <th>
+            </th>
         </tr>
         @foreach (var book in Model)
         {
@@ -25,6 +27,19 @@
                 <td>
                     @Html.DisplayFor(model => book.Title)
                 </td>
+                <td>
+                    @using (Html.BeginForm(null, null, new
+                                                       {
+                                                           id = book.BookId
+                                                       }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <button class="btn btn-primary" @(book.IsBorrowed ? "disabled" : "") name="Borrow">Borrow</button>
+                        <button class="btn btn-primary" @(book.IsBorrowed ? "" : "disabled") name="Return">Return</button>
+                    }
+                </td>
+
             </tr>
         }
     </table>

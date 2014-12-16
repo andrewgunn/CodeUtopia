@@ -3,30 +3,12 @@ using CodeUtopia.Events;
 
 namespace Tests.CodeUtopia.Domain
 {
-    internal class TodoListItemRemovedEvent : DomainEvent
+    internal class TodoListItemRemovedEvent : IDomainEvent
     {
-        public TodoListItemRemovedEvent(Guid todoListId, int todoListVersionNumber, Guid todoListItemId)
-            : base(todoListId, todoListVersionNumber)
-        {
-            _todoListItemId = todoListItemId;
-        }
+        public Guid AggregateId { get; set; }
 
-        public Guid TodoListId
-        {
-            get
-            {
-                return ((IDomainEvent)this).AggregateId;
-            }
-        }
+        public int AggregateVersionNumber { get; set; }
 
-        public Guid TodoListItemId
-        {
-            get
-            {
-                return _todoListItemId;
-            }
-        }
-
-        private readonly Guid _todoListItemId;
+        public Guid TodoListItemId { get; set; }
     }
 }

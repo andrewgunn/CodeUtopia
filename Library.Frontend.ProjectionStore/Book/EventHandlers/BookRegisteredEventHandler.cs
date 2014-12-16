@@ -14,13 +14,13 @@ namespace Library.Frontend.ProjectionStore.Book.EventHandlers
         {
             using (var databaseContext = new ProjectionStoreContext(_projectionStoreDatabaseSettings))
             {
-                var client = new BookEntity
+                var book = new BookEntity
                              {
                                  BookId = bookRegisteredEvent.AggregateId,
                                  Title = bookRegisteredEvent.Title
                              };
 
-                databaseContext.Books.Add(client);
+                databaseContext.Books.Add(book);
 
                 databaseContext.SaveChanges();
             }

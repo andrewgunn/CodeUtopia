@@ -18,6 +18,9 @@ namespace Library.Frontend.ProjectionStore.Book
             Property(p => p.Title)
                 .HasColumnOrder(++columnOrder)
                 .IsRequired();
+            Property(p => p.IsBorrowed)
+                .HasColumnOrder(++columnOrder)
+                .IsRequired();
         }
     }
 }

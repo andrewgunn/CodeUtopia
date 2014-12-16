@@ -22,19 +22,19 @@ namespace Library.Domain
                   });
         }
 
-        public void Lend(DateTime lentAt)
+        public void Borrow(DateTime borrowedAt)
         {
-            Apply(new BookLentEvent
+            Apply(new BookBorrowedEvent
                   {
                       AggregateId = AggregateId,
                       AggregateVersionNumber = GetNextVersionNumber(),
-                      LentAt = lentAt
+                      BorrowedAt = borrowedAt
                   });
         }
 
-        private void OnBookLentEvent(BookLentEvent bookLentAt)
+        private void OnBookBorrowedEvent(BookBorrowedEvent bookBorrowedAt)
         {
-            _lentAt = bookLentAt.LentAt;
+            _isBorrowed = true;
         }
 
         private void OnBookRegisteredEvent(BookRegisteredEvent bookRegisteredEvent)
@@ -45,7 +45,7 @@ namespace Library.Domain
 
         private void OnBookReturnedEvent(BookReturnedEvent bookReturnedEvent)
         {
-            _lentAt = null;
+            _isBorrowed = false;
         }
 
         public static Book Register(Guid bookId, string title)
@@ -56,7 +56,7 @@ namespace Library.Domain
         private void RegisterEventHandlers()
         {
             RegisterEventHandler<BookRegisteredEvent>(OnBookRegisteredEvent);
-            RegisterEventHandler<BookLentEvent>(OnBookLentEvent);
+            RegisterEventHandler<BookBorrowedEvent>(OnBookBorrowedEvent);
             RegisterEventHandler<BookReturnedEvent>(OnBookReturnedEvent);
         }
 
@@ -78,7 +78,7 @@ namespace Library.Domain
             }
         }
 
-        private DateTime? _lentAt;
+        private bool _isBorrowed;
 
         private string _title;
     }

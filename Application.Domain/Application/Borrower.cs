@@ -39,18 +39,21 @@ namespace Application.Domain.Application
 
         public void MoveAddress(Address address)
         {
-            Apply(new BorrowerMovedAddressEvent(ApplicationId,
-                                                GetNextVersionNumber(),
-                                                BorrowerId,
-                                                address.HouseName,
-                                                address.HouseNumber,
-                                                address.Flat,
-                                                address.Street,
-                                                address.Street2,
-                                                address.TownOrCity,
-                                                address.District,
-                                                address.County,
-                                                address.Postcode));
+            Apply(new BorrowerMovedAddressEvent
+                  {
+                      AggregateId = ApplicationId,
+                      AggregateVersionNumber = GetNextVersionNumber(),
+                      EntityId = BorrowerId,
+                      HouseName = address.HouseName,
+                      HouseNumber = address.HouseNumber,
+                      Flat = address.Flat,
+                      Street = address.Street,
+                      Street2 = address.Street2,
+                      TownOrCity = address.TownOrCity,
+                      District = address.District,
+                      County = address.County,
+                      Postcode = address.Postcode
+                  });
         }
 
         private void OnMovedAddressEvent(BorrowerMovedAddressEvent borrowerMovedAddressEvent)

@@ -18,7 +18,12 @@ namespace Tests.CodeUtopia.Domain
 
         public void Complete()
         {
-            Apply(new TodoListItemCompletedEvent(TodoListId, GetNextVersionNumber(), TodoListItemId));
+            Apply(new TodoListItemCompletedEvent
+            {
+                AggregateId = TodoListId,
+                AggregateVersionNumber = GetNextVersionNumber(),
+                EntityId = TodoListItemId
+            });
         }
 
         private void OnTodoListItemCompletedEvent(TodoListItemCompletedEvent todoListItemCompletedEvent)

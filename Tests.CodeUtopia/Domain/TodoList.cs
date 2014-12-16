@@ -14,12 +14,23 @@ namespace Tests.CodeUtopia.Domain
         private TodoList(Guid todoListId, string name)
             : this()
         {
-            Apply(new TodoListCreatedEvent(todoListId, GetNextVersionNumber(), name));
+            Apply(new TodoListCreatedEvent
+                  {
+                      AggregateId = todoListId,
+                      AggregateVersionNumber = GetNextVersionNumber(),
+                      Name = name
+                  });
         }
 
         public void AddTodoListItem(Guid todoListItemId, string description)
         {
-            Apply(new TodoListItemAddedEvent(TodoListId, GetNextVersionNumber(), todoListItemId, description));
+            Apply(new TodoListItemAddedEvent
+                  {
+                      AggregateId = TodoListId,
+                      AggregateVersionNumber = GetNextVersionNumber(),
+                      TodoListItemId = todoListItemId,
+                      Description = description
+                  });
         }
 
         public static TodoList Create(Guid todoListId, string name)
