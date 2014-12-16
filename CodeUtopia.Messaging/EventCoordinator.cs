@@ -2,6 +2,8 @@
 {
     public class EventCoordinator : IEventCoordinator
     {
+        private readonly IEventHandlerResolver _eventHandlerResolver;
+
         public EventCoordinator(IEventHandlerResolver eventHandlerResolver)
         {
             _eventHandlerResolver = eventHandlerResolver;
@@ -16,7 +18,5 @@
                 eventHandler.Handle(@event);
             }
         }
-
-        private readonly IEventHandlerResolver _eventHandlerResolver;
     }
 }

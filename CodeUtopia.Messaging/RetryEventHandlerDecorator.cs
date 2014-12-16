@@ -22,7 +22,7 @@ namespace CodeUtopia.Messaging
             {
                 _decorated.Handle(@event);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 _retryCounts.Increment();
 
