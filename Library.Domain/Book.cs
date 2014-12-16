@@ -14,12 +14,22 @@ namespace Library.Domain
         private Book(Guid bookId, string title)
             : this()
         {
-            Apply(new BookRegisteredEvent(bookId, GetNextVersionNumber(), title));
+            Apply(new BookRegisteredEvent
+                  {
+                      AggregateId = bookId,
+                      AggregateVersionNumber = GetNextVersionNumber(),
+                      Title = title
+                  });
         }
 
         public void Lend(DateTime lentAt)
         {
-            Apply(new BookLentEvent(BookId, GetNextVersionNumber(), lentAt));
+            Apply(new BookLentEvent
+                  {
+                      AggregateId = AggregateId,
+                      AggregateVersionNumber = GetNextVersionNumber(),
+                      LentAt = lentAt
+                  });
         }
 
         private void OnBookLentEvent(BookLentEvent bookLentAt)
@@ -52,7 +62,12 @@ namespace Library.Domain
 
         public void Return(DateTime returnedAt)
         {
-            Apply(new BookReturnedEvent(BookId, GetNextVersionNumber(), returnedAt));
+            Apply(new BookReturnedEvent
+                  {
+                      AggregateId = AggregateId,
+                      AggregateVersionNumber = GetNextVersionNumber(),
+                      ReturnedAt = returnedAt
+                  });
         }
 
         protected Guid BookId

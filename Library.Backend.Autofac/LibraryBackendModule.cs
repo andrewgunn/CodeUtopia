@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -90,6 +91,13 @@ namespace Library.Backend.Autofac
                              x =>
                              new EntityFrameworkEventStore(eventStoreNameOrConnectionString, x.Resolve<IFormatter>()))
                    .As<IEventStorage>();
+
+            // Event Store database.
+            using (var databaseContext = new EventStoreContext(eventStoreNameOrConnectionString))
+            {
+                Database.SetInitializer(new CreateDatabaseIfNotExists<EventStoreContext>());
+                databaseContext.Database.Initialize(true);
+            }
         }
     }
 }

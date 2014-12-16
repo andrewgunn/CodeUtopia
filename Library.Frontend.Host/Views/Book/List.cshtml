@@ -1,40 +1,42 @@
 ﻿@model IReadOnlyCollection<BookModel>
+
 @{
 
     ViewBag.Title = "Books";
 }
+
 <h2>Books</h2>
 
-@if (Model.Any())
+@using (Html.BeginForm("Register", null))
 {
-    <table class="table table-bordered table-striped">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ElementAt(0)
-                                                   .BookId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ElementAt(0)
-                                                   .Title)
-            </th>
-        </tr>
-        @foreach (var book in Model)
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink(book.BookId.ToString(), "Details", new
-                                                                        {
-                                                                            id = book.BookId
-                                                                        })
-                </td>
-                <td>
-                    @Html.DisplayFor(model => book.Title)
-                </td>
-            </tr>
-        }
-    </table>
+    <fieldset>
+        <legend>Register a new book</legend>
+        <input name="title" />
+
+        @Html.AntiForgeryToken()
+        <button>Register</button>
+    </fieldset>
 }
-else
+
+<hr />
+
+<div id="books">
+    @Html.Partial("_List", Model)
+</div>
+
+@section Scripts
 {
-    <p>No books found.</p>
+    <script type="text/javascript">
+        var $books = $('#books');
+
+        setInterval(function () {
+            $.ajax({
+                type: 'GET',
+                success: function (response) {
+                    $books.html(response);
+                },
+                url: window.location
+            })
+        }, 1000);
+    </script>
 }

@@ -33,7 +33,12 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="NServiceBus.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NServiceBus.5.1.2\lib\net45\NServiceBus.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,6 +57,10 @@
     <ProjectReference Include="..\CodeUtopia.Autofac\CodeUtopia.Autofac.csproj">
       <Project>{E3F3E269-BFC1-4C11-8EF6-4CE4C24C8060}</Project>
       <Name>CodeUtopia.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Configuration\CodeUtopia.Configuration.csproj">
+      <Project>{73575727-7CE5-4089-AE71-44DA853F23B5}</Project>
+      <Name>CodeUtopia.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Messaging.NServiceBus\CodeUtopia.Messaging.NServiceBus.csproj">
       <Project>{91E4E297-D6D9-4F4A-B0AA-5D4D560099F4}</Project>

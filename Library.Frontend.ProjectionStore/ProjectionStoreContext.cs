@@ -7,8 +7,13 @@ namespace Library.Frontend.ProjectionStore
 {
     public class ProjectionStoreContext : DbContext
     {
-        public ProjectionStoreContext(string nameOrConnectionString)
-            : base(nameOrConnectionString)
+        static ProjectionStoreContext()
+        {
+            Database.SetInitializer(new NullDatabaseInitializer<ProjectionStoreContext>());
+        }
+
+        public ProjectionStoreContext(IProjectionStoreDatabaseSettings projectionStoreDatabaseSettings)
+            : base(projectionStoreDatabaseSettings.ConnectionString)
         {
             Configuration.LazyLoadingEnabled = false;
         }

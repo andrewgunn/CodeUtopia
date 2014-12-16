@@ -1,0 +1,36 @@
+﻿@model IReadOnlyCollection<BookModel>
+
+@if (Model.Any())
+{
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ElementAt(0)
+                                                   .BookId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElementAt(0)
+                                                   .Title)
+            </th>
+        </tr>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(book.BookId.ToString(), "Details", new
+                                                                        {
+                                                                            id = book.BookId
+                                                                        })
+                </td>
+                <td>
+                    @Html.DisplayFor(model => book.Title)
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No books found.</p>
+}
+

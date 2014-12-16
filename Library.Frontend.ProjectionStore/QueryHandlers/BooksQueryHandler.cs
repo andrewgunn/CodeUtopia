@@ -7,14 +7,14 @@ namespace Library.Frontend.ProjectionStore.QueryHandlers
 {
     public class BooksQueryHandler : IQueryHandler<BooksQuery, BooksProjection>
     {
-        public BooksQueryHandler(string nameOrConnectionString)
+        public BooksQueryHandler(IProjectionStoreDatabaseSettings projectionStoreDatabaseSettings)
         {
-            _nameOrConnectionString = nameOrConnectionString;
+            _projectionStoreDatabaseSettings = projectionStoreDatabaseSettings;
         }
 
         public BooksProjection Handle(BooksQuery query)
         {
-            using (var databaseContext = new ProjectionStoreContext(_nameOrConnectionString))
+            using (var databaseContext = new ProjectionStoreContext(_projectionStoreDatabaseSettings))
             {
                 var books = databaseContext.Books.ToList();
 
@@ -25,6 +25,6 @@ namespace Library.Frontend.ProjectionStore.QueryHandlers
             }
         }
 
-        private readonly string _nameOrConnectionString;
+        private readonly IProjectionStoreDatabaseSettings _projectionStoreDatabaseSettings;
     }
 }

@@ -125,6 +125,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Book\List.cshtml" />
+    <Content Include="Views\Book\_List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -140,6 +141,10 @@
       <Project>{E3F3E269-BFC1-4C11-8EF6-4CE4C24C8060}</Project>
       <Name>CodeUtopia.Autofac</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
+      <Project>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</Project>
+      <Name>CodeUtopia.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
       <Name>CodeUtopia</Name>
@@ -151,6 +156,10 @@
     <ProjectReference Include="..\Library.Frontend.Autofac\Library.Frontend.Autofac.csproj">
       <Project>{B9307E71-499A-47B8-A72E-50CC2ECB4570}</Project>
       <Name>Library.Frontend.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library.Frontend.ProjectionStore\Library.Frontend.ProjectionStore.csproj">
+      <Project>{79B33B67-B98A-47D1-A464-8FBC777EF639}</Project>
+      <Name>Library.Frontend.ProjectionStore</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library.Frontend.Queries\Library.Frontend.Queries.csproj">
       <Project>{b06f4a79-8f37-45c4-8a0c-73969c36c705}</Project>

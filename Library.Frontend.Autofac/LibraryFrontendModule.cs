@@ -4,6 +4,7 @@ using Autofac;
 using Autofac.Core;
 using CodeUtopia;
 using CodeUtopia.Autofac;
+using CodeUtopia.Configuration;
 using CodeUtopia.Messaging;
 using CodeUtopia.Messaging.NServiceBus;
 using Library.Frontend.ProjectionStore;
@@ -19,11 +20,13 @@ namespace Library.Frontend.Autofac
         {
             base.Load(builder);
 
-            const string projectionStoreNameOrConnectionString = "ProjectionStore";
-
             // Dependency resolver.
             builder.RegisterType<AutofacDependencyResolver>()
                    .As<IDependencyResolver>();
+
+            // Settings provider
+            builder.RegisterType<ConfigurationManagerSettingsProvider>()
+                   .As<ISettingsProvider>();
 
             // Bus.
             builder.RegisterType<NServiceBusBus>()
@@ -46,7 +49,7 @@ namespace Library.Frontend.Autofac
                              x =>
                              new IdempotentEventCoordinatorDecorator(
                                  x.ResolveNamed<IEventCoordinator>("EventCoordinator"),
-                                 projectionStoreNameOrConnectionString))
+                                 x.Resolve<IProjectionStoreDatabaseSettings>()))
                    .As<IEventCoordinator>();
 
             // Event handler resolver.
@@ -62,7 +65,6 @@ namespace Library.Frontend.Autofac
 
             // TODO Create IProjectionStoreConnectionString
             builder.RegisterAssemblyTypes(eventHandlerAssembly)
-                   .WithParameter("nameOrConnectionString", projectionStoreNameOrConnectionString)
                    .As(type => type.GetInterfaces()
                                    .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(IEventHandler<>)))
                                    .Select(interfaceType => new KeyedService("EventHandler", interfaceType)));
@@ -85,9 +87,13 @@ namespace Library.Frontend.Autofac
 
             // TODO Create IProjectionStoreConnectionString
             builder.RegisterAssemblyTypes(queryHandlerAssembly)
-                   .WithParameter("nameOrConnectionString", projectionStoreNameOrConnectionString)
                    .As(type => type.GetInterfaces()
                                    .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(IQueryHandler<,>))));
+
+            // Projection Store.
+            builder.RegisterType<ProjectionStoreDatabaseSettings>()
+                   .WithParameter("projectionStoreConnectionStringKey", "ProjectionStore")
+                   .As<IProjectionStoreDatabaseSettings>();
         }
     }
 }

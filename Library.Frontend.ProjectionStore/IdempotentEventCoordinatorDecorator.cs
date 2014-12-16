@@ -7,10 +7,10 @@ namespace Library.Frontend.ProjectionStore
 {
     public class IdempotentEventCoordinatorDecorator : IEventCoordinator
     {
-        public IdempotentEventCoordinatorDecorator(IEventCoordinator decorated, string nameOrConnectionString)
+        public IdempotentEventCoordinatorDecorator(IEventCoordinator decorated, IProjectionStoreDatabaseSettings projectionStoreDatabaseSettings)
         {
             _decorated = decorated;
-            _nameOrConnectionString = nameOrConnectionString;
+            _projectionStoreDatabaseSettings = projectionStoreDatabaseSettings;
         }
 
         public void Coordinate<TEvent>(TEvent @event, IBus bus) where TEvent : class
@@ -23,7 +23,7 @@ namespace Library.Frontend.ProjectionStore
                 return;
             }
 
-            using (var databaseContext = new ProjectionStoreContext(_nameOrConnectionString))
+            using (var databaseContext = new ProjectionStoreContext(_projectionStoreDatabaseSettings))
             {
                 var aggregate = databaseContext.Aggregates.Find(domainEvent.AggregateId);
 
@@ -69,6 +69,6 @@ namespace Library.Frontend.ProjectionStore
 
         private readonly IEventCoordinator _decorated;
 
-        private readonly string _nameOrConnectionString;
+        private readonly IProjectionStoreDatabaseSettings _projectionStoreDatabaseSettings;
     }
 }

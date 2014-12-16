@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -7,6 +8,7 @@ using Autofac.Integration.Mvc;
 using CodeUtopia;
 using Library.Commands;
 using Library.Frontend.Autofac;
+using Library.Frontend.ProjectionStore;
 using Library.Frontend.Queries;
 using NServiceBus;
 using NServiceBus.Features;
@@ -27,6 +29,13 @@ namespace Library.Frontend.Host
             builder.RegisterModule(new LibraryFrontendModule());
 
             var container = builder.Build();
+
+            using (
+                var databaseContext = new ProjectionStoreContext(container.Resolve<IProjectionStoreDatabaseSettings>()))
+            {
+                Database.SetInitializer(new CreateDatabaseIfNotExists<ProjectionStoreContext>());
+                databaseContext.Database.Initialize(true);
+            }
 
             AreaRegistration.RegisterAllAreas();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

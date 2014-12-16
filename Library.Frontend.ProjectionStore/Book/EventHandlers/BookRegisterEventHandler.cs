@@ -1,22 +1,22 @@
-﻿using CodeUtopia;
-using Library.Events;
+﻿using Library.Events;
+using NServiceBus;
 
 namespace Library.Frontend.ProjectionStore.Book.EventHandlers
 {
-    public class BookRegisteredEventHandler : IEventHandler<BookRegisteredEvent>
+    public class BookRegisteredEventHandler : IHandleMessages<BookRegisteredEvent>
     {
-        public BookRegisteredEventHandler(string nameOrConnectionString)
+        public BookRegisteredEventHandler(IProjectionStoreDatabaseSettings projectionStoreDatabaseSettings)
         {
-            _nameOrConnectionString = nameOrConnectionString;
+            _projectionStoreDatabaseSettings = projectionStoreDatabaseSettings;
         }
 
         public void Handle(BookRegisteredEvent bookRegisteredEvent)
         {
-            using (var databaseContext = new ProjectionStoreContext(_nameOrConnectionString))
+            using (var databaseContext = new ProjectionStoreContext(_projectionStoreDatabaseSettings))
             {
                 var client = new BookEntity
                              {
-                                 BookId = bookRegisteredEvent.BookId,
+                                 BookId = bookRegisteredEvent.AggregateId,
                                  Title = bookRegisteredEvent.Title
                              };
 
@@ -26,6 +26,6 @@ namespace Library.Frontend.ProjectionStore.Book.EventHandlers
             }
         }
 
-        private readonly string _nameOrConnectionString;
+        private readonly IProjectionStoreDatabaseSettings _projectionStoreDatabaseSettings;
     }
 }

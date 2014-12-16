@@ -3,30 +3,13 @@ using CodeUtopia.Events;
 
 namespace Library.Events
 {
-    public class BookReturnedEvent : DomainEvent
+    [Serializable]
+    public class BookReturnedEvent : IDomainEvent
     {
-        public BookReturnedEvent(Guid bookId, int bookVersionNumber, DateTime returnedAt)
-            : base(bookId, bookVersionNumber)
-        {
-            _returnedAt = returnedAt;
-        }
+        public Guid AggregateId { get; set; }
 
-        public Guid BookId
-        {
-            get
-            {
-                return ((IDomainEvent)this).AggregateId;
-            }
-        }
+        public int AggregateVersionNumber { get; set; }
 
-        public DateTime ReturnedAt
-        {
-            get
-            {
-                return _returnedAt;
-            }
-        }
-
-        private readonly DateTime _returnedAt;
+        public DateTime ReturnedAt { get; set; }
     }
 }
