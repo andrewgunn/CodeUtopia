@@ -37,7 +37,7 @@ namespace CodeUtopia.EventStore.EntityFramework
                                    .Skip(skip)
                                    .Take(take)
                                    .ToList()
-                                   .Select(x => Deserialize<IDomainEvent>(x.Data))
+                                   .Select(x => Deserialize<IDomainEvent>(x.DomainEvent))
                                    .ToList();
         }
 
@@ -46,7 +46,7 @@ namespace CodeUtopia.EventStore.EntityFramework
             return _databaseContext.DomainEvents.Where(x => x.AggregateId == aggregateId)
                                    .OrderBy(x => x.AggregateVersionNumber)
                                    .ToList()
-                                   .Select(x => Deserialize<IDomainEvent>(x.Data))
+                                   .Select(x => Deserialize<IDomainEvent>(x.DomainEvent))
                                    .ToList();
         }
 
@@ -63,7 +63,7 @@ namespace CodeUtopia.EventStore.EntityFramework
                                                     x.AggregateVersionNumber > snapshotVersion)
                                 .OrderBy(x => x.AggregateVersionNumber)
                                 .ToList()
-                                .Select(x => Deserialize<IDomainEvent>(x.Data))
+                                .Select(x => Deserialize<IDomainEvent>(x.DomainEvent))
                                 .ToList();
         }
 
@@ -76,7 +76,7 @@ namespace CodeUtopia.EventStore.EntityFramework
                                            x =>
                                            new Snapshot(x.AggregateId,
                                                         x.AggregateVersionNumber,
-                                                        Deserialize<object>(x.Data)))
+                                                        Deserialize<object>(x.Memento)))
                                    .FirstOrDefault();
         }
 
@@ -101,7 +101,7 @@ namespace CodeUtopia.EventStore.EntityFramework
                                                       AggregateVersionNumber = domainEvent.AggregateVersionNumber,
                                                       DomainEventType = domainEvent.GetType()
                                                                                    .FullName,
-                                                      Data = Serialize(domainEvent),
+                                                      DomainEvent = Serialize(domainEvent),
                                                   });
             }
         }
@@ -112,7 +112,9 @@ namespace CodeUtopia.EventStore.EntityFramework
                                            {
                                                AggregateId = aggregateId,
                                                AggregateVersionNumber = aggregateVersionNumber,
-                                               Data = Serialize(memento)
+                                               MementoType = memento.GetType()
+                                                                    .FullName,
+                                               Memento = Serialize(memento)
                                            });
         }
 

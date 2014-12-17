@@ -1,9 +1,9 @@
 ﻿using System;
 using CodeUtopia.Domain;
-using Library.Backed.Domain.Mementoes.v1;
+using Library.Backend.Domain.Mementoes.v1;
 using Library.Events.v1;
 
-namespace Library.Backed.Domain
+namespace Library.Backend.Domain
 {
     public class Book : Aggregate, IOriginator
     {

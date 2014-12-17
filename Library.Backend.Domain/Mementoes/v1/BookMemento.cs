@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Library.Backed.Domain.Mementoes.v1
+namespace Library.Backend.Domain.Mementoes.v1
 {
     [Serializable]
     public class BookMemento

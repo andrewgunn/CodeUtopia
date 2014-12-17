@@ -8,6 +8,8 @@ namespace CodeUtopia.EventStore.EntityFramework
 
         public int AggregateVersionNumber { get; set; }
 
-        public byte[] Data { get; set; }
+        public byte[] Memento { get; set; }
+
+        public string MementoType { get; set; }
     }
 }

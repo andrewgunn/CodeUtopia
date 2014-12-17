@@ -23,7 +23,7 @@ namespace Tests.CodeUtopia.EventStore.EntityFramework
                                AggregateVersionNumber = 1,
                                DomainEventType = serializable.GetType()
                                                              .FullName,
-                               Data = Serialize(serializable)
+                               DomainEvent = Serialize(serializable)
                            };
         }
 

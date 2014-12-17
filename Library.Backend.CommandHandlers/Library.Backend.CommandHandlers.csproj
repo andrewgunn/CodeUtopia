@@ -68,9 +68,9 @@
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
       <Name>CodeUtopia</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Library.Backend.Domain\Library.Backed.Domain.csproj">
+    <ProjectReference Include="..\Library.Backend.Domain\Library.Backend.Domain.csproj">
       <Project>{6A2B8C4B-85B5-4E06-9CC7-35147CBDB71C}</Project>
-      <Name>Library.Backed.Domain</Name>
+      <Name>Library.Backend.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library.Commands\Library.Commands.csproj">
       <Project>{3a8f0f9a-4d61-4ff1-ae1f-6d3c9e397515}</Project>
