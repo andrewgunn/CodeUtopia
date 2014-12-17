@@ -17,7 +17,7 @@
 
         <footer>
             <div class="container">
-                <form id="events">
+                <form id="republish-all-events">
                     <button class="btn btn-danger" data-bind="click: republishAllEvents">Republish all events</button>
                 </form>
             </div>
@@ -34,7 +34,7 @@
             $(function () {
                 var libraryHub = $.connection.libraryHub;
 
-                function EventsViewModel() {
+                function RepublishAllEventsViewModel() {
                     var self = this;
 
                     self.republishAllEvents = function () {
@@ -42,7 +42,7 @@
                     };
                 }
 
-                ko.applyBindings(new EventsViewModel(), $('#events')[0]);
+                ko.applyBindings(new RepublishAllEventsViewModel(), $('#republish-all-events')[0]);
             });
         })(window.jQuery);
     </script>

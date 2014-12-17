@@ -12,8 +12,10 @@ namespace Library.Backed.Domain
         }
 
         private Book(Guid bookId, string title)
-            : this()
+            : base(bookId)
         {
+            RegisterEventHandlers();
+            
             Apply(new BookRegisteredEvent
                   {
                       Title = title
@@ -35,7 +37,6 @@ namespace Library.Backed.Domain
 
         private void OnBookRegisteredEvent(BookRegisteredEvent bookRegisteredEvent)
         {
-            AggregateId = bookRegisteredEvent.AggregateId;
             _title = bookRegisteredEvent.Title;
         }
 

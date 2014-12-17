@@ -14,6 +14,12 @@ namespace CodeUtopia.Domain
             _eventHandlers = new Dictionary<Type, Action<IDomainEvent>>();
         }
 
+        protected Aggregate(Guid aggregateId)
+            : this()
+        {
+            AggregateId = aggregateId;
+        }
+
         protected void Apply(IEditableDomainEvent domainEvent)
         {
             domainEvent.AggregateId = AggregateId;
@@ -86,6 +92,9 @@ namespace CodeUtopia.Domain
                 return;
             }
 
+            AggregateId = domainEvents.First()
+                                       .AggregateId;
+
             foreach (var domainEvent in domainEvents)
             {
                 Handle(domainEvent);
@@ -105,9 +114,9 @@ namespace CodeUtopia.Domain
             _entities.Add(entity);
         }
 
-        public Guid AggregateId { get; protected set; }
+        public Guid AggregateId { get; private set; }
 
-        public int AggregateVersionNumber { get; protected set; }
+        public int AggregateVersionNumber { get; private set; }
 
         public int EventVersionNumber { get; private set; }
 

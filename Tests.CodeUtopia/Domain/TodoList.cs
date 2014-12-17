@@ -8,12 +8,18 @@ namespace Tests.CodeUtopia.Domain
     {
         public TodoList()
         {
+            _todoListItems = new EntityList<TodoListItem>(this);
+
             RegisterEventHandlers();
         }
 
         private TodoList(Guid todoListId, string name)
-            : this()
+            : base(todoListId)
         {
+            _todoListItems = new EntityList<TodoListItem>(this);
+           
+            RegisterEventHandlers();
+
             Apply(new TodoListCreatedEvent
                   {
                       Name = name
@@ -41,7 +47,6 @@ namespace Tests.CodeUtopia.Domain
 
         private void OnTodoListCreatedEvent(TodoListCreatedEvent todoListCreatedEvent)
         {
-            AggregateId = todoListCreatedEvent.AggregateId;
             _name = todoListCreatedEvent.Name;
         }
 

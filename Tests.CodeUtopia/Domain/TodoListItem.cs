@@ -18,10 +18,7 @@ namespace Tests.CodeUtopia.Domain
 
         public void Complete()
         {
-            Apply(new TodoListItemCompletedEvent
-                  {
-                      EntityId = TodoListItemId
-                  });
+            Apply(new TodoListItemCompletedEvent());
         }
 
         private void OnTodoListItemCompletedEvent(TodoListItemCompletedEvent todoListItemCompletedEvent)

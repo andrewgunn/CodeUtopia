@@ -72,7 +72,6 @@ namespace Application.Backend.Domain.Application
                 throw new AggregateValidationErrorException(validationErrors);
             }
 
-            AggregateId = applicationCreatedEvent.AggregateId;
             _loanAmount = applicationCreatedEvent.LoanAmount;
             _loanTermInMonths = applicationCreatedEvent.LoanTermInMonths;
         }
