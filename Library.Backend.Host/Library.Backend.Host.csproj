@@ -84,6 +84,14 @@
       <Project>{4108B733-08BF-4B68-81C4-DB5B34107B35}</Project>
       <Name>Library.Backend.Autofac</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Library.Backend.CommandHandlers\Library.Backend.CommandHandlers.csproj">
+      <Project>{891da6fb-963a-488b-9b3f-9b7c5eebc078}</Project>
+      <Name>Library.Backend.CommandHandlers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library.Commands\Library.Commands.csproj">
+      <Project>{3a8f0f9a-4d61-4ff1-ae1f-6d3c9e397515}</Project>
+      <Name>Library.Commands</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
