@@ -2,11 +2,10 @@
 using System.Linq;
 using CodeUtopia.Events;
 using CodeUtopia.EventStore;
-using Library.Commands;
 using Library.Commands.v1;
 using NServiceBus;
 
-namespace Library.CommandHandlers
+namespace Library.Backend.CommandHandlers
 {
     public class RepublishAllEventsCommandHandler : IHandleMessages<RepublishAllEventsCommand>
     {

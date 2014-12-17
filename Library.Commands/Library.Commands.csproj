@@ -39,11 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReturnBookCommand.cs" />
-    <Compile Include="LendBookCommand.cs" />
-    <Compile Include="RegisterBookCommand.cs" />
+    <Compile Include="v1\ReturnBookCommand.cs" />
+    <Compile Include="v1\LendBookCommand.cs" />
+    <Compile Include="v1\RegisterBookCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RepublishAllEventsCommand.cs" />
+    <Compile Include="v1\RepublishAllEventsCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

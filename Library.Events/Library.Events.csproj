@@ -39,9 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookLentEvent.cs" />
-    <Compile Include="BookRegisteredEvent.cs" />
-    <Compile Include="BookReturnedEvent.cs" />
+    <Compile Include="v1\BookLentEvent.cs" />
+    <Compile Include="v1\BookRegisteredEvent.cs" />
+    <Compile Include="v1\BookReturnedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

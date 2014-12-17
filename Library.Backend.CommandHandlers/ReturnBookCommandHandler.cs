@@ -1,10 +1,9 @@
 ﻿using CodeUtopia.Domain;
-using Library.Commands;
+using Library.Backed.Domain;
 using Library.Commands.v1;
-using Library.Domain;
 using NServiceBus;
 
-namespace Library.CommandHandlers
+namespace Library.Backend.CommandHandlers
 {
     public class ReturnBookCommandHandler : IHandleMessages<ReturnBookCommand>
     {

@@ -1,9 +1,9 @@
 ﻿using CodeUtopia.Domain;
-using Library.Commands;
-using Library.Domain;
+using Library.Backed.Domain;
+using Library.Commands.v1;
 using NServiceBus;
 
-namespace Library.CommandHandlers
+namespace Library.Backend.CommandHandlers
 {
     public class RegisterBookCommandHandler : IHandleMessages<RegisterBookCommand>
     {
