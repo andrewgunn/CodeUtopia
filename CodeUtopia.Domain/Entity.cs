@@ -17,8 +17,12 @@ namespace CodeUtopia.Domain
             _appliedEvents = new List<IEntityEvent>();
         }
 
-        protected void Apply(IEntityEvent entityEvent)
+        protected void Apply(IEditableEntityEvent entityEvent)
         {
+            entityEvent.AggregateId = AggregateId;
+            entityEvent.AggregateVersionNumber = GetNextVersionNumber();
+            entityEvent.EntityId = EntityId;
+
             Handle(entityEvent);
 
             _appliedEvents.Add(entityEvent);
@@ -42,7 +46,7 @@ namespace CodeUtopia.Domain
             return _appliedEvents.OrderBy(x => x.AggregateVersionNumber);
         }
 
-        protected int GetNextVersionNumber()
+        private int GetNextVersionNumber()
         {
             return _versionNumberProvider.GetNextVersionNumber();
         }

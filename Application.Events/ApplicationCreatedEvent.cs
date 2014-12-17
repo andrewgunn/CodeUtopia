@@ -3,7 +3,7 @@ using CodeUtopia.Events;
 
 namespace Application.Events
 {
-    public class ApplicationCreatedEvent : IDomainEvent
+    public class ApplicationCreatedEvent : IEditableDomainEvent
     {
         public Guid AggregateId { get; set; }
 

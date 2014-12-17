@@ -16,8 +16,6 @@ namespace Library.Domain
         {
             Apply(new BookRegisteredEvent
                   {
-                      AggregateId = bookId,
-                      AggregateVersionNumber = GetNextVersionNumber(),
                       Title = title
                   });
         }
@@ -26,8 +24,6 @@ namespace Library.Domain
         {
             Apply(new BookBorrowedEvent
                   {
-                      AggregateId = AggregateId,
-                      AggregateVersionNumber = GetNextVersionNumber(),
                       BorrowedAt = borrowedAt
                   });
         }
@@ -64,8 +60,6 @@ namespace Library.Domain
         {
             Apply(new BookReturnedEvent
                   {
-                      AggregateId = AggregateId,
-                      AggregateVersionNumber = GetNextVersionNumber(),
                       ReturnedAt = returnedAt
                   });
         }

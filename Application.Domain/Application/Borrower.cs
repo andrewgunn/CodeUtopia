@@ -41,9 +41,6 @@ namespace Application.Domain.Application
         {
             Apply(new BorrowerMovedAddressEvent
                   {
-                      AggregateId = ApplicationId,
-                      AggregateVersionNumber = GetNextVersionNumber(),
-                      EntityId = BorrowerId,
                       HouseName = address.HouseName,
                       HouseNumber = address.HouseNumber,
                       Flat = address.Flat,

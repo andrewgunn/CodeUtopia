@@ -20,8 +20,6 @@ namespace Tests.CodeUtopia.Domain
         {
             Apply(new TodoListItemCompletedEvent
                   {
-                      AggregateId = TodoListId,
-                      AggregateVersionNumber = GetNextVersionNumber(),
                       EntityId = TodoListItemId
                   });
         }

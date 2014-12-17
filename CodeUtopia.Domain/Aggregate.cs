@@ -14,8 +14,11 @@ namespace CodeUtopia.Domain
             _eventHandlers = new Dictionary<Type, Action<IDomainEvent>>();
         }
 
-        protected void Apply(IDomainEvent domainEvent)
+        protected void Apply(IEditableDomainEvent domainEvent)
         {
+            domainEvent.AggregateId = AggregateId;
+            domainEvent.AggregateVersionNumber = GetNextVersionNumber();
+
             Handle(domainEvent);
 
             _appliedEvents.Add(domainEvent);
@@ -46,9 +49,14 @@ namespace CodeUtopia.Domain
             return _entities.SelectMany(x => x.GetChanges());
         }
 
-        public int GetNextVersionNumber()
+        private int GetNextVersionNumber()
         {
             return ++EventVersionNumber;
+        }
+
+        int IVersionNumberProvider.GetNextVersionNumber()
+        {
+            return GetNextVersionNumber();
         }
 
         private void Handle(IDomainEvent domainEvent)

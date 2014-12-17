@@ -3,7 +3,7 @@ using CodeUtopia.Events;
 
 namespace Tests.CodeUtopia.Domain
 {
-    public class TodoListCreatedEvent : IDomainEvent
+    public class TodoListCreatedEvent : IEditableDomainEvent
     {
         public Guid AggregateId { get; set; }
 

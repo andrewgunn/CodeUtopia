@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDomainEvent.cs" />
+    <Compile Include="IEditableDomainEvent.cs" />
+    <Compile Include="IEditableEntityEvent.cs" />
     <Compile Include="IEntityEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

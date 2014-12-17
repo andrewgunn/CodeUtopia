@@ -4,7 +4,7 @@ using CodeUtopia.Events;
 namespace Library.Events
 {
     [Serializable]
-    public class BookBorrowedEvent : IDomainEvent
+    public class BookBorrowedEvent : IEditableDomainEvent
     {
         public Guid AggregateId { get; set; }
 

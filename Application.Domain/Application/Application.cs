@@ -19,8 +19,6 @@ namespace Application.Domain.Application
         {
             Apply(new ApplicationCreatedEvent
                   {
-                      AggregateId = applicationId,
-                      AggregateVersionNumber = GetNextVersionNumber(),
                       LoanAmount = loanAmount,
                       LoanTermInMonths = loanTermInMonths
                   });
@@ -32,8 +30,6 @@ namespace Application.Domain.Application
 
             Apply(new BorrowerAddedToApplicationEvent
                   {
-                      AggregateId = AggregateId,
-                      AggregateVersionNumber = GetNextVersionNumber(),
                       BorrowerId = borrowerId,
                       FirstName = firstName,
                       LastName = lastName,

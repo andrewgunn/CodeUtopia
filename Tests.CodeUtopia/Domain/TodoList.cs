@@ -16,8 +16,6 @@ namespace Tests.CodeUtopia.Domain
         {
             Apply(new TodoListCreatedEvent
                   {
-                      AggregateId = todoListId,
-                      AggregateVersionNumber = GetNextVersionNumber(),
                       Name = name
                   });
         }
@@ -26,8 +24,6 @@ namespace Tests.CodeUtopia.Domain
         {
             Apply(new TodoListItemAddedEvent
                   {
-                      AggregateId = TodoListId,
-                      AggregateVersionNumber = GetNextVersionNumber(),
                       TodoListItemId = todoListItemId,
                       Description = description
                   });
