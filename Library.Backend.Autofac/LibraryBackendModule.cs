@@ -8,7 +8,6 @@ using CodeUtopia.Autofac;
 using CodeUtopia.Domain;
 using CodeUtopia.EventStore;
 using CodeUtopia.EventStore.EntityFramework;
-using Library.CommandHandlers;
 using Module = Autofac.Module;
 
 namespace Library.Backend.Autofac
