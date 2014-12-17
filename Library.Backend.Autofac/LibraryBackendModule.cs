@@ -1,17 +1,13 @@
 ﻿using System.Data.Entity;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using Autofac;
-using Autofac.Core;
 using CodeUtopia;
 using CodeUtopia.Autofac;
 using CodeUtopia.Domain;
 using CodeUtopia.EventStore;
 using CodeUtopia.EventStore.EntityFramework;
-using CodeUtopia.Messaging;
-using CodeUtopia.Messaging.NServiceBus;
 using Library.CommandHandlers;
 using Module = Autofac.Module;
 
@@ -29,22 +25,8 @@ namespace Library.Backend.Autofac
             builder.RegisterType<AutofacDependencyResolver>()
                    .As<IDependencyResolver>();
 
-            // Bus.
-            builder.RegisterType<NServiceBusBus>()
-                   .WithParameter("endpointName", "LibraryBackend")
-                   .As<IBus>();
-
-            // Command handlers.
-            var commandHandlerAssembly = Assembly.GetAssembly(typeof(RegisterBookCommandHandler));
-
-            builder.RegisterAssemblyTypes(commandHandlerAssembly)
-                   .As(type => type.GetInterfaces()
-                                   .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(ICommandHandler<>)))
-                                   .Select(interfaceType => new KeyedService("CommandHandler", interfaceType)));
-
-            builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerDecorator<>),
-                                             typeof(ICommandHandler<>),
-                                             "CommandHandler");
+            // Command handlers (required for NServiceBus assembly scanning).
+            Assembly.GetAssembly(typeof(RegisterBookCommandHandler));
 
             // Aggregate repository.
             builder.RegisterType<EventStoreAggregateRepository>()

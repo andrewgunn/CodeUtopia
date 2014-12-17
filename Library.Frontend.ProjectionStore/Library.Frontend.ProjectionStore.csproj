@@ -56,6 +56,7 @@
     <Compile Include="Book\EventHandlers\BookReturnedEventHandler.cs" />
     <Compile Include="Book\EventHandlers\BookBorrowedEventHandler.cs" />
     <Compile Include="Book\EventHandlers\BookRegisteredEventHandler.cs" />
+    <Compile Include="Book\EventHandlers\UnexpectedDomainEventException.cs" />
     <Compile Include="IProjectionStoreDatabaseSettings.cs" />
     <Compile Include="ProjectionStoreContext.cs" />
     <Compile Include="ProjectionStoreDatabaseSettings.cs" />
@@ -66,10 +67,6 @@
     <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">
       <Project>{2382FC22-7FC9-43D2-AE77-4B2ADF8F0AB3}</Project>
       <Name>CodeUtopia.Events</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
-      <Project>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</Project>
-      <Name>CodeUtopia.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>

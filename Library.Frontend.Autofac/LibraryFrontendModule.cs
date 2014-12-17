@@ -4,8 +4,6 @@ using Autofac;
 using CodeUtopia;
 using CodeUtopia.Autofac;
 using CodeUtopia.Configuration;
-using CodeUtopia.Messaging;
-using CodeUtopia.Messaging.NServiceBus;
 using Library.Frontend.ProjectionStore;
 using Library.Frontend.ProjectionStore.QueryHandlers;
 using Module = Autofac.Module;
@@ -25,11 +23,6 @@ namespace Library.Frontend.Autofac
             // Settings provider
             builder.RegisterType<ConfigurationManagerSettingsProvider>()
                    .As<ISettingsProvider>();
-
-            // Bus.
-            builder.RegisterType<NServiceBusBus>()
-                   .WithParameter("endpointName", "LibraryFrontend")
-                   .As<IBus>();
 
             // Query executor.
             builder.RegisterType<QueryExecutor>()

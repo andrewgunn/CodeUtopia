@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeUtopia.Domain;
 using CodeUtopia.Events;
-using CodeUtopia.Messaging;
+using NServiceBus;
 
 namespace CodeUtopia.EventStore
 {
@@ -44,8 +44,6 @@ namespace CodeUtopia.EventStore
             _aggregates.Clear();
 
             _eventStorage.Commit();
-
-            _bus.Commit();
         }
 
         public TAggregate Get<TAggregate>(Guid aggregateId) where TAggregate : class, IAggregate, new()
@@ -97,7 +95,7 @@ namespace CodeUtopia.EventStore
 
             _eventStorage.Rollback();
 
-            _bus.Rollback();
+            // TODO: Rollback bus
         }
 
         private readonly List<IAggregate> _aggregates;

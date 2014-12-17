@@ -8,6 +8,7 @@ using Autofac.Integration.Mvc;
 using CodeUtopia;
 using Library.Commands;
 using Library.Frontend.ProjectionStore;
+using Library.Frontend.ProjectionStore.Book.EventHandlers;
 using Library.Frontend.Queries;
 using log4net.Appender;
 using log4net.Config;
@@ -71,6 +72,8 @@ namespace Library.Frontend.Host
             busConfiguration.UsePersistence<InMemoryPersistence>();
             busConfiguration.UseSerialization<JsonSerializer>();
             busConfiguration.UseTransport<RabbitMQTransport>();
+
+            busConfiguration.LoadMessageHandlers(new First<DomainEventHandler>());
 
             return busConfiguration;
         }

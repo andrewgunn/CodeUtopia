@@ -17,17 +17,16 @@
 
         <footer>
             <div class="container">
-                @using (Html.BeginForm("RepublishAll", "Event"))
-                {
-                    @Html.AntiForgeryToken()
-
+                <form id="republish-all-events">
                     <button class="btn btn-danger">Republish all events</button>
-                }
+                </form>
             </div>
         </footer>
     </body>
 
     <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+
+    <script src="~/Scripts/knockout-3.2.0.js"></script>
 
     @RenderSection("Scripts", false)
 </html>

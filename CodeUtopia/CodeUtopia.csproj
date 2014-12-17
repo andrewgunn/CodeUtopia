@@ -47,11 +47,8 @@
     <Compile Include="IQueryExecutor.cs" />
     <Compile Include="IQueue.cs" />
     <Compile Include="IQueryHandler.cs" />
-    <Compile Include="ICommandHandler.cs" />
-    <Compile Include="IEventHandler.cs" />
     <Compile Include="ISettingsProvider.cs" />
     <Compile Include="IUnitOfWork.cs" />
-    <Compile Include="LoggingCommandHandlerDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryDispatcher.cs" />
     <Compile Include="QueryExecutor.cs" />

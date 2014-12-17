@@ -64,10 +64,6 @@
       <Project>{2382fc22-7fc9-43d2-ae77-4b2adf8f0ab3}</Project>
       <Name>CodeUtopia.Events</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
-      <Project>{c9cd31fa-49fb-452d-b6f8-1c695c7c5832}</Project>
-      <Name>CodeUtopia.Messaging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
       <Name>CodeUtopia</Name>

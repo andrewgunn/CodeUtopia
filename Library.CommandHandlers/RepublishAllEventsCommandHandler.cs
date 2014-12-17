@@ -4,7 +4,6 @@ using CodeUtopia.Events;
 using CodeUtopia.EventStore;
 using Library.Commands;
 using NServiceBus;
-using IBus = CodeUtopia.Messaging.IBus;
 
 namespace Library.CommandHandlers
 {
@@ -29,8 +28,6 @@ namespace Library.CommandHandlers
                 {
                     _bus.Publish(domainEvent);
                 }
-
-                _bus.Commit();
 
                 skip += take;
             }

@@ -1,29 +1,42 @@
-﻿@model IReadOnlyCollection<BookModel>
-
-@{
+﻿@{
 
     ViewBag.Title = "Books";
 }
 
 <h2>Books</h2>
 
-@using (Html.BeginForm("Register", null))
-{
+<form id="register-book">
     <fieldset>
         <legend>Register a new book</legend>
-        <input name="title" />
+        <input name="title" data-bind="value: title" />
 
         @Html.AntiForgeryToken()
 
-        <button class="register-book">Register</button>
+        <button data-bind="click: registerBook">Register</button>
     </fieldset>
-}
+</form>
 
 <hr />
 
-<div id="books">
-    @Html.Partial("_List", Model)
-</div>
+<table id="books" class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Book ID</th>
+            <th>Title</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: books">
+        <tr>
+            <td data-bind="text: bookId"></td>
+            <td data-bind="text: title"></td>
+            <td>
+                <button class="btn btn-primary" data-bind="click: borrowBook, enable: canBorrow">Borrow</button>
+                <button class="btn btn-primary" data-bind="click: returnBook, enable: canReturn">Return</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 @section Scripts
 {
@@ -37,43 +50,92 @@
             $(function () {
                 var libraryHub = $.connection.libraryHub;
 
-                libraryHub.client.bookBorrowed = function (bookId) {
-                    console.log('Book borrowed: ' + bookId);
-                };
-
                 libraryHub.client.bookRegistered = function (bookId, title) {
                     console.log('Book registered: ' + bookId + ' ' + title);
                 };
 
-                libraryHub.client.bookReturned = function (bookId) {
-                    console.log('Book returned: ' + bookId);
-                };
-
                 $.connection.hub.start().done(function () {
-                    console.log('Ready...');
-
-                    $('.borrow-book').on('click', function (event) {
-                        event.preventDefault();
-
-                        var $borrowBook = $(this);
-
-                        libraryHub.server.borrowBook($borrowBook.data('book-id'));
-                    });
-
                     $('.register-book').on('click', function (event) {
                         event.preventDefault();
 
                         libraryHub.server.registerBook($('[name="title"]').val());
                     });
-
-                    $('.return-book').on('click', function (event) {
-                        event.preventDefault();
-
-                        var $returnBook = $(this);
-
-                        libraryHub.server.returnBook($(this).data('book-id'));
-                    });
                 });
+
+                function RegisterBookViewModel() {
+                    var self = this;
+
+                    self.title = ko.observable();
+
+                    self.registerBook = function () {
+                        libraryHub.server.registerBook(self.title());
+
+                        self.title('');
+                    };
+                }
+
+                function BookViewModel(bookId, title, isBorrowed) {
+                    var self = this;
+
+                    self.bookId = ko.observable(bookId);
+                    self.title = ko.observable(title);
+                    self._isBorrowed = ko.observable(isBorrowed);
+                    self.canBorrow = ko.computed(function () {
+                        return !this._isBorrowed();
+                    }, self);
+                    self.canReturn = ko.computed(function () {
+                        return this._isBorrowed();
+                    }, self);
+
+                    self.borrowBook = function () {
+                        libraryHub.server.borrowBook(self.bookId());
+                    };
+
+                    self.returnBook = function () {
+                        libraryHub.server.returnBook(self.bookId());
+                    };
+                }
+
+                function BooksViewModel() {
+                    var self = this;
+
+                    self.books = ko.observableArray([]);
+
+                    var getBook = function (bookId) {
+                        return ko.utils.arrayFirst(self.books(), function (book) {
+                            return book.bookId() === bookId;
+                        });
+                    };
+                    libraryHub.client.loadBooks = function (books) {
+                        for (var i = 0; i < books.length; i++) {
+                            var book = books[i];
+
+                            self.books.push(new BookViewModel(book.BookId, book.Title, book.IsBorrowed));
+                        }
+                    };
+                    libraryHub.client.bookBorrowed = function (bookId) {
+                        var book = getBook(bookId);
+
+                        if (book) {
+                            book._isBorrowed(true);
+                        }
+                    };
+
+                    libraryHub.client.bookRegistered = function (bookId, title) {
+                        self.books.push(new BookViewModel(bookId, title, false));
+                    };
+
+                    libraryHub.client.bookReturned = function (bookId) {
+                        var book = getBook(bookId);
+
+                        if (book) {
+                            book._isBorrowed(false);
+                        }
+                    };
+                }
+
+                ko.applyBindings(new RegisterBookViewModel(), $('#register-book')[0]);
+                ko.applyBindings(new BooksViewModel(), $('#books')[0]);
             });
         })(window.jQuery);
     </script>

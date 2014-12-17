@@ -158,13 +158,14 @@
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery.signalR-2.1.2.js" />
     <Content Include="Scripts\jquery.signalR-2.1.2.min.js" />
+    <Content Include="Scripts\knockout-3.2.0.debug.js" />
+    <Content Include="Scripts\knockout-3.2.0.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Container.cs" />
     <Compile Include="Controllers\BookController.cs" />
-    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="EventHandlers\BookReturnedEventHandler.cs" />
     <Compile Include="EventHandlers\BookBorrowedEventHandler.cs" />
     <Compile Include="EventHandlers\BookRegisteredEventHandler.cs" />
@@ -183,7 +184,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Book\List.cshtml" />
-    <Content Include="Views\Book\_List.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -203,10 +203,6 @@
     <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">
       <Project>{2382FC22-7FC9-43D2-AE77-4B2ADF8F0AB3}</Project>
       <Name>CodeUtopia.Events</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
-      <Project>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</Project>
-      <Name>CodeUtopia.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>

@@ -78,14 +78,6 @@
       <Project>{CD9D834E-D000-4687-ACCE-E8C16A65E33A}</Project>
       <Name>CodeUtopia.EventStore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.Messaging.NServiceBus\CodeUtopia.Messaging.NServiceBus.csproj">
-      <Project>{91E4E297-D6D9-4F4A-B0AA-5D4D560099F4}</Project>
-      <Name>CodeUtopia.Messaging.NServiceBus</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.Messaging\CodeUtopia.Messaging.csproj">
-      <Project>{C9CD31FA-49FB-452D-B6F8-1C695C7C5832}</Project>
-      <Name>CodeUtopia.Messaging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
       <Name>CodeUtopia</Name>
