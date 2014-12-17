@@ -6,7 +6,6 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
 using CodeUtopia;
-using Library.Commands;
 using Library.Commands.v1;
 using Library.Frontend.ProjectionStore;
 using Library.Frontend.ProjectionStore.Book.EventHandlers;

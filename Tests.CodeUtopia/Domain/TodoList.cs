@@ -17,7 +17,7 @@ namespace Tests.CodeUtopia.Domain
             : base(todoListId)
         {
             _todoListItems = new EntityList<TodoListItem>(this);
-           
+
             RegisterEventHandlers();
 
             Apply(new TodoListCreatedEvent

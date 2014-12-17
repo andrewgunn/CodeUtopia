@@ -1,10 +1,11 @@
 ﻿using System;
 using CodeUtopia.Domain;
+using Library.Backed.Domain.Mementoes.v1;
 using Library.Events.v1;
 
 namespace Library.Backed.Domain
 {
-    public class Book : Aggregate
+    public class Book : Aggregate, IOriginator
     {
         public Book()
         {
@@ -15,7 +16,7 @@ namespace Library.Backed.Domain
             : base(bookId)
         {
             RegisterEventHandlers();
-            
+
             Apply(new BookRegisteredEvent
                   {
                       Title = title
@@ -28,6 +29,25 @@ namespace Library.Backed.Domain
                   {
                       BorrowedAt = borrowedAt
                   });
+        }
+
+        public object CreateMemento()
+        {
+            return new BookMemento(AggregateId, _title, _isBorrowed);
+        }
+
+        public void LoadFromMemento(Guid aggregateId, int aggregateVersionNumber, object memento)
+        {
+            var bookMemento = memento as BookMemento;
+
+            if (bookMemento == null)
+            {
+                return;
+            }
+
+            LoadFromMemento(aggregateId, aggregateVersionNumber);
+            _title = bookMemento.Title;
+            _isBorrowed = bookMemento.IsBorrowed;
         }
 
         private void OnBookBorrowedEvent(BookBorrowedEvent bookBorrowedAt)

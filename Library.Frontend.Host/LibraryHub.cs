@@ -1,5 +1,4 @@
-﻿using Library.Commands;
-using Library.Commands.v1;
+﻿using Library.Commands.v1;
 using Microsoft.AspNet.SignalR;
 using NServiceBus;
 

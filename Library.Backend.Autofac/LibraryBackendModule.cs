@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using Autofac;
@@ -8,7 +7,6 @@ using CodeUtopia.Autofac;
 using CodeUtopia.Domain;
 using CodeUtopia.EventStore;
 using CodeUtopia.EventStore.EntityFramework;
-using Module = Autofac.Module;
 
 namespace Library.Backend.Autofac
 {
@@ -23,7 +21,7 @@ namespace Library.Backend.Autofac
             // Dependency resolver.
             builder.RegisterType<AutofacDependencyResolver>()
                    .As<IDependencyResolver>();
-            
+
             // Aggregate repository.
             builder.RegisterType<EventStoreAggregateRepository>()
                    .As<IAggregateRepository>();

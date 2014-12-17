@@ -93,7 +93,7 @@ namespace CodeUtopia.Domain
             }
 
             AggregateId = domainEvents.First()
-                                       .AggregateId;
+                                      .AggregateId;
 
             foreach (var domainEvent in domainEvents)
             {
@@ -101,6 +101,17 @@ namespace CodeUtopia.Domain
             }
 
             EventVersionNumber = AggregateVersionNumber;
+        }
+
+        protected void LoadFromMemento(Guid aggregateId, int aggregateVersionNumber)
+        {
+            if (IsInitialized())
+            {
+                throw new AggregateAlreadyInitialisedException(AggregateId);
+            }
+
+            AggregateId = aggregateId;
+            AggregateVersionNumber = aggregateVersionNumber;
         }
 
         protected void RegisterEventHandler<TDomainEvent>(Action<TDomainEvent> eventHandler)

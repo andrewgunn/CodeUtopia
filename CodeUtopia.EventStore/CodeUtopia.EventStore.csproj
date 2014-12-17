@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="EventStoreAggregateRepository.cs" />
     <Compile Include="IEventStorage.cs" />
-    <Compile Include="ISnapShot.cs" />
     <Compile Include="ISnapshotStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Snapshot.cs" />

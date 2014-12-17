@@ -4,7 +4,7 @@ namespace CodeUtopia.EventStore
 {
     public interface ISnapshotStorage
     {
-        ISnapshot GetLastSnapshotForAggregate(Guid aggregateId);
+        Snapshot GetLastSnapshotForAggregate(Guid aggregateId);
 
         void SaveSnapshotForAggregate(Guid aggregateId, int aggregateVersionNumber, object memento);
     }

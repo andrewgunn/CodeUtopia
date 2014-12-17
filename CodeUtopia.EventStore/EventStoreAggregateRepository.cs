@@ -58,12 +58,11 @@ namespace CodeUtopia.EventStore
         private TAggregate LoadFromHistory<TAggregate>(Guid aggregateId) where TAggregate : class, IAggregate, new()
         {
             var aggregate = new TAggregate();
-            IReadOnlyCollection<IDomainEvent> domainEvents;
             var originator = aggregate as IOriginator;
 
             if (originator == null)
             {
-                domainEvents = _eventStorage.GetEventsForAggregate(aggregateId);
+                aggregate.LoadFromHistory(_eventStorage.GetEventsForAggregate(aggregateId));
             }
             else
             {
@@ -74,17 +73,17 @@ namespace CodeUtopia.EventStore
                     originator.LoadFromMemento(snapshot.AggregateId, snapshot.AggregateVersionNumber, snapshot.Memento);
                 }
 
-                domainEvents = _eventStorage.GetEventsForAggregateSinceLastSnapshot(aggregateId);
+                var domainEvents = _eventStorage.GetEventsForAggregateSinceLastSnapshot(aggregateId);
 
-                if (domainEvents.Count > 10 /* TODO Make this value configurable. */)
+                aggregate.LoadFromHistory(_eventStorage.GetEventsForAggregate(aggregateId));
+
+                if (domainEvents.Count == 10 /* TODO Make this value configurable. */)
                 {
-                    _eventStorage.SaveSnapshotForAggregate(aggregate.AggregateId,
-                                                           aggregate.AggregateVersionNumber,
+                    _eventStorage.SaveSnapshotForAggregate(aggregateId,
+                                                           domainEvents.OrderBy(x => x.AggregateVersionNumber).Last().AggregateVersionNumber,
                                                            originator.CreateMemento());
                 }
             }
-
-            aggregate.LoadFromHistory(domainEvents);
 
             return aggregate;
         }

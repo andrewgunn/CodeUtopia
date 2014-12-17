@@ -67,12 +67,17 @@ namespace CodeUtopia.EventStore.EntityFramework
                                 .ToList();
         }
 
-        public ISnapshot GetLastSnapshotForAggregate(Guid aggregateId)
+        public Snapshot GetLastSnapshotForAggregate(Guid aggregateId)
         {
-            var snapshot = _databaseContext.Snapshots.OrderByDescending(x => x.AggregateVersionNumber)
-                                           .FirstOrDefault(x => x.AggregateId == aggregateId);
-
-            return snapshot == null ? null : Deserialize<ISnapshot>(snapshot.Data);
+            return _databaseContext.Snapshots.OrderByDescending(x => x.AggregateVersionNumber)
+                                   .Where(x => x.AggregateId == aggregateId)
+                                   .ToList()
+                                   .Select(
+                                           x =>
+                                           new Snapshot(x.AggregateId,
+                                                        x.AggregateVersionNumber,
+                                                        Deserialize<object>(x.Data)))
+                                   .FirstOrDefault();
         }
 
         public void Rollback()

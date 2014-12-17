@@ -2,9 +2,9 @@ using System;
 
 namespace CodeUtopia.EventStore
 {
-    public abstract class Snapshot : ISnapshot
+    public class Snapshot
     {
-        protected Snapshot(Guid aggregateId, int aggregateVersionNumber, object memento)
+        public Snapshot(Guid aggregateId, int aggregateVersionNumber, object memento)
         {
             _aggregateId = aggregateId;
             _aggregateVersionNumber = aggregateVersionNumber;

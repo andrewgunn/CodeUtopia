@@ -1,5 +1,4 @@
-﻿using Library.Events;
-using Library.Events.v1;
+﻿using Library.Events.v1;
 using NServiceBus;
 
 namespace Library.Frontend.ProjectionStore.Book.EventHandlers
