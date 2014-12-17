@@ -10,8 +10,6 @@
         <legend>Register a new book</legend>
         <input name="title" data-bind="value: title" />
 
-        @Html.AntiForgeryToken()
-
         <button data-bind="click: registerBook">Register</button>
     </fieldset>
 </form>
@@ -26,7 +24,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody data-bind="foreach: books">
+    <tbody style="display: none;" data-bind="foreach: books, visible: books().length">
         <tr>
             <td data-bind="text: bookId"></td>
             <td data-bind="text: title"></td>
@@ -48,9 +46,9 @@
         ;
         (function ($) {
             $(function () {
-                var libraryHub = $.connection.libraryHub;
+                var bookHub = $.connection.bookHub;
 
-                libraryHub.client.bookRegistered = function (bookId, title) {
+                bookHub.client.bookRegistered = function (bookId, title) {
                     console.log('Book registered: ' + bookId + ' ' + title);
                 };
 
@@ -58,7 +56,7 @@
                     $('.register-book').on('click', function (event) {
                         event.preventDefault();
 
-                        libraryHub.server.registerBook($('[name="title"]').val());
+                        bookHub.server.registerBook($('[name="title"]').val());
                     });
                 });
 
@@ -68,7 +66,7 @@
                     self.title = ko.observable();
 
                     self.registerBook = function () {
-                        libraryHub.server.registerBook(self.title());
+                        bookHub.server.registerBook(self.title());
 
                         self.title('');
                     };
@@ -88,11 +86,11 @@
                     }, self);
 
                     self.borrowBook = function () {
-                        libraryHub.server.borrowBook(self.bookId());
+                        bookHub.server.borrowBook(self.bookId());
                     };
 
                     self.returnBook = function () {
-                        libraryHub.server.returnBook(self.bookId());
+                        bookHub.server.returnBook(self.bookId());
                     };
                 }
 
@@ -106,14 +104,14 @@
                             return book.bookId() === bookId;
                         });
                     };
-                    libraryHub.client.loadBooks = function (books) {
+                    bookHub.client.loadBooks = function (books) {
                         for (var i = 0; i < books.length; i++) {
                             var book = books[i];
 
                             self.books.push(new BookViewModel(book.BookId, book.Title, book.IsBorrowed));
                         }
                     };
-                    libraryHub.client.bookBorrowed = function (bookId) {
+                    bookHub.client.bookBorrowed = function (bookId) {
                         var book = getBook(bookId);
 
                         if (book) {
@@ -121,11 +119,11 @@
                         }
                     };
 
-                    libraryHub.client.bookRegistered = function (bookId, title) {
+                    bookHub.client.bookRegistered = function (bookId, title) {
                         self.books.push(new BookViewModel(bookId, title, false));
                     };
 
-                    libraryHub.client.bookReturned = function (bookId) {
+                    bookHub.client.bookReturned = function (bookId) {
                         var book = getBook(bookId);
 
                         if (book) {

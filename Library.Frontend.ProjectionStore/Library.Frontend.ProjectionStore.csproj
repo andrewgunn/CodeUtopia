@@ -56,6 +56,7 @@
     <Compile Include="Book\EventHandlers\BookReturnedEventHandler.cs" />
     <Compile Include="Book\EventHandlers\BookBorrowedEventHandler.cs" />
     <Compile Include="Book\EventHandlers\BookRegisteredEventHandler.cs" />
+    <Compile Include="Book\EventHandlers\DomainEventHandler.cs" />
     <Compile Include="Book\EventHandlers\UnexpectedDomainEventException.cs" />
     <Compile Include="IProjectionStoreDatabaseSettings.cs" />
     <Compile Include="ProjectionStoreContext.cs" />

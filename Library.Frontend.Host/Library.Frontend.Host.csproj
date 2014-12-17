@@ -173,6 +173,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HttpNameAttribute.cs" />
+    <Compile Include="BookHub.cs" />
     <Compile Include="LibraryHub.cs" />
     <Compile Include="Models\BookModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

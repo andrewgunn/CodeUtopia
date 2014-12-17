@@ -17,8 +17,8 @@
 
         <footer>
             <div class="container">
-                <form id="republish-all-events">
-                    <button class="btn btn-danger">Republish all events</button>
+                <form id="events">
+                    <button class="btn btn-danger" data-bind="click: republishAllEvents">Republish all events</button>
                 </form>
             </div>
         </footer>
@@ -28,5 +28,24 @@
 
     <script src="~/Scripts/knockout-3.2.0.js"></script>
 
+    <script>
+        ;
+        (function ($) {
+            $(function () {
+                var libraryHub = $.connection.libraryHub;
+
+                function EventsViewModel() {
+                    var self = this;
+
+                    self.republishAllEvents = function () {
+                        libraryHub.server.republishAllEvents();
+                    };
+                }
+
+                ko.applyBindings(new EventsViewModel(), $('#events')[0]);
+            });
+        })(window.jQuery);
+    </script>
+    
     @RenderSection("Scripts", false)
 </html>

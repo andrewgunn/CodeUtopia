@@ -68,12 +68,11 @@ namespace Library.Frontend.Host
 
             busConfiguration.DisableFeature<Sagas>();
             busConfiguration.EndpointName("LibraryFrontend");
+            busConfiguration.LoadMessageHandlers<First<DomainEventHandler>>();
             busConfiguration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(lifetimeScope));
             busConfiguration.UsePersistence<InMemoryPersistence>();
             busConfiguration.UseSerialization<JsonSerializer>();
             busConfiguration.UseTransport<RabbitMQTransport>();
-
-            busConfiguration.LoadMessageHandlers(new First<DomainEventHandler>());
 
             return busConfiguration;
         }
