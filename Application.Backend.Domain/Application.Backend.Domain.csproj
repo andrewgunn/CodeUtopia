@@ -7,8 +7,8 @@
     <ProjectGuid>{6E23D9B4-0155-4C28-A8A5-7BC2D1F1A4A3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Application.Domain</RootNamespace>
-    <AssemblyName>Application.Domain</AssemblyName>
+    <RootNamespace>Application.Backend.Domain</RootNamespace>
+    <AssemblyName>Application.Backend.Domain</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

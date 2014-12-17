@@ -1,7 +1,7 @@
 ﻿using System;
 using CodeUtopia.Domain;
 
-namespace Application.Domain.Application
+namespace Application.Backend.Domain.Application
 {
     public abstract class Applicant : Entity
     {

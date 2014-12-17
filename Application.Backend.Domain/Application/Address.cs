@@ -1,4 +1,4 @@
-﻿namespace Application.Domain.Application
+﻿namespace Application.Backend.Domain.Application
 {
     public class Address
     {
