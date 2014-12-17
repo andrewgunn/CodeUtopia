@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -108,6 +109,14 @@ namespace CodeUtopia.EventStore.EntityFramework
 
         public void SaveSnapshotForAggregate(Guid aggregateId, int aggregateVersionNumber, object memento)
         {
+            var snapshot = _databaseContext.Snapshots.SingleOrDefault(x => x.AggregateId == aggregateId);
+
+            if (snapshot != null)
+            {
+                _databaseContext.Entry(snapshot)
+                                .State = EntityState.Deleted;
+            }
+
             _databaseContext.Snapshots.Add(new SnapshotEntity
                                            {
                                                AggregateId = aggregateId,
