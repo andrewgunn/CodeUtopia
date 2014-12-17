@@ -15,7 +15,7 @@
 
         @Html.AntiForgeryToken()
 
-        <button>Register</button>
+        <button class="register-book">Register</button>
     </fieldset>
 }
 
@@ -27,17 +27,54 @@
 
 @section Scripts
 {
-    <script type="text/javascript">
-        var $books = $('#books');
+    <script src="~/Scripts/jquery.signalR-2.1.2.min.js"></script>
 
-        setInterval(function () {
-            $.ajax({
-                type: 'get',
-                success: function (response) {
-                    $books.html(response);
-                },
-                url: window.location
+    <script src="~/signalr/hubs"></script>
+
+    <script>
+        ;
+        (function ($) {
+            $(function () {
+                var libraryHub = $.connection.libraryHub;
+
+                libraryHub.client.bookBorrowed = function (bookId) {
+                    console.log('Book borrowed: ' + bookId);
+                };
+
+                libraryHub.client.bookRegistered = function (bookId, title) {
+                    console.log('Book registered: ' + bookId + ' ' + title);
+                };
+
+                libraryHub.client.bookReturned = function (bookId) {
+                    console.log('Book returned: ' + bookId);
+                };
+
+                $.connection.hub.start().done(function () {
+                    console.log('Ready...');
+
+                    $('.borrow-book').on('click', function (event) {
+                        event.preventDefault();
+
+                        var $borrowBook = $(this);
+
+                        libraryHub.server.borrowBook($borrowBook.data('book-id'));
+                    });
+
+                    $('.register-book').on('click', function (event) {
+                        event.preventDefault();
+
+                        libraryHub.server.registerBook($('[name="title"]').val());
+                    });
+
+                    $('.return-book').on('click', function (event) {
+                        event.preventDefault();
+
+                        var $returnBook = $(this);
+
+                        libraryHub.server.returnBook($(this).data('book-id'));
+                    });
+                });
             });
-        }, 1000);
+        })(window.jQuery);
     </script>
 }

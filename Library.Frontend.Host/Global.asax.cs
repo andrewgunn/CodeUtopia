@@ -7,7 +7,6 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using CodeUtopia;
 using Library.Commands;
-using Library.Frontend.Autofac;
 using Library.Frontend.ProjectionStore;
 using Library.Frontend.Queries;
 using log4net.Appender;
@@ -25,15 +24,7 @@ namespace Library.Frontend.Host
     {
         protected void Application_Start()
         {
-            var builder = new ContainerBuilder();
-
-            builder.RegisterControllers(typeof(MvcApplication).Assembly);
-            builder.RegisterModelBinderProvider();
-            builder.RegisterModelBinders(typeof(MvcApplication).Assembly);
-
-            builder.RegisterModule(new LibraryFrontendModule());
-
-            var container = builder.Build();
+            var container = Container.Instance;
 
             using (
                 var databaseContext = new ProjectionStoreContext(container.Resolve<IProjectionStoreDatabaseSettings>()))
@@ -44,6 +35,7 @@ namespace Library.Frontend.Host
 
             AreaRegistration.RegisterAllAreas();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             ConfigureBusLogging();
@@ -86,29 +78,29 @@ namespace Library.Frontend.Host
         private static void ConfigureBusLogging()
         {
             var layout = new PatternLayout
-            {
-                ConversionPattern = "%d [%t] %-5p %c [%x] - %m%n"
-            };
+                         {
+                             ConversionPattern = "%d [%t] %-5p %c [%x] - %m%n"
+                         };
             layout.ActivateOptions();
             var consoleAppender = new ColoredConsoleAppender
-            {
-                Threshold = Level.Debug,
-                Layout = layout
-            };
+                                  {
+                                      Threshold = Level.Debug,
+                                      Layout = layout
+                                  };
             consoleAppender.ActivateOptions();
             var fileAppender = new RollingFileAppender
-            {
-                DatePattern = "yyyy-MM-dd'.log'",
-                RollingStyle = RollingFileAppender.RollingMode.Composite,
-                MaxFileSize = 10 * 1024 * 1024,
-                MaxSizeRollBackups = 10,
-                LockingModel = new FileAppender.MinimalLock(),
-                StaticLogFileName = false,
-                File = @"nsb_log_",
-                Layout = layout,
-                AppendToFile = true,
-                Threshold = Level.Debug,
-            };
+                               {
+                                   DatePattern = "yyyy-MM-dd'.log'",
+                                   RollingStyle = RollingFileAppender.RollingMode.Composite,
+                                   MaxFileSize = 10 * 1024 * 1024,
+                                   MaxSizeRollBackups = 10,
+                                   LockingModel = new FileAppender.MinimalLock(),
+                                   StaticLogFileName = false,
+                                   File = @"nsb_log_",
+                                   Layout = layout,
+                                   AppendToFile = true,
+                                   Threshold = Level.Debug,
+                               };
             fileAppender.ActivateOptions();
 
             BasicConfigurator.Configure(fileAppender, consoleAppender);

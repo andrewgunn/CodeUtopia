@@ -17,21 +17,21 @@ namespace Library.Frontend.Host.Controllers
             _queryExecutor = queryExecutor;
         }
 
-        [HttpName]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public RedirectToRouteResult Borrow([Bind(Prefix = "id")] Guid bookId)
-        {
-            var command = new BorrowBookCommand
-                          {
-                              BookId = bookId,
-                          };
+        //[HttpName]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public RedirectToRouteResult Borrow([Bind(Prefix = "id")] Guid bookId)
+        //{
+        //    var command = new BorrowBookCommand
+        //                  {
+        //                      BookId = bookId,
+        //                  };
 
-            _bus.Send(command);
-            _bus.Commit();
+        //    _bus.Send(command);
+        //    _bus.Commit();
 
-            return RedirectToAction("List");
-        }
+        //    return RedirectToAction("List");
+        //}
 
         public ActionResult List()
         {
@@ -47,37 +47,37 @@ namespace Library.Frontend.Host.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public RedirectToRouteResult Register(string title)
-        {
-            var command = new RegisterBookCommand
-                          {
-                              BookId = Guid.NewGuid(),
-                              Title = title
-                          };
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public RedirectToRouteResult Register(string title)
+        //{
+        //    var command = new RegisterBookCommand
+        //                  {
+        //                      BookId = Guid.NewGuid(),
+        //                      Title = title
+        //                  };
 
-            _bus.Send(command);
-            _bus.Commit();
+        //    _bus.Send(command);
+        //    _bus.Commit();
 
-            return RedirectToAction("List");
-        }
+        //    return RedirectToAction("List");
+        //}
 
-        [HttpName]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public RedirectToRouteResult Return([Bind(Prefix = "id")] Guid bookId)
-        {
-            var command = new ReturnBookCommand
-                          {
-                              BookId = bookId,
-                          };
+        //[HttpName]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public RedirectToRouteResult Return([Bind(Prefix = "id")] Guid bookId)
+        //{
+        //    var command = new ReturnBookCommand
+        //                  {
+        //                      BookId = bookId,
+        //                  };
 
-            _bus.Send(command);
-            _bus.Commit();
+        //    _bus.Send(command);
+        //    _bus.Commit();
 
-            return RedirectToAction("List");
-        }
+        //    return RedirectToAction("List");
+        //}
 
         private readonly IBus _bus;
 

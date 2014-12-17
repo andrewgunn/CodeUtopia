@@ -16,14 +16,15 @@ namespace Library.Frontend.ProjectionStore.Book.EventHandlers
         {
             using (var databaseContext = new ProjectionStoreContext(_projectionStoreDatabaseSettings))
             {
-                var aggregate = databaseContext.Aggregates.SingleOrDefault(x => x.AggregateId == bookReturnedEvent.AggregateId);
+                var aggregate =
+                    databaseContext.Aggregates.SingleOrDefault(x => x.AggregateId == bookReturnedEvent.AggregateId);
 
                 if (aggregate == null)
                 {
                     aggregate = new AggregateEntity
-                    {
-                        AggregateId = bookReturnedEvent.AggregateId,
-                    };
+                                {
+                                    AggregateId = bookReturnedEvent.AggregateId,
+                                };
                     databaseContext.Aggregates.Add(aggregate);
                 }
                 else if (bookReturnedEvent.AggregateVersionNumber <= aggregate.AggregateVersionNumber)

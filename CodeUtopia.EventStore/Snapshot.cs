@@ -40,6 +40,5 @@ namespace CodeUtopia.EventStore
         private readonly int _aggregateVersionNumber;
 
         private readonly object _memento;
-
     }
 }

@@ -16,14 +16,15 @@ namespace Library.Frontend.ProjectionStore.Book.EventHandlers
         {
             using (var databaseContext = new ProjectionStoreContext(_projectionStoreDatabaseSettings))
             {
-                var aggregate = databaseContext.Aggregates.SingleOrDefault(x => x.AggregateId == bookRegisteredEvent.AggregateId);
+                var aggregate =
+                    databaseContext.Aggregates.SingleOrDefault(x => x.AggregateId == bookRegisteredEvent.AggregateId);
 
                 if (aggregate == null)
                 {
                     aggregate = new AggregateEntity
-                    {
-                        AggregateId = bookRegisteredEvent.AggregateId,
-                    };
+                                {
+                                    AggregateId = bookRegisteredEvent.AggregateId,
+                                };
                     databaseContext.Aggregates.Add(aggregate);
                 }
                 else if (bookRegisteredEvent.AggregateVersionNumber <= aggregate.AggregateVersionNumber)
@@ -35,10 +36,10 @@ namespace Library.Frontend.ProjectionStore.Book.EventHandlers
                 aggregate.AggregateVersionNumber = bookRegisteredEvent.AggregateVersionNumber;
 
                 var book = new BookEntity
-                             {
-                                 BookId = bookRegisteredEvent.AggregateId,
-                                 Title = bookRegisteredEvent.Title
-                             };
+                           {
+                               BookId = bookRegisteredEvent.AggregateId,
+                               Title = bookRegisteredEvent.Title
+                           };
 
                 databaseContext.Books.Add(book);
 

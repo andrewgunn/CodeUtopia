@@ -16,7 +16,8 @@ namespace Library.Frontend.ProjectionStore.Book.EventHandlers
         {
             using (var databaseContext = new ProjectionStoreContext(_projectionStoreDatabaseSettings))
             {
-                var aggregate = databaseContext.Aggregates.SingleOrDefault(x => x.AggregateId == bookBorrowedEvent.AggregateId);
+                var aggregate =
+                    databaseContext.Aggregates.SingleOrDefault(x => x.AggregateId == bookBorrowedEvent.AggregateId);
 
                 if (aggregate == null)
                 {

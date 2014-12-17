@@ -63,7 +63,6 @@ namespace Library.Backend.Host
 
         public void Customize(BusConfiguration configuration)
         {
-
             var builder = new ContainerBuilder();
             builder.RegisterModule(new LibraryBackendModule());
 

@@ -25,16 +25,8 @@
                     @Html.DisplayFor(model => book.Title)
                 </td>
                 <td>
-                    @using (Html.BeginForm(null, null, new
-                                                       {
-                                                           id = book.BookId
-                                                       }, FormMethod.Post))
-                    {
-                        @Html.AntiForgeryToken()
-
-                        <button class="btn btn-primary" @(book.IsBorrowed ? "disabled" : "") name="Borrow">Borrow</button>
-                        <button class="btn btn-primary" @(book.IsBorrowed ? "" : "disabled") name="Return">Return</button>
-                    }
+                    <button class="btn btn-primary borrow-book" @(book.IsBorrowed ? "disabled" : "") name="Borrow" data-book-id="@book.BookId">Borrow</button>
+                    <button class="btn btn-primary return-book" @(book.IsBorrowed ? "" : "disabled") name="Return" data-book-id="@book.BookId">Return</button>
                 </td>
 
             </tr>
