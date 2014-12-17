@@ -1,7 +1,7 @@
 ﻿using System;
 using CodeUtopia.Events;
 
-namespace Application.Events
+namespace Application.Events.v1
 {
     public class BorrowerMovedAddressEvent : IEditableEntityEvent
     {

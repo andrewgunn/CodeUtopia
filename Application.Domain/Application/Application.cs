@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Application.Events;
+using Application.Events.v1;
 using Application.Validators;
 using CodeUtopia.Domain;
 using CodeUtopia.Validators;

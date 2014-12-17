@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeUtopia.Domain;
 using Library.Events;
+using Library.Events.v1;
 
 namespace Library.Domain
 {

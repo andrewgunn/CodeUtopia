@@ -1,4 +1,5 @@
 ﻿using Library.Events;
+using Library.Events.v1;
 using Microsoft.AspNet.SignalR;
 using NServiceBus;
 
