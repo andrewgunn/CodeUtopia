@@ -1,5 +1,6 @@
 using Autofac;
 using Library.Backend.Autofac;
+using Library.CommandHandlers;
 using log4net.Appender;
 using log4net.Config;
 using log4net.Core;

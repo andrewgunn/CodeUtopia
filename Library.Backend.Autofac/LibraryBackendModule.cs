@@ -24,10 +24,7 @@ namespace Library.Backend.Autofac
             // Dependency resolver.
             builder.RegisterType<AutofacDependencyResolver>()
                    .As<IDependencyResolver>();
-
-            // Command handlers (required for NServiceBus assembly scanning).
-            Assembly.GetAssembly(typeof(RegisterBookCommandHandler));
-
+            
             // Aggregate repository.
             builder.RegisterType<EventStoreAggregateRepository>()
                    .As<IAggregateRepository>();

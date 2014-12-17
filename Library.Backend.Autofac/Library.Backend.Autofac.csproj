@@ -82,10 +82,6 @@
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
       <Name>CodeUtopia</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Library.CommandHandlers\Library.CommandHandlers.csproj">
-      <Project>{891DA6FB-963A-488B-9B3F-9B7C5EEBC078}</Project>
-      <Name>Library.CommandHandlers</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
