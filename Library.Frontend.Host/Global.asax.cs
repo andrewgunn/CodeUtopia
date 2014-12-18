@@ -67,7 +67,7 @@ namespace Library.Frontend.Host
             conventions.DefiningEventsAs(x => x.Name.EndsWith("Event"));
 
             busConfiguration.DisableFeature<Sagas>();
-            busConfiguration.EndpointName("LibraryFrontend");
+            busConfiguration.EndpointName("v1_LibraryFrontend");
             busConfiguration.LoadMessageHandlers<First<DomainEventHandler>>();
             busConfiguration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(lifetimeScope));
             busConfiguration.UsePersistence<InMemoryPersistence>();
