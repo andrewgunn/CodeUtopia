@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using CodeUtopia.Domain;
 using CodeUtopia.Events;
 
 namespace CodeUtopia.EventStore.EntityFramework
@@ -31,59 +31,54 @@ namespace CodeUtopia.EventStore.EntityFramework
             }
         }
 
-        private int GetAggregateVersionNumber(Guid aggregateId)
+        public IReadOnlyCollection<IDomainEvent> GetEvents(int skip, int take)
         {
-            var versionNumber = _databaseContext.DomainEvents.Where(x => x.AggregateId == aggregateId)
-                                                .OrderByDescending(x => x.VersionNumber)
-                                                .Select(x => x.VersionNumber)
-                                                .FirstOrDefault();
-
-            return versionNumber;
-        }
-
-        public IReadOnlyCollection<IDomainEvent> GetAll(Guid aggregateId)
-        {
-            return _databaseContext.DomainEvents.Where(x => x.AggregateId == aggregateId)
-                                   .OrderBy(x => x.VersionNumber)
-                                   .ToList()
-                                   .Select(x => Deserialize<IDomainEvent>(x.Data))
-                                   .ToList();
-        }
-
-        public IReadOnlyCollection<IDomainEvent> GetAll(int skip, int take)
-        {
-            return _databaseContext.DomainEvents
-                                   .OrderBy(x=> x.AggregateId)
-                                   .ThenBy(x => x.VersionNumber)
+            return _databaseContext.DomainEvents.OrderBy(x => x.AggregateId)
+                                   .ThenBy(x => x.AggregateVersionNumber)
                                    .Skip(skip)
                                    .Take(take)
                                    .ToList()
-                                   .Select(x => Deserialize<IDomainEvent>(x.Data))
+                                   .Select(x => Deserialize<IDomainEvent>(x.DomainEvent))
                                    .ToList();
         }
 
-        public IReadOnlyCollection<IDomainEvent> GetAllSinceLastSnapshot(Guid aggregateId)
+        public IReadOnlyCollection<IDomainEvent> GetEventsForAggregate(Guid aggregateId)
         {
-            var snapshot = GetLastSnapshot(aggregateId);
+            return _databaseContext.DomainEvents.Where(x => x.AggregateId == aggregateId)
+                                   .OrderBy(x => x.AggregateVersionNumber)
+                                   .ToList()
+                                   .Select(x => Deserialize<IDomainEvent>(x.DomainEvent))
+                                   .ToList();
+        }
 
-            var snapshotVersion = snapshot == null ? -1 : snapshot.VersionNumber;
+        public IReadOnlyCollection<IDomainEvent> GetEventsForAggregateSinceLastSnapshot(Guid aggregateId)
+        {
+            var snapshot = GetLastSnapshotForAggregate(aggregateId);
+
+            var snapshotVersion = snapshot == null ? -1 : snapshot.AggregateVersionNumber;
 
             return
                 _databaseContext.DomainEvents.Where(
                                                     x =>
-                                                    x.AggregateId == aggregateId && x.VersionNumber > snapshotVersion)
-                                .OrderBy(x => x.VersionNumber)
+                                                    x.AggregateId == aggregateId &&
+                                                    x.AggregateVersionNumber > snapshotVersion)
+                                .OrderBy(x => x.AggregateVersionNumber)
                                 .ToList()
-                                .Select(x => Deserialize<IDomainEvent>(x.Data))
+                                .Select(x => Deserialize<IDomainEvent>(x.DomainEvent))
                                 .ToList();
         }
 
-        public ISnapshot GetLastSnapshot(Guid aggregateId)
+        public Snapshot GetLastSnapshotForAggregate(Guid aggregateId)
         {
-            var snapshot = _databaseContext.Snapshots.OrderByDescending(x => x.VersionNumber)
-                                           .FirstOrDefault(x => x.AggregateId == aggregateId);
-
-            return snapshot == null ? null : Deserialize<ISnapshot>(snapshot.Data);
+            return _databaseContext.Snapshots.OrderByDescending(x => x.AggregateVersionNumber)
+                                   .Where(x => x.AggregateId == aggregateId)
+                                   .ToList()
+                                   .Select(
+                                           x =>
+                                           new Snapshot(x.AggregateId,
+                                                        x.AggregateVersionNumber,
+                                                        Deserialize<object>(x.Memento)))
+                                   .FirstOrDefault();
         }
 
         public void Rollback()
@@ -91,48 +86,44 @@ namespace CodeUtopia.EventStore.EntityFramework
             _databaseContext = new EventStoreContext(_nameOrConnectionString);
         }
 
-        public void SaveChanges(IAggregate aggregate)
+        public void SaveEvents(IReadOnlyCollection<IDomainEvent> domainEvents)
         {
-            var versionNumber = GetAggregateVersionNumber(aggregate.AggregateId);
-
-            if (versionNumber != aggregate.VersionNumber)
-            {
-                throw new ConcurrencyViolationException();
-            }
-
-            var domainEvents = aggregate.GetChanges()
-                                        .OrderBy(x => x.VersionNumber);
-
-            if (!domainEvents.Any())
+            if (domainEvents == null || !domainEvents.Any())
             {
                 return;
             }
 
-            foreach (var domainEvent in domainEvents)
+            foreach (var domainEvent in domainEvents.OrderBy(x => x.AggregateVersionNumber)
+                                                    .ToList())
             {
                 _databaseContext.DomainEvents.Add(new DomainEventEntity
                                                   {
-                                                      AggregateId = aggregate.AggregateId,
-                                                      AggregateType = aggregate.GetType()
-                                                                               .FullName,
+                                                      AggregateId = domainEvent.AggregateId,
+                                                      AggregateVersionNumber = domainEvent.AggregateVersionNumber,
                                                       DomainEventType = domainEvent.GetType()
                                                                                    .FullName,
-                                                      VersionNumber = domainEvent.VersionNumber,
-                                                      Data = Serialize(domainEvent),
+                                                      DomainEvent = Serialize(domainEvent),
                                                   });
             }
-
-            aggregate.UpdateVersionNumber(domainEvents.Last()
-                                                      .VersionNumber);
         }
 
-        public void SaveSnapshot<TAggregate>(TAggregate aggregate) where TAggregate : IAggregate, IOriginator
+        public void SaveSnapshotForAggregate(Guid aggregateId, int aggregateVersionNumber, object memento)
         {
+            var snapshot = _databaseContext.Snapshots.SingleOrDefault(x => x.AggregateId == aggregateId);
+
+            if (snapshot != null)
+            {
+                _databaseContext.Entry(snapshot)
+                                .State = EntityState.Deleted;
+            }
+
             _databaseContext.Snapshots.Add(new SnapshotEntity
                                            {
-                                               AggregateId = aggregate.AggregateId,
-                                               VersionNumber = aggregate.VersionNumber,
-                                               Data = Serialize(aggregate.CreateMemento())
+                                               AggregateId = aggregateId,
+                                               AggregateVersionNumber = aggregateVersionNumber,
+                                               MementoType = memento.GetType()
+                                                                    .FullName,
+                                               Memento = Serialize(memento)
                                            });
         }
 

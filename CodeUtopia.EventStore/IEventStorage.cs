@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using CodeUtopia.Domain;
 using CodeUtopia.Events;
 
 namespace CodeUtopia.EventStore
@@ -10,12 +9,12 @@ namespace CodeUtopia.EventStore
     /// </summary>
     public interface IEventStorage : ISnapshotStorage, IUnitOfWork
     {
-        IReadOnlyCollection<IDomainEvent> GetAll(int skip, int take);
+        IReadOnlyCollection<IDomainEvent> GetEvents(int skip, int take);
 
-        IReadOnlyCollection<IDomainEvent> GetAll(Guid aggregateId);
+        IReadOnlyCollection<IDomainEvent> GetEventsForAggregate(Guid aggregateId);
 
-        IReadOnlyCollection<IDomainEvent> GetAllSinceLastSnapshot(Guid aggregateId);
+        IReadOnlyCollection<IDomainEvent> GetEventsForAggregateSinceLastSnapshot(Guid aggregateId);
 
-        void SaveChanges(IAggregate aggregate);
+        void SaveEvents(IReadOnlyCollection<IDomainEvent> domainEvents);
     }
 }

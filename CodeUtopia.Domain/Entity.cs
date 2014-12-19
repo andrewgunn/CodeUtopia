@@ -7,21 +7,23 @@ namespace CodeUtopia.Domain
 {
     public abstract class Entity : IEntity
     {
-        protected Entity(Guid aggregateId, IVersionNumberProvider versionNumberProvider)
+        protected Entity(Guid aggregateId, IVersionNumberProvider versionNumberProvider, Guid entityId)
         {
             _aggregateId = aggregateId;
             _versionNumberProvider = versionNumberProvider;
+            _entityId = entityId;
+
             _eventHandlers = new Dictionary<Type, Action<IEntityEvent>>();
             _appliedEvents = new List<IEntityEvent>();
         }
 
-        protected void Apply(IEntityEvent entityEvent)
+        protected void Apply(IEditableEntityEvent entityEvent)
         {
-            Handle(entityEvent);
+            entityEvent.AggregateId = AggregateId;
+            entityEvent.AggregateVersionNumber = GetNextVersionNumber();
+            entityEvent.EntityId = EntityId;
 
-            //entityEvent.AggregateId = AggregateId;
-            //entityEvent.VersionNumber = _versionNumberProvider.GetNextVersionNumber();
-            //entityEvent.EntityId = EntityId;
+            Handle(entityEvent);
 
             _appliedEvents.Add(entityEvent);
         }
@@ -41,10 +43,10 @@ namespace CodeUtopia.Domain
 
         public IEnumerable<IEntityEvent> GetChanges()
         {
-            return _appliedEvents.OrderBy(x => x.VersionNumber);
+            return _appliedEvents.OrderBy(x => x.AggregateVersionNumber);
         }
 
-        protected int GetNextVersionNumber()
+        private int GetNextVersionNumber()
         {
             return _versionNumberProvider.GetNextVersionNumber();
         }
@@ -64,7 +66,7 @@ namespace CodeUtopia.Domain
 
         public bool IsInitialized()
         {
-            return EntityId == default(Guid);
+            return EntityId != default(Guid);
         }
 
         public void LoadFromHistory(IReadOnlyCollection<IEntityEvent> entityEvents)
@@ -94,11 +96,19 @@ namespace CodeUtopia.Domain
             }
         }
 
-        public Guid EntityId { get; protected set; }
+        public Guid EntityId
+        {
+            get
+            {
+                return _entityId;
+            }
+        }
 
         private readonly Guid _aggregateId;
 
         private readonly List<IEntityEvent> _appliedEvents;
+
+        private readonly Guid _entityId;
 
         private readonly Dictionary<Type, Action<IEntityEvent>> _eventHandlers;
 

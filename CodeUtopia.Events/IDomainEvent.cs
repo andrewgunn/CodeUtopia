@@ -6,6 +6,6 @@ namespace CodeUtopia.Events
     {
         Guid AggregateId { get; }
 
-        int VersionNumber { get; }
+        int AggregateVersionNumber { get; }
     }
 }

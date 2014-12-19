@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{79B33B67-B98A-47D1-A464-8FBC777EF639}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Library.Frontend.ProjectionStore</RootNamespace>
+    <AssemblyName>Library.Frontend.ProjectionStore</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\packages\NServiceBus.5.1.2\lib\net45\NServiceBus.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Aggregate\AggregateEntity.cs" />
+    <Compile Include="Aggregate\AggregateEntityConfiguration.cs" />
+    <Compile Include="Book\BookEntity.cs" />
+    <Compile Include="Book\BookEntityConfiguration.cs" />
+    <Compile Include="Book\EventHandlers\BookReturnedEventHandler.cs" />
+    <Compile Include="Book\EventHandlers\BookBorrowedEventHandler.cs" />
+    <Compile Include="Book\EventHandlers\BookRegisteredEventHandler.cs" />
+    <Compile Include="Book\EventHandlers\DomainEventHandler.cs" />
+    <Compile Include="Book\EventHandlers\UnexpectedDomainEventException.cs" />
+    <Compile Include="IProjectionStoreDatabaseSettings.cs" />
+    <Compile Include="ProjectionStoreContext.cs" />
+    <Compile Include="ProjectionStoreDatabaseSettings.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryHandlers\BooksQueryHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">
+      <Project>{2382FC22-7FC9-43D2-AE77-4B2ADF8F0AB3}</Project>
+      <Name>CodeUtopia.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
+      <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
+      <Name>CodeUtopia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library.Events\Library.Events.csproj">
+      <Project>{CD7B3948-C2CE-4752-B20C-73970BA46C50}</Project>
+      <Name>Library.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library.Frontend.Queries\Library.Frontend.Queries.csproj">
+      <Project>{B06F4A79-8F37-45C4-8A0C-73969C36C705}</Project>
+      <Name>Library.Frontend.Queries</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

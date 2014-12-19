@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+        <meta name="viewport" content="width=device-width" />
+
+        <title>@ViewBag.Title</title>
+    </head>
+    <body>
+        <main>
+            <div class="container" role="main">
+                @RenderBody()
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <form id="republish-all-events">
+                    <button class="btn btn-danger" data-bind="click: republishAllEvents">Republish all events</button>
+                </form>
+            </div>
+        </footer>
+    </body>
+
+    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+
+    <script src="~/Scripts/knockout-3.2.0.js"></script>
+
+    <script>
+        ;
+        (function ($) {
+            $(function () {
+                var libraryHub = $.connection.libraryHub;
+
+                function RepublishAllEventsViewModel() {
+                    var self = this;
+
+                    self.republishAllEvents = function () {
+                        libraryHub.server.republishAllEvents();
+                    };
+                }
+
+                ko.applyBindings(new RepublishAllEventsViewModel(), $('#republish-all-events')[0]);
+            });
+        })(window.jQuery);
+    </script>
+    
+    @RenderSection("Scripts", false)
+</html>

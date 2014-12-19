@@ -5,7 +5,7 @@ using CodeUtopia.Events;
 
 namespace CodeUtopia.Domain
 {
-    public abstract class Aggregate : IAggregate
+    public abstract class Aggregate : IAggregate, IEntityTracker, IVersionNumberProvider
     {
         protected Aggregate()
         {
@@ -14,12 +14,18 @@ namespace CodeUtopia.Domain
             _eventHandlers = new Dictionary<Type, Action<IDomainEvent>>();
         }
 
-        protected void Apply(IDomainEvent domainEvent)
+        protected Aggregate(Guid aggregateId)
+            : this()
         {
-            Handle(domainEvent);
+            AggregateId = aggregateId;
+        }
 
-            //domainEvent.AggregateId = AggregateId;
-            //domainEvent.VersionNumber = GetNextVersionNumber();
+        protected void Apply(IEditableDomainEvent domainEvent)
+        {
+            domainEvent.AggregateId = AggregateId;
+            domainEvent.AggregateVersionNumber = GetNextVersionNumber();
+
+            Handle(domainEvent);
 
             _appliedEvents.Add(domainEvent);
         }
@@ -27,8 +33,6 @@ namespace CodeUtopia.Domain
         void IAggregate.ClearChanges()
         {
             _appliedEvents.Clear();
-
-            EventVersionNumber = VersionNumber;
         }
 
         protected void EnsureIsInitialized()
@@ -42,7 +46,7 @@ namespace CodeUtopia.Domain
         IReadOnlyCollection<IDomainEvent> IAggregate.GetChanges()
         {
             return _appliedEvents.Concat(GetEntityEvents())
-                                 .OrderBy(x => x.VersionNumber)
+                                 .OrderBy(x => x.AggregateVersionNumber)
                                  .ToList();
         }
 
@@ -51,14 +55,14 @@ namespace CodeUtopia.Domain
             return _entities.SelectMany(x => x.GetChanges());
         }
 
-        protected int GetNextVersionNumber()
+        private int GetNextVersionNumber()
         {
-            return ((IVersionNumberProvider)this).GetNextVersionNumber();
+            return ++EventVersionNumber;
         }
 
         int IVersionNumberProvider.GetNextVersionNumber()
         {
-            return ++EventVersionNumber;
+            return GetNextVersionNumber();
         }
 
         private void Handle(IDomainEvent domainEvent)
@@ -72,6 +76,8 @@ namespace CodeUtopia.Domain
             }
 
             eventHandler(domainEvent);
+
+            AggregateVersionNumber = domainEvent.AggregateVersionNumber;
         }
 
         public bool IsInitialized()
@@ -86,14 +92,26 @@ namespace CodeUtopia.Domain
                 return;
             }
 
+            AggregateId = domainEvents.First()
+                                      .AggregateId;
+
             foreach (var domainEvent in domainEvents)
             {
                 Handle(domainEvent);
             }
 
-            VersionNumber = domainEvents.Last()
-                                        .VersionNumber;
-            EventVersionNumber = VersionNumber;
+            EventVersionNumber = AggregateVersionNumber;
+        }
+
+        protected void LoadFromMemento(Guid aggregateId, int aggregateVersionNumber)
+        {
+            if (IsInitialized())
+            {
+                throw new AggregateAlreadyInitialisedException(AggregateId);
+            }
+
+            AggregateId = aggregateId;
+            AggregateVersionNumber = aggregateVersionNumber;
         }
 
         protected void RegisterEventHandler<TDomainEvent>(Action<TDomainEvent> eventHandler)
@@ -107,16 +125,11 @@ namespace CodeUtopia.Domain
             _entities.Add(entity);
         }
 
-        public void UpdateVersionNumber(int versionNumber)
-        {
-            VersionNumber = versionNumber;
-        }
+        public Guid AggregateId { get; private set; }
 
-        public Guid AggregateId { get; protected set; }
+        public int AggregateVersionNumber { get; private set; }
 
         public int EventVersionNumber { get; private set; }
-
-        public int VersionNumber { get; protected set; }
 
         private readonly List<IDomainEvent> _appliedEvents;
 

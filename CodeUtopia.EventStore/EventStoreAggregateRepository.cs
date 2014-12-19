@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CodeUtopia.Domain;
-using CodeUtopia.Messaging;
+using CodeUtopia.Events;
+using NServiceBus;
 
 namespace CodeUtopia.EventStore
 {
@@ -25,7 +26,12 @@ namespace CodeUtopia.EventStore
         {
             foreach (var aggregate in _aggregates)
             {
-                _eventStorage.SaveChanges(aggregate);
+                var domainEvents = aggregate.GetChanges();
+
+                if (domainEvents != null && domainEvents.Any())
+                {
+                    _eventStorage.SaveEvents(domainEvents);
+                }
 
                 foreach (var domainEvent in aggregate.GetChanges())
                 {
@@ -38,8 +44,6 @@ namespace CodeUtopia.EventStore
             _aggregates.Clear();
 
             _eventStorage.Commit();
-
-            _bus.Commit();
         }
 
         public TAggregate Get<TAggregate>(Guid aggregateId) where TAggregate : class, IAggregate, new()
@@ -54,41 +58,34 @@ namespace CodeUtopia.EventStore
         private TAggregate LoadFromHistory<TAggregate>(Guid aggregateId) where TAggregate : class, IAggregate, new()
         {
             var aggregate = new TAggregate();
-
             var originator = aggregate as IOriginator;
 
-            if (originator != null)
+            if (originator == null)
             {
-                LoadFromLastSnapshotIfExists(aggregateId, originator);
+                aggregate.LoadFromHistory(_eventStorage.GetEventsForAggregate(aggregateId));
             }
+            else
+            {
+                var snapshot = _eventStorage.GetLastSnapshotForAggregate(aggregateId);
 
-            LoadFromHistorySinceLastSnapshot(aggregateId, aggregate);
+                if (snapshot != null)
+                {
+                    originator.LoadFromMemento(snapshot.AggregateId, snapshot.AggregateVersionNumber, snapshot.Memento);
+                }
+
+                var domainEvents = _eventStorage.GetEventsForAggregateSinceLastSnapshot(aggregateId);
+
+                aggregate.LoadFromHistory(_eventStorage.GetEventsForAggregate(aggregateId));
+
+                if (domainEvents.Count == 10 /* TODO Make this value configurable. */)
+                {
+                    _eventStorage.SaveSnapshotForAggregate(aggregateId,
+                                                           domainEvents.OrderBy(x => x.AggregateVersionNumber).Last().AggregateVersionNumber,
+                                                           originator.CreateMemento());
+                }
+            }
 
             return aggregate;
-        }
-
-        private void LoadFromHistorySinceLastSnapshot(Guid aggregateId, IAggregate aggregate)
-        {
-            var domainEvents = _eventStorage.GetAllSinceLastSnapshot(aggregateId);
-
-            if (!domainEvents.Any())
-            {
-                domainEvents = _eventStorage.GetAll(aggregateId);
-            }
-
-            aggregate.LoadFromHistory(domainEvents);
-        }
-
-        private void LoadFromLastSnapshotIfExists(Guid aggregateId, IOriginator aggregate)
-        {
-            var snapshot = _eventStorage.GetLastSnapshot(aggregateId);
-
-            if (snapshot == null)
-            {
-                return;
-            }
-
-            aggregate.LoadFromMemento(snapshot.AggregateId, snapshot.VersionNumber, snapshot.Memento);
         }
 
         public void Rollback()
@@ -97,7 +94,7 @@ namespace CodeUtopia.EventStore
 
             _eventStorage.Rollback();
 
-            _bus.Rollback();
+            // TODO: Rollback bus
         }
 
         private readonly List<IAggregate> _aggregates;
