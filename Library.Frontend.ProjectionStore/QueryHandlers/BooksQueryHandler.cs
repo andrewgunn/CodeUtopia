@@ -18,8 +18,7 @@ namespace Library.Frontend.ProjectionStore.QueryHandlers
             {
                 var books = databaseContext.Books.ToList();
 
-                var bookProjections = books.OrderBy(x => x.Title)
-                                           .Select(x => new BookProjection(x.BookId, x.Title, x.IsBorrowed))
+                var bookProjections = books.Select(x => new BookProjection(x.BookId, x.Title, x.IsBorrowed))
                                            .ToList();
 
                 return new BooksProjection(bookProjections);

@@ -1,15 +1,11 @@
 ﻿using System.Data.Entity;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
-using CodeUtopia;
-using Library.Commands.v1;
 using Library.Frontend.ProjectionStore;
 using Library.Frontend.ProjectionStore.Book.EventHandlers;
-using Library.Frontend.Queries;
 using log4net.Appender;
 using log4net.Config;
 using log4net.Core;
@@ -44,20 +40,8 @@ namespace Library.Frontend.Host
             var busConfiguration = new BusConfiguration();
             busConfiguration = ConfigureBus(busConfiguration, container);
 
-            var startableBus = Bus.Create(busConfiguration);
-            var bus = startableBus.Start();
-
-            var queryExecutor = container.Resolve<IQueryExecutor>();
-            var projection = queryExecutor.Execute(new BooksQuery());
-
-            if (projection.Books.Any())
-            {
-                return;
-            }
-
-            var command = new RepublishAllEventsCommand();
-
-            bus.Send(command);
+            Bus.Create(busConfiguration)
+               .Start();
         }
 
         private static BusConfiguration ConfigureBus(BusConfiguration busConfiguration, ILifetimeScope lifetimeScope)

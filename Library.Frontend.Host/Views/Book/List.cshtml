@@ -98,6 +98,16 @@
                     var self = this;
 
                     self.books = ko.observableArray([]);
+                    var booksSubscription = self.books.subscribe(onBooksChanged);
+
+                    function onBooksChanged() {
+                        booksSubscription.dispose();
+                        booksSubscription = null;
+
+                        self.books.sort(function (left, right) { return left.title().toLowerCase() === right.title().toLowerCase() ? 0 : (left.title().toLowerCase() < right.title().toLowerCase() ? -1 : 1); });
+
+                        booksSubscription = self.books.subscribe(onBooksChanged);
+                    }
 
                     var getBook = function (bookId) {
                         return ko.utils.arrayFirst(self.books(), function (book) {
