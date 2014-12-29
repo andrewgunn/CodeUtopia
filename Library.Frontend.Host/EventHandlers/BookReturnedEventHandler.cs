@@ -1,4 +1,5 @@
 ﻿using Library.Events.v1;
+using Library.Frontend.Host.Hubs;
 using Microsoft.AspNet.SignalR;
 using NServiceBus;
 

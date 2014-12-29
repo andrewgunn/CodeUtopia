@@ -2,7 +2,7 @@
 using Microsoft.AspNet.SignalR;
 using NServiceBus;
 
-namespace Library.Frontend.Host
+namespace Library.Frontend.Host.Hubs
 {
     public class LibraryHub : Hub
     {
