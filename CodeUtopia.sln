@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeUtopia", "CodeUtopia\CodeUtopia.csproj", "{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}"
 EndProject
@@ -64,6 +64,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Backend.Domain", "Application.Backend.Domain\Application.Backend.Domain.csproj", "{6E23D9B4-0155-4C28-A8A5-7BC2D1F1A4A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Backend.Domain", "Library.Backend.Domain\Library.Backend.Domain.csproj", "{6A2B8C4B-85B5-4E06-9CC7-35147CBDB71C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{80364217-0844-4488-A7C2-CB5D32BD7F1D}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
