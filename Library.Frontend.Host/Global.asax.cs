@@ -1,9 +1,11 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Library.Commands.v1;
 using Library.Frontend.ProjectionStore;
 using Library.Frontend.ProjectionStore.Book.EventHandlers;
 using log4net.Appender;
@@ -23,13 +25,6 @@ namespace Library.Frontend.Host
         {
             var container = Container.Instance;
 
-            using (
-                var databaseContext = new ProjectionStoreContext(container.Resolve<IProjectionStoreDatabaseSettings>()))
-            {
-                Database.SetInitializer(new CreateDatabaseIfNotExists<ProjectionStoreContext>());
-                databaseContext.Database.Initialize(true);
-            }
-
             AreaRegistration.RegisterAllAreas();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
@@ -42,6 +37,11 @@ namespace Library.Frontend.Host
 
             Bus.Create(busConfiguration)
                .Start();
+
+            InitializeDatabase(container.Resolve<IProjectionStoreDatabaseSettings>());
+
+            RepublishAllEventsIfNoneHaveBeenHandled(container.Resolve<IProjectionStoreDatabaseSettings>(),
+                                                    container.Resolve<IBus>());
         }
 
         private static BusConfiguration ConfigureBus(BusConfiguration busConfiguration, ILifetimeScope lifetimeScope)
@@ -92,6 +92,32 @@ namespace Library.Frontend.Host
             BasicConfigurator.Configure(fileAppender, consoleAppender);
 
             LogManager.Use<Log4NetFactory>();
+        }
+
+        private void InitializeDatabase(IProjectionStoreDatabaseSettings projectionStoreDatabaseSettings)
+        {
+            using (var databaseContext = new ProjectionStoreContext(projectionStoreDatabaseSettings))
+            {
+                Database.SetInitializer(new CreateDatabaseIfNotExists<ProjectionStoreContext>());
+                databaseContext.Database.Initialize(true);
+            }
+        }
+
+        private void RepublishAllEventsIfNoneHaveBeenHandled(
+            IProjectionStoreDatabaseSettings projectionStoreDatabaseSettings,
+            IBus bus)
+        {
+            using (var databaseContext = new ProjectionStoreContext(projectionStoreDatabaseSettings))
+            {
+                if (databaseContext.Aggregates.Any())
+                {
+                    return;
+                }
+            }
+
+            var command = new RepublishAllEventsCommand();
+
+            bus.Send(command);
         }
     }
 }
