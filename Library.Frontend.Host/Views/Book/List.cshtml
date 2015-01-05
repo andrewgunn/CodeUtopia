@@ -16,25 +16,37 @@
 
 <hr />
 
-<table id="books" class="table table-bordered table-hover table-striped">
-    <thead>
-        <tr>
-            <th>Book ID</th>
-            <th>Title</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody style="display: none;" data-bind="foreach: books, visible: books().length">
-        <tr>
-            <td data-bind="text: bookId"></td>
-            <td data-bind="text: title"></td>
-            <td>
-                <button class="btn btn-primary" data-bind="click: borrowBook, enable: canBorrow">Borrow</button>
-                <button class="btn btn-primary" data-bind="click: returnBook, enable: canReturn">Return</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div id="books">
+    <div class="alert alert-info" data-bind="visible: !books().length">
+        <p>
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-stack-2x fa-circle"></i>
+                <i class="fa fa-stack-1x fa-inverse fa-info"></i>
+            </span>
+            <strong>No books found.</strong>
+        </p>
+    </div>
+
+    <table id="books" class="table table-bordered table-hover table-striped" data-bind="visible: books().length" style="display: none;">
+        <thead>
+            <tr>
+                <th>Book ID</th>
+                <th>Title</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: books">
+            <tr>
+                <td data-bind="text: bookId"></td>
+                <td data-bind="text: title"></td>
+                <td>
+                    <button class="btn btn-primary" data-bind="click: borrowBook, enable: canBorrow">Borrow</button>
+                    <button class="btn btn-primary" data-bind="click: returnBook, enable: canReturn">Return</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 @section Scripts
 {
@@ -58,7 +70,6 @@
                     ko.applyBindings(registerBookViewModel, $('#register-book')[0]);
                     ko.applyBindings(booksViewModel, $('#books')[0]);
                 });
-
             });
         })(window.jQuery);
     </script>
