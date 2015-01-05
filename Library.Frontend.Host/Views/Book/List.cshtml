@@ -5,16 +5,19 @@
 
 <h2>Books</h2>
 
-<form id="register-book">
-    <fieldset>
-        <legend>Register a new book</legend>
-        <input name="title" data-bind="value: title" />
+<div id="register-book">
+    <p>
+        <form class="form-inline">
+            <div class="form-group">
+                <fieldset>
+                    <input class="form-control" data-bind="value: title" name="title" placeholder="Please enter the title..." />
 
-        <button data-bind="click: registerBook">Register</button>
-    </fieldset>
-</form>
-
-<hr />
+                    <button class="btn btn-primary" data-bind="click: registerBook">Register</button>
+                </fieldset>
+            </div>
+        </form>
+    </p>
+</div>
 
 <div id="books">
     <div class="alert alert-info" data-bind="visible: !books().length">

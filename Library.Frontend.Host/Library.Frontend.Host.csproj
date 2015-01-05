@@ -178,7 +178,6 @@
     </Compile>
     <Compile Include="HttpNameAttribute.cs" />
     <Compile Include="Hubs\BookHub.cs" />
-    <Compile Include="Hubs\LibraryHub.cs" />
     <Compile Include="Models\BookModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
