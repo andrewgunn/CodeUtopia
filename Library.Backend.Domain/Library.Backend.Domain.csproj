@@ -39,7 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Book.cs" />
+    <Compile Include="Book\Book.cs" />
+    <Compile Include="Book\BookAlreadyBorrowedException.cs" />
+    <Compile Include="Book\BookAlreadyReturnedException.cs" />
     <Compile Include="Mementoes\v1\BookMemento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -52,9 +54,17 @@
       <Project>{2382FC22-7FC9-43D2-AE77-4B2ADF8F0AB3}</Project>
       <Name>CodeUtopia.Events</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Validators\CodeUtopia.Validators.csproj">
+      <Project>{2E19C46A-4504-4F70-B349-6722A892EC4A}</Project>
+      <Name>CodeUtopia.Validators</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Library.Events\Library.Events.csproj">
       <Project>{cd7b3948-c2ce-4752-b20c-73970ba46c50}</Project>
       <Name>Library.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library.Validators\Library.Validators.csproj">
+      <Project>{E1297EF6-C8F0-44E6-AFCD-BBCDD5DB7F4D}</Project>
+      <Name>Library.Validators</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</ProjectGuid>
+    <ProjectGuid>{E1297EF6-C8F0-44E6-AFCD-BBCDD5DB7F4D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeUtopia</RootNamespace>
-    <AssemblyName>CodeUtopia</AssemblyName>
+    <RootNamespace>Library.Validators</RootNamespace>
+    <AssemblyName>Library.Validators</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,19 +39,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDateTimeProvider.cs" />
-    <Compile Include="IDependencyResolver.cs" />
-    <Compile Include="IQuery.cs" />
-    <Compile Include="IQueryDispatcher.cs" />
-    <Compile Include="IQueryExecutor.cs" />
-    <Compile Include="IQueryHandler.cs" />
-    <Compile Include="ISettingsProvider.cs" />
-    <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="BookCannotBeBorrowedInTheFuture.cs" />
+    <Compile Include="BookCannotBeReturnedInTheFuture.cs" />
+    <Compile Include="BookCannotBeReturnedItWasBeingBorrowed.cs" />
+    <Compile Include="BorrowedAtValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryExecutor.cs" />
-    <Compile Include="UtcNowDateTimeProvider.cs" />
+    <Compile Include="ReturnedAtValidator.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CodeUtopia.Validators\CodeUtopia.Validators.csproj">
+      <Project>{2E19C46A-4504-4F70-B349-6722A892EC4A}</Project>
+      <Name>CodeUtopia.Validators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
+      <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
+      <Name>CodeUtopia</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

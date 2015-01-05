@@ -1,4 +1,4 @@
-﻿namespace CodeUtopia.Validators
+namespace CodeUtopia.Validators
 {
     public interface IValidationError
     {

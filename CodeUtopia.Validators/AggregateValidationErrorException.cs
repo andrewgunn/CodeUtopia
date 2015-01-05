@@ -1,17 +1,17 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CodeUtopia.Validators
 {
     public class AggregateValidationErrorException : Exception
     {
-        public AggregateValidationErrorException(IEnumerable<IValidationError> validationErrors)
+        public AggregateValidationErrorException(List<IValidationError> validationErrors)
+            : base("One or more validation errors occurred.")
         {
-            _validationErrors = validationErrors.ToList();
+            _validationErrors = validationErrors;
         }
 
-        public IReadOnlyCollection<IValidationError> ValidationErrors
+        public List<IValidationError> ValidationErrors
         {
             get
             {
@@ -19,6 +19,6 @@ namespace CodeUtopia.Validators
             }
         }
 
-        private readonly IReadOnlyCollection<IValidationError> _validationErrors;
+        private readonly List<IValidationError> _validationErrors;
     }
 }

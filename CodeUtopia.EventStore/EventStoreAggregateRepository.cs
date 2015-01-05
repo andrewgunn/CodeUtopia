@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CodeUtopia.Domain;
-using CodeUtopia.Events;
 using NServiceBus;
 
 namespace CodeUtopia.EventStore
@@ -80,7 +79,9 @@ namespace CodeUtopia.EventStore
                 if (domainEvents.Count == 10 /* TODO Make this value configurable. */)
                 {
                     _eventStorage.SaveSnapshotForAggregate(aggregateId,
-                                                           domainEvents.OrderBy(x => x.AggregateVersionNumber).Last().AggregateVersionNumber,
+                                                           domainEvents.OrderBy(x => x.AggregateVersionNumber)
+                                                                       .Last()
+                                                                       .AggregateVersionNumber,
                                                            originator.CreateMemento());
                 }
             }

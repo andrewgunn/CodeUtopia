@@ -20,6 +20,10 @@ namespace Library.Frontend.Autofac
             builder.RegisterType<AutofacDependencyResolver>()
                    .As<IDependencyResolver>();
 
+            // Date/time provider
+            builder.RegisterType<UtcNowDateTimeProvider>()
+                   .As<IDateTimeProvider>();
+
             // Settings provider
             builder.RegisterType<ConfigurationManagerSettingsProvider>()
                    .As<ISettingsProvider>();

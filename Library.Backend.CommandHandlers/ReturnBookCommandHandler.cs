@@ -1,5 +1,5 @@
 ﻿using CodeUtopia.Domain;
-using Library.Backend.Domain;
+using Library.Backend.Domain.Book;
 using Library.Commands.v1;
 using NServiceBus;
 

@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aggregate.cs" />
-    <Compile Include="AggregateAlreadyInitialisedException.cs" />
+    <Compile Include="AggregateAlreadyInitializedException.cs" />
     <Compile Include="AggregateNotInitializedException.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityEventProviderExtensions.cs" />

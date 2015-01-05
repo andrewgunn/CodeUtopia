@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("CodeUtopia.Validators")]
+[assembly: AssemblyTitle("Library.Validators")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CodeUtopia.Validators")]
+[assembly: AssemblyProduct("Library.Validators")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
-[assembly: Guid("8388303d-2a9a-477f-a75a-5e84526eae3b")]
+[assembly: Guid("f51b7ce4-05b1-40b6-af33-884428a265af")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -107,7 +107,7 @@ namespace CodeUtopia.Domain
         {
             if (IsInitialized())
             {
-                throw new AggregateAlreadyInitialisedException(AggregateId);
+                throw new AggregateAlreadyInitializedException(AggregateId);
             }
 
             AggregateId = aggregateId;

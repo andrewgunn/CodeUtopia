@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{346F0DF7-8279-44A2-AF14-67243F88FAF6}</ProjectGuid>
+    <ProjectGuid>{2E19C46A-4504-4F70-B349-6722A892EC4A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CodeUtopia.Validators</RootNamespace>
@@ -43,12 +43,6 @@
     <Compile Include="IValidationError.cs" />
     <Compile Include="IValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CodeUtopia.Specifications\CodeUtopia.Specifications.csproj">
-      <Project>{EA901496-33B2-4C21-A08E-1539C49BC0E9}</Project>
-      <Name>CodeUtopia.Specifications</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

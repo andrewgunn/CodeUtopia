@@ -1,16 +1,15 @@
 ﻿/// <reference path="../../Scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../../Scripts/typings/knockout/knockout.d.ts" />
 /// <reference path="../../scripts/typings/signalr/signalr.d.ts" />
-
 class BookViewModel {
     bookHub: any;
     bookId: KnockoutObservable<string>;
-    title: KnockoutObservable<string>;
-    _isBorrowed: KnockoutObservable<boolean>;
     canBorrow: KnockoutComputed<boolean>;
     canReturn: KnockoutComputed<boolean>;
+    _isBorrowed: KnockoutObservable<boolean>;
+    title: KnockoutObservable<string>;
 
-    constructor(bookHub: any, bookId: string, title : string, isBorrowed : boolean) {
+    constructor(bookHub: any, bookId: string, title: string, isBorrowed: boolean) {
         this.bookHub = bookHub;
         this.bookId = ko.observable(bookId);
         this.title = ko.observable(title);

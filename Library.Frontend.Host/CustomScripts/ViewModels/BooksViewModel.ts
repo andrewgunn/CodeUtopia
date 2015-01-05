@@ -1,7 +1,6 @@
 ﻿/// <reference path="../../Scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../../Scripts/typings/knockout/knockout.d.ts" />
 /// <reference path="../../scripts/typings/signalr/signalr.d.ts" />
-
 class BooksViewModel {
     books: KnockoutObservableArray<BookViewModel>;
 
@@ -27,7 +26,7 @@ class BooksViewModel {
                 this.books.push(new BookViewModel(bookHub, book.BookId, book.Title, book.IsBorrowed));
             }
         };
-        
+
         bookHub.client.bookBorrowed = bookId => {
             var book = this.getBook(bookId);
 
