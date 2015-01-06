@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using CodeUtopia.Events;
+using CodeUtopia.Messages;
 
 namespace CodeUtopia.WriteStore.EntityFramework
 {

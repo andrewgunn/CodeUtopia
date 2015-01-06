@@ -204,13 +204,17 @@
       <Project>{E3F3E269-BFC1-4C11-8EF6-4CE4C24C8060}</Project>
       <Name>CodeUtopia.Autofac</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">
-      <Project>{2382FC22-7FC9-43D2-AE77-4B2ADF8F0AB3}</Project>
-      <Name>CodeUtopia.Events</Name>
+    <ProjectReference Include="..\CodeUtopia.Messages\CodeUtopia.Messages.csproj">
+      <Project>{0A59D12A-8332-43C2-80D6-FD9E2AA99CD6}</Project>
+      <Name>CodeUtopia.Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.ReadStore\CodeUtopia.ReadStore.csproj">
       <Project>{D7DFDC1B-1613-4A2F-A69D-69D0D93750A0}</Project>
       <Name>CodeUtopia.ReadStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Validators\CodeUtopia.Validators.csproj">
+      <Project>{2E19C46A-4504-4F70-B349-6722A892EC4A}</Project>
+      <Name>CodeUtopia.Validators</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>

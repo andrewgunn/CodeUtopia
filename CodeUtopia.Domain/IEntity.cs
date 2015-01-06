@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeUtopia.Events;
+using CodeUtopia.Messages;
 
 namespace CodeUtopia.Domain
 {

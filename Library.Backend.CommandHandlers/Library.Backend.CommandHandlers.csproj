@@ -58,9 +58,9 @@
       <Project>{B05CBD95-7133-4B24-92B7-9C273E69A4D2}</Project>
       <Name>CodeUtopia.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.Events\CodeUtopia.Events.csproj">
-      <Project>{2382fc22-7fc9-43d2-ae77-4b2adf8f0ab3}</Project>
-      <Name>CodeUtopia.Events</Name>
+    <ProjectReference Include="..\CodeUtopia.Messages\CodeUtopia.Messages.csproj">
+      <Project>{0A59D12A-8332-43C2-80D6-FD9E2AA99CD6}</Project>
+      <Name>CodeUtopia.Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.WriteStore\CodeUtopia.WriteStore.csproj">
       <Project>{CD9D834E-D000-4687-ACCE-E8C16A65E33A}</Project>

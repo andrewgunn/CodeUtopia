@@ -13,7 +13,7 @@ namespace Library.Validators.Book
         {
             get
             {
-                return "Title is too short.";
+                return "The title is too short.";
             }
         }
 

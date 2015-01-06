@@ -1,4 +1,4 @@
-﻿using CodeUtopia.Events;
+﻿using CodeUtopia.Messages;
 using NServiceBus;
 
 namespace CodeUtopia.ReadStore

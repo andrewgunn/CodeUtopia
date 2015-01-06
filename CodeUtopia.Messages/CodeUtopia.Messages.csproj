@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CD7B3948-C2CE-4752-B20C-73970BA46C50}</ProjectGuid>
+    <ProjectGuid>{0A59D12A-8332-43C2-80D6-FD9E2AA99CD6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Library.Events</RootNamespace>
-    <AssemblyName>Library.Events</AssemblyName>
+    <RootNamespace>CodeUtopia.Messages</RootNamespace>
+    <AssemblyName>CodeUtopia.Messages</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,16 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="v1\BookBorrowedEvent.cs" />
-    <Compile Include="v1\BookRegisteredEvent.cs" />
-    <Compile Include="v1\BookReturnedEvent.cs" />
+    <Compile Include="IDomainEvent.cs" />
+    <Compile Include="IEditableDomainEvent.cs" />
+    <Compile Include="IEditableEntityEvent.cs" />
+    <Compile Include="IEntityEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CodeUtopia.Messages\CodeUtopia.Messages.csproj">
-      <Project>{0A59D12A-8332-43C2-80D6-FD9E2AA99CD6}</Project>
-      <Name>CodeUtopia.Messages</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -16,7 +16,6 @@ namespace Library.Frontend.Host.Hubs
         {
             _bus = GlobalHost.DependencyResolver.Resolve<IBus>();
             _queryExecutor = GlobalHost.DependencyResolver.Resolve<IQueryExecutor>();
-            _dateTimeProvider = GlobalHost.DependencyResolver.Resolve<IDateTimeProvider>();
         }
 
         public void BorrowBook(Guid bookId)
@@ -65,7 +64,5 @@ namespace Library.Frontend.Host.Hubs
         private readonly IBus _bus;
 
         private readonly IQueryExecutor _queryExecutor;
-
-        private readonly IDateTimeProvider _dateTimeProvider;
     }
 }

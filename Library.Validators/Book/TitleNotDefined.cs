@@ -8,7 +8,7 @@ namespace Library.Validators.Book
         {
             get
             {
-                return "Title is not defined.";
+                return "The title is not defined.";
             }
         }
     }

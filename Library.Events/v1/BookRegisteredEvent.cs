@@ -1,5 +1,5 @@
 ﻿using System;
-using CodeUtopia.Events;
+using CodeUtopia.Messages;
 
 namespace Library.Events.v1
 {

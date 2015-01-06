@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CodeUtopia.Domain;
-using CodeUtopia.Events;
+using CodeUtopia.Messages;
 
 namespace Tests.CodeUtopia.Domain
 {

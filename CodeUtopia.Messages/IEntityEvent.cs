@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeUtopia.Events
+namespace CodeUtopia.Messages
 {
     public interface IEntityEvent : IDomainEvent
     {
