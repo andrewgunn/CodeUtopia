@@ -5,9 +5,9 @@ using NServiceBus;
 
 namespace Library.Backend.CommandHandlers
 {
-    public class LendBookCommandHandler : IHandleMessages<BorrowBookCommand>
+    public class BorrowBookCommandHandler : IHandleMessages<BorrowBookCommand>
     {
-        public LendBookCommandHandler(IAggregateRepository aggregateRepository)
+        public BorrowBookCommandHandler(IAggregateRepository aggregateRepository)
         {
             _aggregateRepository = aggregateRepository;
         }
