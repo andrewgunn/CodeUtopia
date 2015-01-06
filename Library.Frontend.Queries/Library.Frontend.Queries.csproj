@@ -42,7 +42,9 @@
     <Compile Include="BooksQuery.cs" />
     <Compile Include="Projections\Books\BookProjection.cs" />
     <Compile Include="Projections\Books\BooksProjection.cs" />
+    <Compile Include="Projections\ReadStoreStatus\ReadStoreStatusProjection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadStoreStatusQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">

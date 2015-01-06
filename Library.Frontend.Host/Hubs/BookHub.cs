@@ -31,7 +31,8 @@ namespace Library.Frontend.Host.Hubs
 
         public override Task OnConnected()
         {
-            var booksProjection = _queryExecutor.Execute(new BooksQuery());
+            var booksQuery = new BooksQuery();
+            var booksProjection = _queryExecutor.Execute(booksQuery);
             var bookModels = booksProjection.Books.Select(x => new BookModel(x.BookId, x.Title, x.IsBorrowed))
                                             .ToList();
 

@@ -72,13 +72,13 @@
       <Project>{B05CBD95-7133-4B24-92B7-9C273E69A4D2}</Project>
       <Name>CodeUtopia.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.EventStore.EntityFramework\CodeUtopia.EventStore.EntityFramework.csproj">
+    <ProjectReference Include="..\CodeUtopia.WriteStore.EntityFramework\CodeUtopia.WriteStore.EntityFramework.csproj">
       <Project>{D4520CB3-8013-4AC1-9034-379D069699C8}</Project>
-      <Name>CodeUtopia.EventStore.EntityFramework</Name>
+      <Name>CodeUtopia.WriteStore.EntityFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.EventStore\CodeUtopia.EventStore.csproj">
+    <ProjectReference Include="..\CodeUtopia.WriteStore\CodeUtopia.WriteStore.csproj">
       <Project>{CD9D834E-D000-4687-ACCE-E8C16A65E33A}</Project>
-      <Name>CodeUtopia.EventStore</Name>
+      <Name>CodeUtopia.WriteStore</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>

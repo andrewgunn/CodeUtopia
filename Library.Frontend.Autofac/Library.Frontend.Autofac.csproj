@@ -35,6 +35,13 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="NServiceBus.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NServiceBus.5.1.2\lib\net45\NServiceBus.Core.dll</HintPath>
@@ -53,7 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -65,13 +72,17 @@
       <Project>{73575727-7CE5-4089-AE71-44DA853F23B5}</Project>
       <Name>CodeUtopia.Configuration</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.ReadStore\CodeUtopia.ReadStore.csproj">
+      <Project>{D7DFDC1B-1613-4A2F-A69D-69D0D93750A0}</Project>
+      <Name>CodeUtopia.ReadStore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
       <Name>CodeUtopia</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Library.Frontend.ProjectionStore\Library.Frontend.ProjectionStore.csproj">
-      <Project>{79B33B67-B98A-47D1-A464-8FBC777EF639}</Project>
-      <Name>Library.Frontend.ProjectionStore</Name>
+    <ProjectReference Include="..\Library.Frontend.ReadStore\Library.Frontend.ReadStore.csproj">
+      <Project>{79b33b67-b98a-47d1-a464-8fbc777ef639}</Project>
+      <Name>Library.Frontend.ReadStore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

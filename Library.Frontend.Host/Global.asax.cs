@@ -1,13 +1,12 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
+using CodeUtopia;
+using CodeUtopia.ReadStore;
 using Library.Commands.v1;
-using Library.Frontend.ProjectionStore;
-using Library.Frontend.ProjectionStore.Book.EventHandlers;
+using Library.Frontend.Queries;
 using log4net.Appender;
 using log4net.Config;
 using log4net.Core;
@@ -35,13 +34,11 @@ namespace Library.Frontend.Host
             var busConfiguration = new BusConfiguration();
             busConfiguration = ConfigureBus(busConfiguration, container);
 
-            Bus.Create(busConfiguration)
-               .Start();
+            var bus = Bus.Create(busConfiguration)
+                         .Start();
 
-            InitializeDatabase(container.Resolve<IProjectionStoreDatabaseSettings>());
-
-            RepublishAllEventsIfNoneHaveBeenHandled(container.Resolve<IProjectionStoreDatabaseSettings>(),
-                                                    container.Resolve<IBus>());
+            var queryExecutor = container.Resolve<IQueryExecutor>();
+            RepublishAllEventsIfNoneHaveBeenHandled(queryExecutor, bus);
         }
 
         private static BusConfiguration ConfigureBus(BusConfiguration busConfiguration, ILifetimeScope lifetimeScope)
@@ -94,25 +91,14 @@ namespace Library.Frontend.Host
             LogManager.Use<Log4NetFactory>();
         }
 
-        private void InitializeDatabase(IProjectionStoreDatabaseSettings projectionStoreDatabaseSettings)
+        private void RepublishAllEventsIfNoneHaveBeenHandled(IQueryExecutor queryExecutor, IBus bus)
         {
-            using (var databaseContext = new ProjectionStoreContext(projectionStoreDatabaseSettings))
-            {
-                Database.SetInitializer(new CreateDatabaseIfNotExists<ProjectionStoreContext>());
-                databaseContext.Database.Initialize(true);
-            }
-        }
+            var query = new ReadStoreStatusQuery();
+            var readStoreStatusProjection = queryExecutor.Execute(query);
 
-        private void RepublishAllEventsIfNoneHaveBeenHandled(
-            IProjectionStoreDatabaseSettings projectionStoreDatabaseSettings,
-            IBus bus)
-        {
-            using (var databaseContext = new ProjectionStoreContext(projectionStoreDatabaseSettings))
+            if (!readStoreStatusProjection.IsEmpty)
             {
-                if (databaseContext.Aggregates.Any())
-                {
-                    return;
-                }
+                return;
             }
 
             var command = new RepublishAllEventsCommand();

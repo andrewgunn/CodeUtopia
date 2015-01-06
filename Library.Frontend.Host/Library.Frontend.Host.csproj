@@ -208,6 +208,10 @@
       <Project>{2382FC22-7FC9-43D2-AE77-4B2ADF8F0AB3}</Project>
       <Name>CodeUtopia.Events</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.ReadStore\CodeUtopia.ReadStore.csproj">
+      <Project>{D7DFDC1B-1613-4A2F-A69D-69D0D93750A0}</Project>
+      <Name>CodeUtopia.ReadStore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
       <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
       <Name>CodeUtopia</Name>
@@ -223,10 +227,6 @@
     <ProjectReference Include="..\Library.Frontend.Autofac\Library.Frontend.Autofac.csproj">
       <Project>{B9307E71-499A-47B8-A72E-50CC2ECB4570}</Project>
       <Name>Library.Frontend.Autofac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Library.Frontend.ProjectionStore\Library.Frontend.ProjectionStore.csproj">
-      <Project>{79B33B67-B98A-47D1-A464-8FBC777EF639}</Project>
-      <Name>Library.Frontend.ProjectionStore</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library.Frontend.Queries\Library.Frontend.Queries.csproj">
       <Project>{b06f4a79-8f37-45c4-8a0c-73969c36c705}</Project>

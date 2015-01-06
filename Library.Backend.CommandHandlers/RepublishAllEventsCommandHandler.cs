@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeUtopia.Events;
-using CodeUtopia.EventStore;
+using CodeUtopia.WriteStore;
 using Library.Commands.v1;
 using NServiceBus;
 

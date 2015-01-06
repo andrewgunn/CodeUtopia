@@ -1,11 +1,13 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using CodeUtopia;
 using CodeUtopia.Autofac;
 using CodeUtopia.Configuration;
-using Library.Frontend.ProjectionStore;
-using Library.Frontend.ProjectionStore.QueryHandlers;
+using CodeUtopia.ReadStore;
+using Library.Frontend.ReadStore;
+using NServiceBus;
 using Module = Autofac.Module;
 
 namespace Library.Frontend.Autofac
@@ -15,6 +17,8 @@ namespace Library.Frontend.Autofac
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
+
+            const string readStoreConnectionStringKey = "ReadStore";
 
             // Dependency resolver.
             builder.RegisterType<AutofacDependencyResolver>()
@@ -33,17 +37,31 @@ namespace Library.Frontend.Autofac
                    .As<IQueryExecutor>();
 
             // Query handlers.
-            var queryHandlerAssembly = Assembly.GetAssembly(typeof(BooksQueryHandler));
+            var queryHandlerAssembly = Assembly.GetAssembly(typeof(IReadStoreDatabaseSettings));
 
-            // TODO Create IProjectionStoreConnectionString
             builder.RegisterAssemblyTypes(queryHandlerAssembly)
                    .As(type => type.GetInterfaces()
                                    .Where(interfaceType => interfaceType.IsClosedTypeOf(typeof(IQueryHandler<,>))));
 
-            // Projection Store.
-            builder.RegisterType<ProjectionStoreDatabaseSettings>()
-                   .WithParameter("projectionStoreConnectionStringKey", "ProjectionStore")
-                   .As<IProjectionStoreDatabaseSettings>();
+            // Read store database settings.
+            builder.RegisterType<ReadStoreDatabaseSettings>()
+                   .WithParameter("readStoreConnectionStringKey", readStoreConnectionStringKey)
+                   .As<IReadStoreDatabaseSettings>();
+
+            // Read store repository.
+            builder.RegisterType<ReadStoreRepository>()
+                   .As<IReadStoreRepository>();
+
+            InitializeDatabase(readStoreConnectionStringKey);
+        }
+
+        private void InitializeDatabase(string readStoreNameOrConnectionString)
+        {
+            using (var databaseContext = new ReadStoreContext(readStoreNameOrConnectionString))
+            {
+                Database.SetInitializer(new CreateDatabaseIfNotExists<ReadStoreContext>());
+                databaseContext.Database.Initialize(true);
+            }
         }
     }
 }
