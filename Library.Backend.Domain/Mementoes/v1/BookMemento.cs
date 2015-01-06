@@ -5,11 +5,11 @@ namespace Library.Backend.Domain.Mementoes.v1
     [Serializable]
     public class BookMemento
     {
-        public BookMemento(Guid bookId, string title, DateTime? borrowedAt)
+        public BookMemento(Guid bookId, string title, bool isBorrowed)
         {
             _bookId = bookId;
             _title = title;
-            _borrowedAt = borrowedAt;
+            _isBorrowed = isBorrowed;
         }
 
         public Guid BookId
@@ -20,13 +20,6 @@ namespace Library.Backend.Domain.Mementoes.v1
             }
         }
 
-        public DateTime? BorrowedAt
-        {
-            get
-            {
-                return _borrowedAt;
-            }
-        }
 
         public string Title
         {
@@ -36,10 +29,19 @@ namespace Library.Backend.Domain.Mementoes.v1
             }
         }
 
+        public bool IsBorrowed
+        {
+            get
+            {
+                return _isBorrowed;
+            }
+        }
+
         private readonly Guid _bookId;
 
-        private readonly DateTime? _borrowedAt;
 
         private readonly string _title;
+
+        private readonly bool _isBorrowed;
     }
 }

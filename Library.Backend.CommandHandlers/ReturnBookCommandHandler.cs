@@ -15,7 +15,7 @@ namespace Library.Backend.CommandHandlers
         public void Handle(ReturnBookCommand returnBookCommand)
         {
             var book = _aggregateRepository.Get<Book>(returnBookCommand.BookId);
-            book.Return(returnBookCommand.ReturnedAt);
+            book.Return();
 
             _aggregateRepository.Commit();
         }

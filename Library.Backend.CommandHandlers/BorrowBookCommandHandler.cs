@@ -15,7 +15,7 @@ namespace Library.Backend.CommandHandlers
         public void Handle(BorrowBookCommand borrowBookCommand)
         {
             var book = _aggregateRepository.Get<Book>(borrowBookCommand.BookId);
-            book.Borrow(borrowBookCommand.BorrowedAt);
+            book.Borrow();
 
             _aggregateRepository.Commit();
         }

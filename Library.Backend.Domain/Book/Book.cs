@@ -5,7 +5,7 @@ using CodeUtopia.Domain;
 using CodeUtopia.Validators;
 using Library.Backend.Domain.Mementoes.v1;
 using Library.Events.v1;
-using Library.Validators;
+using Library.Validators.Book;
 
 namespace Library.Backend.Domain.Book
 {
@@ -19,6 +19,14 @@ namespace Library.Backend.Domain.Book
         private Book(Guid bookId, string title)
             : base(bookId)
         {
+            var validationErrors = new List<IValidationError>();
+            validationErrors.AddRange(new TitleValidator().Validate(title));
+
+            if (validationErrors.Any())
+            {
+                throw new AggregateValidationErrorException(validationErrors);
+            }
+
             RegisterEventHandlers();
 
             Apply(new BookRegisteredEvent
@@ -27,32 +35,21 @@ namespace Library.Backend.Domain.Book
                   });
         }
 
-        public void Borrow(DateTime borrowedAt)
+        public void Borrow()
         {
             EnsureIsInitialized();
 
-            if (_borrowedAt != null)
+            if (_isBorrowed)
             {
                 throw new BookAlreadyBorrowedException(AggregateId);
             }
 
-            var validationErrors = new List<IValidationError>();
-            validationErrors.AddRange(new BorrowedAtValidator().Validate(borrowedAt));
-
-            if (validationErrors.Any())
-            {
-                throw new AggregateValidationErrorException(validationErrors);
-            }
-
-            Apply(new BookBorrowedEvent
-                  {
-                      BorrowedAt = borrowedAt
-                  });
+            Apply(new BookBorrowedEvent());
         }
 
         public object CreateMemento()
         {
-            return new BookMemento(AggregateId, _title, _borrowedAt);
+            return new BookMemento(AggregateId, _title, _isBorrowed);
         }
 
         public void LoadFromMemento(Guid aggregateId, int aggregateVersionNumber, object memento)
@@ -66,12 +63,12 @@ namespace Library.Backend.Domain.Book
 
             LoadFromMemento(aggregateId, aggregateVersionNumber);
             _title = bookMemento.Title;
-            _borrowedAt = bookMemento.BorrowedAt;
+            _isBorrowed = bookMemento.IsBorrowed;
         }
 
-        private void OnBookBorrowedEvent(BookBorrowedEvent bookBorrowedAt)
+        private void OnBookBorrowedEvent(BookBorrowedEvent bookBorrowedEvent)
         {
-            _borrowedAt = bookBorrowedAt.BorrowedAt;
+            _isBorrowed = true;
         }
 
         private void OnBookRegisteredEvent(BookRegisteredEvent bookRegisteredEvent)
@@ -81,7 +78,7 @@ namespace Library.Backend.Domain.Book
 
         private void OnBookReturnedEvent(BookReturnedEvent bookReturnedEvent)
         {
-            _borrowedAt = null;
+            _isBorrowed = false;
         }
 
         public static Book Register(Guid bookId, string title)
@@ -96,27 +93,16 @@ namespace Library.Backend.Domain.Book
             RegisterEventHandler<BookReturnedEvent>(OnBookReturnedEvent);
         }
 
-        public void Return(DateTime returnedAt)
+        public void Return()
         {
             EnsureIsInitialized();
 
-            if (_borrowedAt == null)
+            if (!_isBorrowed)
             {
                 throw new BookAlreadyReturnedException(AggregateId);
             }
 
-            var validationErrors = new List<IValidationError>();
-            validationErrors.AddRange(new ReturnedAtValidator(_borrowedAt.Value).Validate(returnedAt));
-
-            if (validationErrors.Any())
-            {
-                throw new AggregateValidationErrorException(validationErrors);
-            }
-
-            Apply(new BookReturnedEvent
-                  {
-                      ReturnedAt = returnedAt
-                  });
+            Apply(new BookReturnedEvent());
         }
 
         protected Guid BookId
@@ -127,7 +113,7 @@ namespace Library.Backend.Domain.Book
             }
         }
 
-        private DateTime? _borrowedAt;
+        private bool _isBorrowed;
 
         private string _title;
     }

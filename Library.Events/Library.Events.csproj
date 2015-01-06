@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="v1\BookLentEvent.cs" />
+    <Compile Include="v1\BookBorrowedEvent.cs" />
     <Compile Include="v1\BookRegisteredEvent.cs" />
     <Compile Include="v1\BookReturnedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

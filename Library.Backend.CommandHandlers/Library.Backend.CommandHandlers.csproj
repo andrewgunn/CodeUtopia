@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ReturnBookCommandHandler.cs" />
-    <Compile Include="LendBookCommandHandler.cs" />
+    <Compile Include="BorrowBookCommandHandler.cs" />
     <Compile Include="RepublishAllEventsCommandHandler.cs" />
     <Compile Include="RegisterBookCommandHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

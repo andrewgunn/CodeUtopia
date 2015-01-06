@@ -23,8 +23,7 @@ namespace Library.Frontend.Host.Hubs
         {
             var command = new BorrowBookCommand
                           {
-                              BookId = bookId,
-                              BorrowedAt = _dateTimeProvider.Value
+                              BookId = bookId
                           };
 
             _bus.Send(command);
@@ -56,8 +55,7 @@ namespace Library.Frontend.Host.Hubs
         {
             var command = new ReturnBookCommand
                           {
-                              BookId = bookId,
-                              ReturnedAt = _dateTimeProvider.Value
+                              BookId = bookId
                           };
 
             _bus.Send(command);

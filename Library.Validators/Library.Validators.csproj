@@ -39,21 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookCannotBeBorrowedInTheFuture.cs" />
-    <Compile Include="BookCannotBeReturnedInTheFuture.cs" />
-    <Compile Include="BookCannotBeReturnedItWasBeingBorrowed.cs" />
-    <Compile Include="BorrowedAtValidator.cs" />
+    <Compile Include="Book\TitleNotDefined.cs" />
+    <Compile Include="Book\TitleTooLong.cs" />
+    <Compile Include="Book\TitleTooShort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReturnedAtValidator.cs" />
+    <Compile Include="Book\TitleValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeUtopia.Validators\CodeUtopia.Validators.csproj">
       <Project>{2E19C46A-4504-4F70-B349-6722A892EC4A}</Project>
       <Name>CodeUtopia.Validators</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
-      <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
-      <Name>CodeUtopia</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

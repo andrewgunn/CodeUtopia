@@ -9,7 +9,5 @@ namespace Library.Events.v1
         public Guid AggregateId { get; set; }
 
         public int AggregateVersionNumber { get; set; }
-
-        public DateTime BorrowedAt { get; set; }
     }
 }
