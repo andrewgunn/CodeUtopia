@@ -6,17 +6,21 @@
 <h2>Books</h2>
 
 <div id="register-book">
-    <p>
-        <form class="form-inline">
-            <div class="form-group">
-                <fieldset>
-                    <input class="form-control" data-bind="value: title" name="title" placeholder="Please enter the title..." />
+    <div class="alert alert-danger" role="alert" data-bind="visible: hasErrors">
+        <ul data-bind="foreach: errorMessages">
+            <li data-bind="text: $data"></li>
+        </ul>
+    </div>
+    <form class="form-inline">
+        <div class="form-group">
+            <fieldset>
+                <input class="form-control" data-bind="value: title" name="title" placeholder="Please enter the title..." />
 
-                    <button class="btn btn-primary" data-bind="click: registerBook">Register</button>
-                </fieldset>
-            </div>
-        </form>
-    </p>
+                <button class="btn btn-primary" data-bind="click: registerBook">Register</button>
+            </fieldset>
+        </div>
+    </form>
+    <br />
 </div>
 
 <div id="books">

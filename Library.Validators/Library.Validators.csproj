@@ -39,19 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Book\TitleNotDefined.cs" />
-    <Compile Include="Book\TitleTooLong.cs" />
-    <Compile Include="Book\TitleTooShort.cs" />
-    <Compile Include="Commands\v1\CommandNotDefined.cs" />
-    <Compile Include="Commands\v1\RegisterBookCommandValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Book\TitleValidator.cs" />
+    <Compile Include="Book\BookValidationErrorCodes.cs" />
+    <Compile Include="Book\BookValidationFailedException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CodeUtopia.Validators\CodeUtopia.Validators.csproj">
-      <Project>{2E19C46A-4504-4F70-B349-6722A892EC4A}</Project>
-      <Name>CodeUtopia.Validators</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Library.Commands\Library.Commands.csproj">
       <Project>{3A8F0F9A-4D61-4FF1-AE1F-6D3C9E397515}</Project>
       <Name>Library.Commands</Name>

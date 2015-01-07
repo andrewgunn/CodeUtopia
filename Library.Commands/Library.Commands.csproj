@@ -39,17 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="v1\Replies\BookValidationErrorCodes.cs" />
+    <Compile Include="v1\Replies\BookValidationFailedReply.cs" />
     <Compile Include="v1\ReturnBookCommand.cs" />
     <Compile Include="v1\BorrowBookCommand.cs" />
     <Compile Include="v1\RegisterBookCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="v1\RepublishAllEventsCommand.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CodeUtopia.Validators\CodeUtopia.Validators.csproj">
-      <Project>{2E19C46A-4504-4F70-B349-6722A892EC4A}</Project>
-      <Name>CodeUtopia.Validators</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

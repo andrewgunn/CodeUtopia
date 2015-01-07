@@ -18,6 +18,7 @@ namespace Library.Backend.Host
             var conventions = busConfiguration.Conventions();
             conventions.DefiningCommandsAs(x => x.Name.EndsWith("Command"));
             conventions.DefiningEventsAs(x => x.Name.EndsWith("Event"));
+            conventions.DefiningMessagesAs(x => x.Name.EndsWith("Reply"));
 
             busConfiguration.DisableFeature<Sagas>();
             busConfiguration.EnableOutbox();

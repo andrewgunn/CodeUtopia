@@ -78,6 +78,10 @@
       <Project>{3a8f0f9a-4d61-4ff1-ae1f-6d3c9e397515}</Project>
       <Name>Library.Commands</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Library.Validators\Library.Validators.csproj">
+      <Project>{E1297EF6-C8F0-44E6-AFCD-BBCDD5DB7F4D}</Project>
+      <Name>Library.Validators</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

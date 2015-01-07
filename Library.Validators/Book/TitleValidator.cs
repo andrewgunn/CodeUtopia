@@ -1,31 +1,34 @@
-using System.Collections.Generic;
-using CodeUtopia.Validators;
+using System.Text.RegularExpressions;
 
 namespace Library.Validators.Book
 {
-    public class TitleValidator : IValidator<string>
+    public class TitleValidator
     {
-        public IReadOnlyCollection<IValidationError> Validate(string title)
+        public BookValidationErrorCodes Validate(string title)
         {
-            var validationErrors = new List<IValidationError>();
+            var errorCodes = BookValidationErrorCodes.None;
 
-            if (title == null)
+            if (string.IsNullOrEmpty(title))
             {
-                validationErrors.Add(new TitleNotDefined());
+                errorCodes |= BookValidationErrorCodes.TitleIsNull;
             }
             else
             {
-                if (title.Length == 0)
+                if (title.Length < 5)
                 {
-                    validationErrors.Add(new TitleTooShort(title));
+                    errorCodes |= BookValidationErrorCodes.TitleIsTooShort;
                 }
                 if (title.Length > 50)
                 {
-                    validationErrors.Add(new TitleTooLong(title));
+                    errorCodes |= BookValidationErrorCodes.TitleIsTooLong;
+                }
+                if (!Regex.IsMatch(title, "[a-zA-Z ]+"))
+                {
+                    errorCodes |= BookValidationErrorCodes.TitleContainsInvalidCharacters;
                 }
             }
 
-            return validationErrors;
+            return errorCodes;
         }
     }
 }

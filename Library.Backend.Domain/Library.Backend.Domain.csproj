@@ -54,10 +54,6 @@
       <Project>{0a59d12a-8332-43c2-80d6-fd9e2aa99cd6}</Project>
       <Name>CodeUtopia.Messages</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeUtopia.Validators\CodeUtopia.Validators.csproj">
-      <Project>{2E19C46A-4504-4F70-B349-6722A892EC4A}</Project>
-      <Name>CodeUtopia.Validators</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Library.Events\Library.Events.csproj">
       <Project>{cd7b3948-c2ce-4752-b20c-73970ba46c50}</Project>
       <Name>Library.Events</Name>

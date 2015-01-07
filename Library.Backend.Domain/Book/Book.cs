@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeUtopia.Domain;
-using CodeUtopia.Validators;
 using Library.Backend.Domain.Mementoes.v1;
 using Library.Events.v1;
+using Library.Validators;
 using Library.Validators.Book;
 
 namespace Library.Backend.Domain.Book
@@ -19,12 +19,11 @@ namespace Library.Backend.Domain.Book
         private Book(Guid bookId, string title)
             : base(bookId)
         {
-            var validationErrors = new List<IValidationError>();
-            validationErrors.AddRange(new TitleValidator().Validate(title));
+            var validationErrorCodes = new TitleValidator().Validate(title);
 
-            if (validationErrors.Any())
+            if (validationErrorCodes != BookValidationErrorCodes.None)
             {
-                throw new AggregateValidationErrorException(validationErrors);
+                throw new BookValidationFailedException(validationErrorCodes);
             }
 
             RegisterEventHandlers();
