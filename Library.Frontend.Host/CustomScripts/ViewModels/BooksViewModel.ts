@@ -19,7 +19,7 @@ class BooksViewModel {
             booksSubscription = self.books.subscribe(onBooksChanged);
         }
 
-        bookHub.client.loadBooks = books => {
+        bookHub.client.loadBooks = (books: any) => {
             for (var i = 0; i < books.length; i++) {
                 var book = books[i];
 
@@ -27,7 +27,7 @@ class BooksViewModel {
             }
         };
 
-        bookHub.client.bookBorrowed = bookId => {
+        bookHub.client.bookBorrowed = (bookId: string) => {
             var book = this.getBook(bookId);
 
             if (book) {
@@ -35,11 +35,11 @@ class BooksViewModel {
             }
         };
 
-        bookHub.client.bookRegistered = (bookId, title) => {
+        bookHub.client.bookRegistered = (bookId: string, title: string) => {
             this.books.push(new BookViewModel(bookHub, bookId, title, false));
         };
 
-        bookHub.client.bookReturned = bookId => {
+        bookHub.client.bookReturned = (bookId) => {
             var book = this.getBook(bookId);
 
             if (book) {

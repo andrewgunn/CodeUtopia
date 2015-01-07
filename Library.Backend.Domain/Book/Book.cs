@@ -19,11 +19,11 @@ namespace Library.Backend.Domain.Book
         private Book(Guid bookId, string title)
             : base(bookId)
         {
-            var validationErrorCodes = new TitleValidator().Validate(title);
+            var errorCodes = new TitleValidator().Validate(title);
 
-            if (validationErrorCodes != BookValidationErrorCodes.None)
+            if (errorCodes != BookErrorCodes.None)
             {
-                throw new BookValidationFailedException(validationErrorCodes);
+                throw new BookErrorException(errorCodes);
             }
 
             RegisterEventHandlers();

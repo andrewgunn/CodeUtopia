@@ -1,10 +1,11 @@
-﻿using CodeUtopia.Domain;
+﻿using System;
+using CodeUtopia.Domain;
 using Library.Backend.Domain.Book;
 using Library.Commands.v1;
 using Library.Commands.v1.Replies;
 using Library.Validators.Book;
 using NServiceBus;
-using BookValidationErrorCodes = Library.Commands.v1.Replies.BookValidationErrorCodes;
+using BookValidationErrorCodes = Library.Commands.v1.Replies.BookErrorCodes;
 
 namespace Library.Backend.CommandHandlers
 {
@@ -25,11 +26,18 @@ namespace Library.Backend.CommandHandlers
                 _aggregateRepository.Add(book);
                 _aggregateRepository.Commit();
             }
-            catch (BookValidationFailedException bookValidationException)
+            catch (BookErrorException bookValidationException)
             {
-                _bus.Reply(new BookValidationFailedReply
+                BookValidationErrorCodes errorCodes;
+
+                if (!Enum.TryParse(bookValidationException.ErrorCodes.ToString(), out errorCodes))
+                {
+                    throw;
+                }
+
+                _bus.Reply(new BookErrorReply
                            {
-                               ErrorCodes = (BookValidationErrorCodes)(int)bookValidationException.ErrorCodes // TODO Fix this.
+                               ErrorCodes = errorCodes
                            });
             }
         }

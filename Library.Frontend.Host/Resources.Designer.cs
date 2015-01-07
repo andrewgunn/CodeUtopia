@@ -70,6 +70,24 @@ namespace Library.Frontend.Host {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The title has spaces at the beginning..
+        /// </summary>
+        internal static string TitleHasWhiteSpaceAtTheBeginning {
+            get {
+                return ResourceManager.GetString("TitleHasWhiteSpaceAtTheBeginning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The title has spaces at the end..
+        /// </summary>
+        internal static string TitleHasWhiteSpaceAtTheEnd {
+            get {
+                return ResourceManager.GetString("TitleHasWhiteSpaceAtTheEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The title is null..
         /// </summary>
         internal static string TitleIsNull {

@@ -120,6 +120,12 @@
   <data name="TitleContainsInvalidCharacters" xml:space="preserve">
     <value>The title contains invalid characters.</value>
   </data>
+  <data name="TitleHasWhiteSpaceAtTheBeginning" xml:space="preserve">
+    <value>The title has spaces at the beginning.</value>
+  </data>
+  <data name="TitleHasWhiteSpaceAtTheEnd" xml:space="preserve">
+    <value>The title has spaces at the end.</value>
+  </data>
   <data name="TitleIsNull" xml:space="preserve">
     <value>The title is null.</value>
   </data>

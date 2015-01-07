@@ -4,27 +4,35 @@ namespace Library.Validators.Book
 {
     public class TitleValidator
     {
-        public BookValidationErrorCodes Validate(string title)
+        public BookErrorCodes Validate(string title)
         {
-            var errorCodes = BookValidationErrorCodes.None;
+            var errorCodes = BookErrorCodes.None;
 
             if (string.IsNullOrEmpty(title))
             {
-                errorCodes |= BookValidationErrorCodes.TitleIsNull;
+                errorCodes |= BookErrorCodes.TitleIsNull;
             }
             else
             {
                 if (title.Length < 5)
                 {
-                    errorCodes |= BookValidationErrorCodes.TitleIsTooShort;
+                    errorCodes |= BookErrorCodes.TitleIsTooShort;
                 }
                 if (title.Length > 50)
                 {
-                    errorCodes |= BookValidationErrorCodes.TitleIsTooLong;
+                    errorCodes |= BookErrorCodes.TitleIsTooLong;
                 }
-                if (!Regex.IsMatch(title, "[a-zA-Z ]+"))
+                if (!Regex.IsMatch(title, "^[a-zA-Z ]+$"))
                 {
-                    errorCodes |= BookValidationErrorCodes.TitleContainsInvalidCharacters;
+                    errorCodes |= BookErrorCodes.TitleContainsInvalidCharacters;
+                }
+                if (Regex.IsMatch(title, "^[ ]+"))
+                {
+                    errorCodes |= BookErrorCodes.TitleHasWhiteSpaceAtTheBeginning;
+                }
+                if (Regex.IsMatch(title, "[ ]+$"))
+                {
+                    errorCodes |= BookErrorCodes.TitleHasWhiteSpaceAtTheEnd;
                 }
             }
 

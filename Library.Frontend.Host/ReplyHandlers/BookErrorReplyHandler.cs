@@ -5,13 +5,13 @@ using NServiceBus;
 
 namespace Library.Frontend.Host.ReplyHandlers
 {
-    public class ValidationFailedReplyHandler : IHandleMessages<BookValidationFailedReply>
+    public class BookErrorReplyHandler : IHandleMessages<BookErrorReply>
     {
-        public void Handle(BookValidationFailedReply bookValidationFailedReply)
+        public void Handle(BookErrorReply bookValidationFailedReply)
         {
             var context = GlobalHost.ConnectionManager.GetHubContext<BookHub>();
             context.Clients.All.ValidationFailed(
-                                                 new BookValidationErrorCodeResourceMapper().Map(
+                                                 new BookErrorCodeResourceMapper().Map(
                                                                                                  bookValidationFailedReply
                                                                                                      .ErrorCodes));
         }

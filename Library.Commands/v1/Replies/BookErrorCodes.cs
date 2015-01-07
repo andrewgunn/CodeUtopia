@@ -1,9 +1,9 @@
 using System;
 
-namespace Library.Validators.Book
+namespace Library.Commands.v1.Replies
 {
     [Flags]
-    public enum BookValidationErrorCodes
+    public enum BookErrorCodes
     {
         None = 0,
 
@@ -14,5 +14,9 @@ namespace Library.Validators.Book
         TitleIsTooLong = 1 << 2,
 
         TitleContainsInvalidCharacters = 1 << 3,
+
+        TitleHasWhiteSpaceAtTheBeginning = 1 << 4,
+
+        TitleHasWhiteSpaceAtTheEnd = 1 << 5,
     }
 }

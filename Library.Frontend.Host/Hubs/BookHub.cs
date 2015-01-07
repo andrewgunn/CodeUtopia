@@ -10,7 +10,7 @@ using NServiceBus;
 
 namespace Library.Frontend.Host.Hubs
 {
-    public class BookHub : Hub
+    public class BookHub : Hub<IBookHub>
     {
         public BookHub()
         {
@@ -35,7 +35,7 @@ namespace Library.Frontend.Host.Hubs
             var bookModels = booksProjection.Books.Select(x => new BookModel(x.BookId, x.Title, x.IsBorrowed))
                                             .ToList();
 
-            Clients.Caller.loadBooks(bookModels);
+            Clients.Caller.LoadBooks(bookModels);
 
             return base.OnConnected();
         }

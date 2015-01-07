@@ -39,8 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="v1\Replies\BookValidationErrorCodes.cs" />
-    <Compile Include="v1\Replies\BookValidationFailedReply.cs" />
+    <Compile Include="v1\Replies\BookErrorCodes.cs" />
+    <Compile Include="v1\Replies\BookErrorReply.cs" />
     <Compile Include="v1\ReturnBookCommand.cs" />
     <Compile Include="v1\BorrowBookCommand.cs" />
     <Compile Include="v1\RegisterBookCommand.cs" />

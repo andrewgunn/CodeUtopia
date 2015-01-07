@@ -170,15 +170,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Container.cs" />
     <Compile Include="Controllers\BookController.cs" />
-    <Compile Include="ReplyHandlers\BookValidationErrorCodeResourceMapper.cs" />
-    <Compile Include="ReplyHandlers\ValidationFailedReplyHandler.cs" />
+    <Compile Include="Hubs\IBookHub.cs" />
+    <Compile Include="ReplyHandlers\BookErrorCodeResourceMapper.cs" />
+    <Compile Include="ReplyHandlers\BookErrorReplyHandler.cs" />
     <Compile Include="EventHandlers\BookReturnedEventHandler.cs" />
     <Compile Include="EventHandlers\BookBorrowedEventHandler.cs" />
     <Compile Include="EventHandlers\BookRegisteredEventHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HttpNameAttribute.cs" />
     <Compile Include="Hubs\BookHub.cs" />
     <Compile Include="Models\BookModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
