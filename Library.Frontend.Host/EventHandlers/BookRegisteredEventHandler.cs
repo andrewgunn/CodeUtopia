@@ -9,7 +9,7 @@ namespace Library.Frontend.Host.EventHandlers
     {
         public void Handle(BookRegisteredEvent bookRegisteredEvent)
         {
-            var context = GlobalHost.ConnectionManager.GetHubContext<BookHub>();
+            var context = GlobalHost.ConnectionManager.GetHubContext<BookHub, IBookHub>();
             context.Clients.All.BookRegistered(bookRegisteredEvent.AggregateId, bookRegisteredEvent.Title);
         }
     }
