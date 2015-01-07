@@ -13,12 +13,16 @@ var RegisterBookViewModel = (function () {
                 return _this.errorMessages().length > 0;
             }
         });
-        bookHub.client.bookError = function (errorMessages) {
+        bookHub.on('bookError', function (errorMessages) {
             _this.errorMessages(errorMessages);
-        };
+        });
+        bookHub.on('bookRegistered', function () {
+            _this.title('');
+            _this.errorMessages([]);
+        });
     }
     RegisterBookViewModel.prototype.registerBook = function () {
-        this.bookHub.server.registerBook(this.title());
+        this.bookHub.invoke('registerBook', this.title());
     };
     return RegisterBookViewModel;
 })();

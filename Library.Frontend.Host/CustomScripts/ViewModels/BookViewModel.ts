@@ -32,10 +32,10 @@ class BookViewModel {
     }
 
     borrowBook() {
-        return this.bookHub.server.borrowBook(this.bookId());
+        return this.bookHub.invoke('borrowBook', this.bookId());
     }
 
     returnBook() {
-        this.bookHub.server.returnBook(this.bookId());
+        this.bookHub.invoke('returnBook', this.bookId());
     }
 }

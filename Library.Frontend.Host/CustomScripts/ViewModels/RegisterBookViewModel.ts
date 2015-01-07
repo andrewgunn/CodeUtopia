@@ -19,12 +19,17 @@ class RegisterBookViewModel {
             }
         });
 
-        bookHub.client.bookError = (errorMessages: string[]) => {
+        bookHub.on('bookError', (errorMessages: string[]) => {
             this.errorMessages(errorMessages);
-        };
+        });
+
+        bookHub.on('bookRegistered', () => {
+            this.title('');
+            this.errorMessages([]);
+        });
     }
 
     registerBook() {
-        this.bookHub.server.registerBook(this.title());
+        this.bookHub.invoke('registerBook', this.title());
     }
 }
