@@ -13,7 +13,7 @@ var RegisterBookViewModel = (function () {
                 return _this.errorMessages().length > 0;
             }
         });
-        bookHub.client.validationFailed = function (errorMessages) {
+        bookHub.client.bookError = function (errorMessages) {
             _this.errorMessages(errorMessages);
         };
     }

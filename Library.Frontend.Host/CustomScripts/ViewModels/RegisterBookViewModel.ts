@@ -19,7 +19,7 @@ class RegisterBookViewModel {
             }
         });
 
-        bookHub.client.validationFailed = (errorMessages: string[]) => {
+        bookHub.client.bookError = (errorMessages: string[]) => {
             this.errorMessages(errorMessages);
         };
     }

@@ -10,10 +10,7 @@ namespace Library.Frontend.Host.ReplyHandlers
         public void Handle(BookErrorReply bookValidationFailedReply)
         {
             var context = GlobalHost.ConnectionManager.GetHubContext<BookHub>();
-            context.Clients.All.ValidationFailed(
-                                                 new BookErrorCodeResourceMapper().Map(
-                                                                                                 bookValidationFailedReply
-                                                                                                     .ErrorCodes));
+            context.Clients.All.BookError(new BookErrorCodeResourceMapper().Map(bookValidationFailedReply.ErrorCodes));
         }
     }
 }
