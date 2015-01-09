@@ -15,17 +15,32 @@ namespace Library.Frontend.Host.Hubs
         public BookHub()
         {
             _bus = GlobalHost.DependencyResolver.Resolve<IBus>();
+            _librarySettings = GlobalHost.DependencyResolver.Resolve<ILibrarySettings>();
             _queryExecutor = GlobalHost.DependencyResolver.Resolve<IQueryExecutor>();
         }
 
+        [Obsolete]
         public void BorrowBook(Guid bookId)
         {
-            var command = new BorrowBookCommand
-                          {
-                              BookId = bookId
-                          };
+            if (_librarySettings.VersionNumber == 1)
+            {
+                var command = new BorrowBookCommand
+                {
+                    BookId = bookId
+                };
 
-            _bus.Send(command);
+                _bus.Send(command);
+            }
+            else
+            {
+                var command = new Commands.v2.BorrowBookCommand
+                {
+                    BookId = bookId,
+                    ReturnBy = DateTime.UtcNow.AddDays(7)
+                };
+
+                _bus.Send(command);
+            }
         }
 
         public override Task OnConnected()
@@ -62,6 +77,8 @@ namespace Library.Frontend.Host.Hubs
         }
 
         private readonly IBus _bus;
+
+        private ILibrarySettings _librarySettings;
 
         private readonly IQueryExecutor _queryExecutor;
     }

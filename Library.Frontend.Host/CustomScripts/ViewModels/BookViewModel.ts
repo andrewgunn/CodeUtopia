@@ -7,13 +7,15 @@ class BookViewModel {
     canBorrow: KnockoutComputed<boolean>;
     canReturn: KnockoutComputed<boolean>;
     _isBorrowed: KnockoutObservable<boolean>;
+    returnBy: KnockoutObservable<string>;
     title: KnockoutObservable<string>;
 
-    constructor(bookHub: any, bookId: string, title: string, isBorrowed: boolean) {
+    constructor(bookHub: any, bookId: string, title: string, isBorrowed: boolean, returnBy: string) {
         this.bookHub = bookHub;
         this.bookId = ko.observable(bookId);
-        this.title = ko.observable(title);
         this._isBorrowed = ko.observable(isBorrowed);
+        this.returnBy = ko.observable(returnBy);
+        this.title = ko.observable(title);
 
         this.canBorrow = ko.computed({
             owner: this,

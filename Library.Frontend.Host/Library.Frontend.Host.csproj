@@ -171,6 +171,7 @@
     <Compile Include="Container.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Hubs\IBookHub.cs" />
+    <Compile Include="VersionedViewEngine.cs" />
     <Compile Include="ReplyHandlers\BookErrorCodeResourceMapper.cs" />
     <Compile Include="ReplyHandlers\BookErrorReplyHandler.cs" />
     <Compile Include="EventHandlers\BookReturnedEventHandler.cs" />
@@ -196,6 +197,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Book\List.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Views\Book\_ListTable_v2.cshtml" />
+    <Content Include="Views\Book\_ListTable_v1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -238,6 +241,14 @@
     <ProjectReference Include="..\Library.Frontend.Queries\Library.Frontend.Queries.csproj">
       <Project>{b06f4a79-8f37-45c4-8a0c-73969c36c705}</Project>
       <Name>Library.Frontend.Queries</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library.Frontend.ReadStore\Library.Frontend.ReadStore.csproj">
+      <Project>{79B33B67-B98A-47D1-A464-8FBC777EF639}</Project>
+      <Name>Library.Frontend.ReadStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library.Frontend\Library.Frontend.csproj">
+      <Project>{E76B371E-98E2-48F4-8BF5-E00504686043}</Project>
+      <Name>Library.Frontend</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

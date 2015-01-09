@@ -12,13 +12,6 @@ class RegisterBookViewModel {
         this.title = ko.observable('');
         this.errorMessages = ko.observableArray([]);
 
-        this.hasErrors = ko.computed({
-            owner: this,
-            read: () => {
-                return this.errorMessages().length > 0;
-            }
-        });
-
         bookHub.on('bookError', (errorMessages: string[]) => {
             this.errorMessages(errorMessages);
         });

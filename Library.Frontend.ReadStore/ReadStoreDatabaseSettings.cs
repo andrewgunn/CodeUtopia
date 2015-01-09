@@ -4,22 +4,19 @@ namespace Library.Frontend.ReadStore
 {
     public class ReadStoreDatabaseSettings : IReadStoreDatabaseSettings
     {
-        public ReadStoreDatabaseSettings(string readStoreConnectionStringKey, ISettingsProvider settingsProvider)
+        public ReadStoreDatabaseSettings(ISettingsProvider settingsProvider)
         {
-            _readStoreConnectionStringKey = readStoreConnectionStringKey;
-            _settingsProvider = settingsProvider;
+            _connectionString = settingsProvider.ConnectionString("ReadStore");
         }
 
         public string ConnectionString
         {
             get
             {
-                return _settingsProvider.ConnectionString(_readStoreConnectionStringKey);
+                return _connectionString;
             }
         }
 
-        private readonly string _readStoreConnectionStringKey;
-
-        private readonly ISettingsProvider _settingsProvider;
+        private readonly string _connectionString;
     }
 }

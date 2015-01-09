@@ -1,10 +1,11 @@
 ﻿using System;
 
-namespace Library.Commands.v1
+namespace Library.Commands.v2
 {
-    [Obsolete]
     public class BorrowBookCommand
     {
         public Guid BookId { get; set; }
+
+        public DateTime ReturnBy { get; set; }
     }
 }

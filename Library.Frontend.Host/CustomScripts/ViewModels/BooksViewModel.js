@@ -16,22 +16,24 @@ var BooksViewModel = (function () {
         bookHub.client.loadBooks = function (books) {
             for (var i = 0; i < books.length; i++) {
                 var book = books[i];
-                _this.books.push(new BookViewModel(bookHub, book.BookId, book.Title, book.IsBorrowed));
+                _this.books.push(new BookViewModel(bookHub, book.BookId, book.Title, book.IsBorrowed, book.returnBy));
             }
         };
-        bookHub.client.bookBorrowed = function (bookId) {
+        bookHub.client.bookBorrowed = function (bookId, returnBy) {
             var book = _this.getBook(bookId);
             if (book) {
                 book._isBorrowed(true);
+                book.returnBy(returnBy);
             }
         };
         bookHub.client.bookRegistered = function (bookId, title) {
-            _this.books.push(new BookViewModel(bookHub, bookId, title, false));
+            _this.books.push(new BookViewModel(bookHub, bookId, title, false, null));
         };
         bookHub.client.bookReturned = function (bookId) {
             var book = _this.getBook(bookId);
             if (book) {
                 book._isBorrowed(false);
+                book.returnBy(null);
             }
         };
     }

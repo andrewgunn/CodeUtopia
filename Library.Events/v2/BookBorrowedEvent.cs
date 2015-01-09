@@ -1,14 +1,15 @@
 using System;
 using CodeUtopia.Messages;
 
-namespace Library.Events.v1
+namespace Library.Events.v2
 {
-    [Obsolete]
     [Serializable]
     public class BookBorrowedEvent : IEditableDomainEvent
     {
         public Guid AggregateId { get; set; }
 
         public int AggregateVersionNumber { get; set; }
+
+        public DateTime ReturnBy { get; set; }
     }
 }

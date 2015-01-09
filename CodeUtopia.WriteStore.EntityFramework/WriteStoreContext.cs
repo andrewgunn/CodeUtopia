@@ -10,11 +10,6 @@ namespace CodeUtopia.WriteStore.EntityFramework
 {
     public class WriteStoreContext : DbContext
     {
-        static WriteStoreContext()
-        {
-            Database.SetInitializer(new NullDatabaseInitializer<WriteStoreContext>());
-        }
-
         public WriteStoreContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using CodeUtopia.Domain;
 using Library.Backend.Domain.Mementoes.v1;
 using Library.Events.v1;
-using Library.Validators;
 using Library.Validators.Book;
 
 namespace Library.Backend.Domain.Book
@@ -34,6 +31,7 @@ namespace Library.Backend.Domain.Book
                   });
         }
 
+        [Obsolete]
         public void Borrow()
         {
             EnsureIsInitialized();
@@ -44,6 +42,22 @@ namespace Library.Backend.Domain.Book
             }
 
             Apply(new BookBorrowedEvent());
+        }
+
+        public void Borrow(DateTime returnBy)
+        {
+            EnsureIsInitialized();
+
+            if (_isBorrowed)
+            {
+                throw new BookAlreadyBorrowedException(AggregateId);
+            }
+
+            Apply(new BookBorrowedEvent());
+            Apply(new Events.v2.BookBorrowedEvent
+                  {
+                      ReturnBy = returnBy
+                  });
         }
 
         public object CreateMemento()
@@ -70,6 +84,11 @@ namespace Library.Backend.Domain.Book
             _isBorrowed = true;
         }
 
+        private void OnBookBorrowedEvent(Events.v2.BookBorrowedEvent bookBorrowedEvent)
+        {
+            _returnBy = bookBorrowedEvent.ReturnBy;
+        }
+
         private void OnBookRegisteredEvent(BookRegisteredEvent bookRegisteredEvent)
         {
             _title = bookRegisteredEvent.Title;
@@ -89,6 +108,7 @@ namespace Library.Backend.Domain.Book
         {
             RegisterEventHandler<BookRegisteredEvent>(OnBookRegisteredEvent);
             RegisterEventHandler<BookBorrowedEvent>(OnBookBorrowedEvent);
+            RegisterEventHandler<Events.v2.BookBorrowedEvent>(OnBookBorrowedEvent);
             RegisterEventHandler<BookReturnedEvent>(OnBookReturnedEvent);
         }
 
@@ -113,6 +133,8 @@ namespace Library.Backend.Domain.Book
         }
 
         private bool _isBorrowed;
+
+        private DateTime? _returnBy;
 
         private string _title;
     }

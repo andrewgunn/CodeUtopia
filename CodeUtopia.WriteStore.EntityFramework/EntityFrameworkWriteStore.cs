@@ -4,18 +4,27 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Transactions;
 using CodeUtopia.Messages;
 
 namespace CodeUtopia.WriteStore.EntityFramework
 {
     public class EntityFrameworkWriteStore : IEventStorage
     {
-        public EntityFrameworkWriteStore(string nameOrConnectionString, IFormatter formatter)
+        public EntityFrameworkWriteStore(IWriteStoreDatabaseSettings writeStoreDatabaseSettings, IFormatter formatter)
         {
-            _nameOrConnectionString = nameOrConnectionString;
+            _writeStoreDatabaseSettings = writeStoreDatabaseSettings;
             _formatter = formatter;
 
-            _databaseContext = new WriteStoreContext(nameOrConnectionString);
+            using (new TransactionScope(TransactionScopeOption.Suppress))
+            {
+                using (var databaseContext = new WriteStoreContext(writeStoreDatabaseSettings.ConnectionString))
+                {
+                    databaseContext.Database.Initialize(true);
+                }
+            }
+
+            _databaseContext = new WriteStoreContext(writeStoreDatabaseSettings.ConnectionString);
         }
 
         public void Commit()
@@ -83,7 +92,7 @@ namespace CodeUtopia.WriteStore.EntityFramework
 
         public void Rollback()
         {
-            _databaseContext = new WriteStoreContext(_nameOrConnectionString);
+            _databaseContext = new WriteStoreContext(_writeStoreDatabaseSettings.ConnectionString);
         }
 
         public void SaveEvents(IReadOnlyCollection<IDomainEvent> domainEvents)
@@ -139,8 +148,8 @@ namespace CodeUtopia.WriteStore.EntityFramework
 
         private WriteStoreContext _databaseContext;
 
-        private readonly IFormatter _formatter;
+        private readonly IWriteStoreDatabaseSettings _writeStoreDatabaseSettings;
 
-        private readonly string _nameOrConnectionString;
+        private readonly IFormatter _formatter;
     }
 }

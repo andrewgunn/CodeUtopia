@@ -68,6 +68,10 @@
       <Project>{E3F3E269-BFC1-4C11-8EF6-4CE4C24C8060}</Project>
       <Name>CodeUtopia.Autofac</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeUtopia.Configuration\CodeUtopia.Configuration.csproj">
+      <Project>{73575727-7CE5-4089-AE71-44DA853F23B5}</Project>
+      <Name>CodeUtopia.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeUtopia.Domain\CodeUtopia.Domain.csproj">
       <Project>{B05CBD95-7133-4B24-92B7-9C273E69A4D2}</Project>
       <Name>CodeUtopia.Domain</Name>

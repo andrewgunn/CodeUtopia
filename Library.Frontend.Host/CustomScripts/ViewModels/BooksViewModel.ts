@@ -23,27 +23,29 @@ class BooksViewModel {
             for (var i = 0; i < books.length; i++) {
                 var book = books[i];
 
-                this.books.push(new BookViewModel(bookHub, book.BookId, book.Title, book.IsBorrowed));
+                this.books.push(new BookViewModel(bookHub, book.BookId, book.Title, book.IsBorrowed, book.returnBy));
             }
         };
 
-        bookHub.client.bookBorrowed = (bookId: string) => {
+        bookHub.client.bookBorrowed = (bookId: string, returnBy: string) => {
             var book = this.getBook(bookId);
 
             if (book) {
                 book._isBorrowed(true);
+                book.returnBy(returnBy);
             }
         };
 
         bookHub.client.bookRegistered = (bookId: string, title: string) => {
-            this.books.push(new BookViewModel(bookHub, bookId, title, false));
+            this.books.push(new BookViewModel(bookHub, bookId, title, false, null));
         };
 
-        bookHub.client.bookReturned = (bookId) => {
+        bookHub.client.bookReturned = (bookId: string) => {
             var book = this.getBook(bookId);
 
             if (book) {
                 book._isBorrowed(false);
+                book.returnBy(null);
             }
         };
     }

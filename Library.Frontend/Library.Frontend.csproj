@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3A8F0F9A-4D61-4FF1-AE1F-6D3C9E397515}</ProjectGuid>
+    <ProjectGuid>{E76B371E-98E2-48F4-8BF5-E00504686043}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Library.Commands</RootNamespace>
-    <AssemblyName>Library.Commands</AssemblyName>
+    <RootNamespace>Library.Frontend</RootNamespace>
+    <AssemblyName>Library.Frontend</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,14 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="v1\Replies\BookErrorCodes.cs" />
-    <Compile Include="v1\Replies\BookErrorReply.cs" />
-    <Compile Include="v1\ReturnBookCommand.cs" />
-    <Compile Include="v1\BorrowBookCommand.cs" />
-    <Compile Include="v1\RegisterBookCommand.cs" />
+    <Compile Include="ILibrarySettings.cs" />
+    <Compile Include="LibrarySettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="v1\RepublishAllEventsCommand.cs" />
-    <Compile Include="v2\BorrowBookCommand.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeUtopia\CodeUtopia.csproj">
+      <Project>{072EBC9A-3E09-4B54-9F42-B8C80EB376FD}</Project>
+      <Name>CodeUtopia</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

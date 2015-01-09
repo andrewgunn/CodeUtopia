@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IWriteStoreDatabaseSettings.cs" />
+    <Compile Include="WriteStoreDatabaseSettings.cs" />
     <Compile Include="WriteStoreAggregateRepository.cs" />
     <Compile Include="IEventStorage.cs" />
     <Compile Include="ISnapshotStorage.cs" />

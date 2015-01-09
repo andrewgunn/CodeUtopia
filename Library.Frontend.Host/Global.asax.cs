@@ -26,22 +26,26 @@ namespace Library.Frontend.Host
 
             AreaRegistration.RegisterAllAreas();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new VersionedViewEngine());
 
             ConfigureBusLogging();
 
             var busConfiguration = new BusConfiguration();
-            busConfiguration = ConfigureBus(busConfiguration, container);
+            busConfiguration = ConfigureBus(container.Resolve<ILibrarySettings>(), busConfiguration, container);
 
             var bus = Bus.Create(busConfiguration)
                          .Start();
 
             var queryExecutor = container.Resolve<IQueryExecutor>();
+
             RepublishAllEventsIfNoneHaveBeenHandled(queryExecutor, bus);
         }
 
-        private static BusConfiguration ConfigureBus(BusConfiguration busConfiguration, ILifetimeScope lifetimeScope)
+        private static BusConfiguration ConfigureBus(ILibrarySettings librarySettings, BusConfiguration busConfiguration, ILifetimeScope lifetimeScope)
         {
             var conventions = busConfiguration.Conventions();
             conventions.DefiningCommandsAs(x => x.Name.EndsWith("Command"));
@@ -49,7 +53,7 @@ namespace Library.Frontend.Host
             conventions.DefiningMessagesAs(x => x.Name.EndsWith("Reply"));
 
             busConfiguration.DisableFeature<Sagas>();
-            busConfiguration.EndpointName("v1_LibraryFrontend");
+            busConfiguration.EndpointName(string.Format("v{0}_LibraryFrontend", librarySettings.VersionNumber));
             busConfiguration.LoadMessageHandlers<First<DomainEventHandler>>();
             busConfiguration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(lifetimeScope));
             busConfiguration.UsePersistence<InMemoryPersistence>();

@@ -7,11 +7,6 @@ namespace Library.Frontend.ReadStore
 {
     public class ReadStoreContext : DbContext
     {
-        static ReadStoreContext()
-        {
-            Database.SetInitializer(new NullDatabaseInitializer<ReadStoreContext>());
-        }
-
         public ReadStoreContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
