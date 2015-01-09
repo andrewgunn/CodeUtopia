@@ -47,7 +47,7 @@ namespace Library.Frontend.Host.Hubs
         {
             var booksQuery = new BooksQuery();
             var booksProjection = _queryExecutor.Execute(booksQuery);
-            var bookModels = booksProjection.Books.Select(x => new BookModel(x.BookId, x.Title, x.IsBorrowed))
+            var bookModels = booksProjection.Books.Select(x => new BookModel(x.BookId, x.Title, x.IsBorrowed, x.ReturnBy))
                                             .ToList();
 
             Clients.Caller.LoadBooks(bookModels);

@@ -16,7 +16,7 @@ var BooksViewModel = (function () {
         bookHub.client.loadBooks = function (books) {
             for (var i = 0; i < books.length; i++) {
                 var book = books[i];
-                _this.books.push(new BookViewModel(bookHub, book.BookId, book.Title, book.IsBorrowed, book.returnBy));
+                _this.books.push(new BookViewModel(bookHub, book.BookId, book.Title, book.IsBorrowed, book.ReturnBy));
             }
         };
         bookHub.client.bookBorrowed = function (bookId, returnBy) {

@@ -23,7 +23,7 @@ class BooksViewModel {
             for (var i = 0; i < books.length; i++) {
                 var book = books[i];
 
-                this.books.push(new BookViewModel(bookHub, book.BookId, book.Title, book.IsBorrowed, book.returnBy));
+                this.books.push(new BookViewModel(bookHub, book.BookId, book.Title, book.IsBorrowed, book.ReturnBy));
             }
         };
 
