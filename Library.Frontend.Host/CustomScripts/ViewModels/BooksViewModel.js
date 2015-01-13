@@ -26,9 +26,9 @@ var BooksViewModel = (function () {
                 book.returnBy(returnBy);
             }
         };
-        bookHub.client.bookRegistered = function (bookId, title) {
+        bookHub.on('bookRegistered', function (bookId, title) {
             _this.books.push(new BookViewModel(bookHub, bookId, title, false, null));
-        };
+        });
         bookHub.client.bookReturned = function (bookId) {
             var book = _this.getBook(bookId);
             if (book) {

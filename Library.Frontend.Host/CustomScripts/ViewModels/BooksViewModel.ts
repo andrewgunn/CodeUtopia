@@ -36,9 +36,9 @@ class BooksViewModel {
             }
         };
 
-        bookHub.client.bookRegistered = (bookId: string, title: string) => {
+        bookHub.on('bookRegistered', (bookId: string, title: string) => {
             this.books.push(new BookViewModel(bookHub, bookId, title, false, null));
-        };
+        });
 
         bookHub.client.bookReturned = (bookId: string) => {
             var book = this.getBook(bookId);

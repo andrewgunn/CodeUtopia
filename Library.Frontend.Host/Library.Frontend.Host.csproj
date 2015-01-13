@@ -159,7 +159,13 @@
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\v1.pubxml" />
     <None Include="Properties\PublishProfiles\v2.pubxml" />
+    <Content Include="CustomScripts\ViewModels\BooksViewModel.js.map" />
+    <Content Include="CustomScripts\ViewModels\BookViewModel.js.map" />
+    <Content Include="CustomScripts\ViewModels\RegisterBookViewModel.js.map" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="CustomScripts\ViewModels\BooksViewModel.js" />
+    <Content Include="CustomScripts\ViewModels\BookViewModel.js" />
+    <Content Include="CustomScripts\ViewModels\RegisterBookViewModel.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery.signalR-2.1.2.js" />
