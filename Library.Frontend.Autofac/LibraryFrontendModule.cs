@@ -38,7 +38,7 @@ namespace Library.Frontend.Autofac
                    .As<IQueryExecutor>();
 
             // Read store database settings.
-            builder.RegisterType<VersionedReadStoreDatabaseSettings>()
+            builder.RegisterType<ReadStoreDatabaseSettings>()
                    .As<IReadStoreDatabaseSettings>();
 
             // Query handlers.

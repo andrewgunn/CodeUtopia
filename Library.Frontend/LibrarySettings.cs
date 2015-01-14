@@ -6,17 +6,17 @@ namespace Library.Frontend
     {
         public LibrarySettings(ISettingsProvider settingsProvider)
         {
-            _versionNumber = int.Parse(settingsProvider.ApplicationSetting("Library.Frontend:VersionNumber"));
+            _endpointName = settingsProvider.ApplicationSetting("Library.Frontend:EndpointName");
         }
 
-        public int VersionNumber
+        public string EndpointName
         {
             get
             {
-                return _versionNumber;
+                return _endpointName;
             }
         }
 
-        private readonly int _versionNumber;
+        private readonly string _endpointName;
     }
 }

@@ -172,7 +172,9 @@
     <Content Include="Scripts\jquery.signalR-2.1.2.min.js" />
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
     <Content Include="Scripts\knockout-3.2.0.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.v1.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -184,8 +186,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Container.cs" />
     <Compile Include="Controllers\BookController.cs" />
+    <Compile Include="Controllers\CommandController.cs" />
     <Compile Include="Hubs\IBookHub.cs" />
-    <Compile Include="VersionedViewEngine.cs" />
     <Compile Include="ReplyHandlers\BookErrorCodeResourceMapper.cs" />
     <Compile Include="ReplyHandlers\BookErrorReplyHandler.cs" />
     <Compile Include="EventHandlers\BookReturnedEventHandler.cs" />
@@ -211,8 +213,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Book\List.cshtml" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
-    <Content Include="Views\Book\_ListTable_v2.cshtml" />
-    <Content Include="Views\Book\_ListTable_v1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -222,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Event\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeUtopia.Autofac\CodeUtopia.Autofac.csproj">

@@ -8,8 +8,6 @@ namespace Library.Frontend.ReadStore.Book
 
         public bool IsBorrowed { get; set; }
 
-        public DateTime? ReturnBy { get; set; }
-
         public string Title { get; set; }
     }
 }

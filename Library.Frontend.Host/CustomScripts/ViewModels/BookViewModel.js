@@ -2,12 +2,11 @@
 /// <reference path="../../Scripts/typings/knockout/knockout.d.ts" />
 /// <reference path="../../scripts/typings/signalr/signalr.d.ts" />
 var BookViewModel = (function () {
-    function BookViewModel(bookHub, bookId, title, isBorrowed, returnBy) {
+    function BookViewModel(bookHub, bookId, title, isBorrowed) {
         var _this = this;
         this.bookHub = bookHub;
         this.bookId = ko.observable(bookId);
         this._isBorrowed = ko.observable(isBorrowed);
-        this.returnBy = ko.observable(returnBy);
         this.title = ko.observable(title);
         this.canBorrow = ko.computed({
             owner: this,

@@ -87,10 +87,6 @@
       <Project>{B06F4A79-8F37-45C4-8A0C-73969C36C705}</Project>
       <Name>Library.Frontend.Queries</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Library.Frontend\Library.Frontend.csproj">
-      <Project>{E76B371E-98E2-48F4-8BF5-E00504686043}</Project>
-      <Name>Library.Frontend</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

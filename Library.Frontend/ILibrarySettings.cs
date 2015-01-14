@@ -2,6 +2,6 @@
 {
     public interface ILibrarySettings
     {
-        int VersionNumber { get; }
+        string EndpointName { get; }
     }
 }

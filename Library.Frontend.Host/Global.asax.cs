@@ -28,10 +28,6 @@ namespace Library.Frontend.Host
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-
-            ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(new VersionedViewEngine());
-
             ConfigureBusLogging();
 
             var busConfiguration = new BusConfiguration();
@@ -53,7 +49,7 @@ namespace Library.Frontend.Host
             conventions.DefiningMessagesAs(x => x.Name.EndsWith("Reply"));
 
             busConfiguration.DisableFeature<Sagas>();
-            busConfiguration.EndpointName(string.Format("v{0}_LibraryFrontend", librarySettings.VersionNumber));
+            busConfiguration.EndpointName(librarySettings.EndpointName);
             busConfiguration.LoadMessageHandlers<First<DomainEventHandler>>();
             busConfiguration.UseContainer<AutofacBuilder>(c => c.ExistingLifetimeScope(lifetimeScope));
             busConfiguration.UsePersistence<InMemoryPersistence>();

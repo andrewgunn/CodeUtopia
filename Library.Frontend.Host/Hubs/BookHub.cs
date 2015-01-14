@@ -22,32 +22,20 @@ namespace Library.Frontend.Host.Hubs
         [Obsolete]
         public void BorrowBook(Guid bookId)
         {
-            if (_librarySettings.VersionNumber == 1)
+            var command = new BorrowBookCommand
             {
-                var command = new BorrowBookCommand
-                {
-                    BookId = bookId
-                };
+                BookId = bookId
+            };
 
-                _bus.Send(command);
-            }
-            else
-            {
-                var command = new Commands.v2.BorrowBookCommand
-                {
-                    BookId = bookId,
-                    ReturnBy = DateTime.UtcNow.AddDays(7)
-                };
-
-                _bus.Send(command);
-            }
+            _bus.Send(command);
+            
         }
 
         public override Task OnConnected()
         {
             var booksQuery = new BooksQuery();
             var booksProjection = _queryExecutor.Execute(booksQuery);
-            var bookModels = booksProjection.Books.Select(x => new BookModel(x.BookId, x.Title, x.IsBorrowed, x.ReturnBy))
+            var bookModels = booksProjection.Books.Select(x => new BookModel(x.BookId, x.Title, x.IsBorrowed))
                                             .ToList();
 
             Clients.Caller.LoadBooks(bookModels);

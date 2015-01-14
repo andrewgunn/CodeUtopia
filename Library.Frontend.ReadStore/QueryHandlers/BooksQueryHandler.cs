@@ -18,7 +18,7 @@ namespace Library.Frontend.ReadStore.QueryHandlers
             {
                 var books = databaseContext.Books.ToList();
 
-                var bookProjections = books.Select(x => new BookProjection(x.BookId, x.Title, x.IsBorrowed, x.ReturnBy))
+                var bookProjections = books.Select(x => new BookProjection(x.BookId, x.Title, x.IsBorrowed))
                                            .ToList();
 
                 return new BooksProjection(bookProjections);
