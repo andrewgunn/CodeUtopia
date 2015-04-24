@@ -53,7 +53,6 @@ namespace Library.Backend.Domain.Book
                 throw new BookAlreadyBorrowedException(AggregateId);
             }
 
-            Apply(new BookBorrowedEvent());
             Apply(new Events.v2.BookBorrowedEvent
                   {
                       ReturnBy = returnBy
