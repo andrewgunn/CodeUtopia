@@ -85,6 +85,7 @@ namespace Library.Backend.Domain.Book
 
         private void OnBookBorrowedEvent(Events.v2.BookBorrowedEvent bookBorrowedEvent)
         {
+            _isBorrowed = true;
             _returnBy = bookBorrowedEvent.ReturnBy;
         }
 
