@@ -35,7 +35,7 @@ class BooksViewModel {
             }
         };
 
-        bookHub.client.bookBorrowed = (bookId: string, returnBy: Date) => {
+        bookHub.client.bookBorrowed = (bookId: string, returnBy: string) => {
             var book = this.getBook(bookId);
 
             if (book) {

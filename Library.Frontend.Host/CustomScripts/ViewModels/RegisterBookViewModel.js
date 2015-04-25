@@ -1,4 +1,4 @@
-/// <reference path="../../Scripts/typings/jquery/jquery.d.ts" />
+﻿/// <reference path="../../Scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../../Scripts/typings/knockout/knockout.d.ts" />
 /// <reference path="../../scripts/typings/signalr/signalr.d.ts" />
 var RegisterBookViewModel = (function () {
@@ -7,9 +7,11 @@ var RegisterBookViewModel = (function () {
         this.bookHub = bookHub;
         this.title = ko.observable('');
         this.errorMessages = ko.observableArray([]);
+
         bookHub.on('bookError', function (errorMessages) {
             _this.errorMessages(errorMessages);
         });
+
         bookHub.on('bookRegistered', function () {
             _this.title('');
             _this.errorMessages([]);
