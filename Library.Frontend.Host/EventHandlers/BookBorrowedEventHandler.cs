@@ -5,12 +5,18 @@ using NServiceBus;
 
 namespace Library.Frontend.Host.EventHandlers
 {
-    public class BookBorrowedEventHandler : IHandleMessages<BookBorrowedEvent>
+    public class BookBorrowedEventHandler : IHandleMessages<BookBorrowedEvent>, IHandleMessages<Events.v2.BookBorrowedEvent>
     {
         public void Handle(BookBorrowedEvent bookBorrowedEvent)
         {
             var context = GlobalHost.ConnectionManager.GetHubContext<BookHub, IBookHub>();
             context.Clients.All.BookBorrowed(bookBorrowedEvent.AggregateId);
+        }
+
+        public void Handle(Events.v2.BookBorrowedEvent bookBorrowedEvent)
+        {
+            var context = GlobalHost.ConnectionManager.GetHubContext<BookHub, IBookHub>();
+            context.Clients.All.BookBorrowed(bookBorrowedEvent.AggregateId, bookBorrowedEvent.ReturnBy);
         }
     }
 }

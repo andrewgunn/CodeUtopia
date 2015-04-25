@@ -9,6 +9,8 @@ namespace Library.Frontend.Host.Hubs
         [Obsolete]
         void BookBorrowed(Guid bookId);
 
+        void BookBorrowed(Guid bookId, DateTime returnBy);
+
         void BookRegistered(Guid bookId, string title);
 
         void BookReturned(Guid bookId);

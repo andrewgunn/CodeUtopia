@@ -16,6 +16,7 @@ namespace Library.Frontend.ReadStore.Book.EventHandlers
             {
                 var book = databaseContext.Books.Find(bookReturnedEvent.AggregateId);
                 book.IsBorrowed = false;
+                book.ReturnBy = null;
 
                 databaseContext.SaveChanges();
             }

@@ -4,7 +4,7 @@ using NServiceBus;
 
 namespace Library.Frontend.ReadStore.Book.EventHandlers
 {
-    public class BookBorrowedEventHandler : IHandleMessages<BookBorrowedEvent>
+    public class BookBorrowedEventHandler : IHandleMessages<BookBorrowedEvent>, IHandleMessages<Events.v2.BookBorrowedEvent>
     {
         public BookBorrowedEventHandler(IReadStoreDatabaseSettings readStoreDatabaseSettings)
         {
@@ -17,6 +17,18 @@ namespace Library.Frontend.ReadStore.Book.EventHandlers
             {
                 var book = databaseContext.Books.Find(bookBorrowedEvent.AggregateId);
                 book.IsBorrowed = true;
+
+                databaseContext.SaveChanges();
+            }
+        }
+
+        public void Handle(Events.v2.BookBorrowedEvent bookBorrowedEvent)
+        {
+            using (var databaseContext = new ReadStoreContext(_readStoreDatabaseSettings))
+            {
+                var book = databaseContext.Books.Find(bookBorrowedEvent.AggregateId);
+                book.IsBorrowed = true;
+                book.ReturnBy = bookBorrowedEvent.ReturnBy;
 
                 databaseContext.SaveChanges();
             }

@@ -19,23 +19,22 @@ namespace Library.Frontend.Host.Hubs
             _queryExecutor = GlobalHost.DependencyResolver.Resolve<IQueryExecutor>();
         }
 
-        [Obsolete]
         public void BorrowBook(Guid bookId)
         {
-            var command = new BorrowBookCommand
+            var command = new Commands.v2.BorrowBookCommand
             {
-                BookId = bookId
+                BookId = bookId,
+                ReturnBy = DateTime.UtcNow.AddMonths(1)
             };
 
             _bus.Send(command);
-            
         }
 
         public override Task OnConnected()
         {
             var booksQuery = new BooksQuery();
             var booksProjection = _queryExecutor.Execute(booksQuery);
-            var bookModels = booksProjection.Books.Select(x => new BookModel(x.BookId, x.Title, x.IsBorrowed))
+            var bookModels = booksProjection.Books.Select(x => new BookModel(x.BookId, x.Title, x.IsBorrowed, x.ReturnBy == null ? "" : x.ReturnBy.Value.ToShortDateString()))
                                             .ToList();
 
             Clients.Caller.LoadBooks(bookModels);
