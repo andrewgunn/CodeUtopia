@@ -32,6 +32,7 @@ class BooksViewModel {
 
             if (book) {
                 book._isBorrowed(true);
+                book.returnBy(null);
             }
         };
 
@@ -53,6 +54,7 @@ class BooksViewModel {
 
             if (book) {
                 book._isBorrowed(false);
+                book.returnBy(null);
             }
         };
     }

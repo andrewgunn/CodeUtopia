@@ -33,6 +33,7 @@ var BooksViewModel = (function () {
 
             if (book) {
                 book._isBorrowed(true);
+                book.returnBy(null);
             }
         };
 
@@ -54,6 +55,7 @@ var BooksViewModel = (function () {
 
             if (book) {
                 book._isBorrowed(false);
+                book.returnBy(null);
             }
         };
     }
